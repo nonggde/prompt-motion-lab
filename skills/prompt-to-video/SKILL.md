@@ -45,6 +45,6 @@ For narration, use available TTS or supplied speech; do not replace missing narr
 
 ## Delivery / 交付
 
-Verify encoded dimensions, frame rate, duration, expected audio and successful decoding. Deliver MP4, preview, source, bilingual recipe, timeline, keyframes and test evidence. A render command or HTML alone is not a completed video request. Publish only when the user has authorized publication.
+Verify encoded dimensions, frame rate, duration, expected audio and successful decoding. Deliver MP4, preview, source, bilingual recipe, timeline, keyframes and test evidence. A render command or HTML alone is not a completed video request. Publish only when the user has authorized publication, and never claim a model or service was validated without a recorded run.
 
-检查编码尺寸、帧率、时长、预期音轨和完整解码。交付 MP4、预览、源码、双语配方、时间线、关键帧和检查证据。只有渲染命令或 HTML 不等于完成视频需求。发布需在用户授权范围内。
+检查编码尺寸、帧率、时长、预期音轨和完整解码。交付 MP4、预览、源码、双语配方、时间线、关键帧和检查证据。只有渲染命令或 HTML 不等于完成视频需求。发布需在用户授权范围内；没有记录运行时，不声称某个模型或服务已经验证。
