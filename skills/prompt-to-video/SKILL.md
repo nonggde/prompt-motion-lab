@@ -31,6 +31,10 @@ Use the user's project if suitable. Otherwise obtain the runnable renderer from 
 
 优先使用用户已有工程；否则在工作目录获取 `https://github.com/nonggde/prompt-motion-lab` 的渲染工程并阅读 [render-contract.md](references/render-contract.md)。按内容选择最简单可控的路线：Canvas 适合图解和字体，SVG/DOM 适合界面，Three.js 适合空间场景，长片使用现成视频框架。
 
+The project's HTML preview and renderer are local source artifacts; do not describe them as a hosted AI video generator. A prompt or render command is not evidence of a finished film. State the actual tool, output, and any missing capability.
+
+项目的 HTML 预览和渲染器是本地源码产物，不要把它们描述成在线 AI 视频生成器。提示词或渲染命令不等于成片证据；说明实际工具、输出和缺失能力。
+
 Keep each frame a function of `render(t, config)`. Seed randomness, replay stateful simulations from a fixed initial state, load fonts and media before capture, and use one timeline for visuals and audio. Rendering must not depend on playback history, network arrival, `Date.now()` or unseeded randomness.
 
 每帧必须是 `render(t, config)` 的函数。随机固定种子，从固定初态重放有状态模拟，捕获前等待字体和素材，音画共用一条时间线。渲染不能依赖播放历史、网络到达、`Date.now()` 或无种子随机。
@@ -38,6 +42,12 @@ Keep each frame a function of `render(t, config)`. Seed randomness, replay state
 Render keyframes and a short sample before the full film. Inspect readable type, overlaps, focal hierarchy, silhouette, in-shot motion, transition continuity, phone-sized layout, important semantics, black frames, NaN values, repeated frames and audio peaks. Repair observed weaknesses and record the time, hypothesis, change and rerender result.
 
 全片前先出关键帧和短样片。检查文字可读性、遮挡、主次、主体轮廓、镜头内部动作、转场连续性、手机尺寸、重要语义、黑帧、NaN、重复帧和音频峰值。修复实际问题并记录时间点、假设、改动和重渲结果。
+
+## Status and experiment record / 状态与实验记录
+
+Use the status path draft -> rendered -> inspected -> validated. Use blocked when a required fact, asset, tool or authorization is missing. Keep the brief, bilingual prompt, timed shots, selected direction, renderer command, output metadata, observations, defects and next experiment in one record; see [experiment-log.md](references/experiment-log.md). Do not write validated, tested, or model-specific claims until the corresponding render and inspection evidence exists.
+
+使用 draft -> rendered -> inspected -> validated 标记状态；缺少必要事实、素材、工具或授权时使用 blocked。把简报、双语提示词、时间分镜、方向选择、渲染命令、输出元数据、观察、缺陷和下一实验放在一份记录中，参见 [experiment-log.md](references/experiment-log.md)。没有对应的渲染和检查证据时，不写 validated、tested 或模型实测结论。
 
 For narration, use available TTS or supplied speech; do not replace missing narration with music. Use code-generated music when it suits the brief, keep speech clear and peaks below clipping, and maintain an asset and rights ledger for non-original material.
 
