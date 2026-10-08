@@ -1,0 +1,10 @@
+{
+  "name": "Prompt Motion Lab",
+  "short_name": "Motion Lab",
+  "description": "From prompts to storyboards, code animation and finished video.",
+  "start_url": "/prompt-motion-lab/",
+  "display": "standalone",
+  "background_color": "#efede5",
+  "theme_color": "#efede5",
+  "icons": []
+}

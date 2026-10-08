@@ -3,7 +3,7 @@ import {spawn} from 'node:child_process';
 import assert from 'node:assert/strict';
 const require=createRequire(import.meta.url);
 const ffmpeg=process.env.FFMPEG_PATH||require('ffmpeg-static');
-for(const [file,expectedSeconds] of [['media/form-flow.mp4',15],['media/token-bucket.mp4',20]]) {
+for(const [file,expectedSeconds] of [['media/form-flow.mp4',15],['media/token-bucket.mp4',20],['media/pulse-grid.mp4',12]]) {
   let metadata='',progress='';
   const child=spawn(ffmpeg,['-hide_banner','-xerror','-i',file,'-map','0:v:0','-map','0:a:0','-progress','pipe:1','-nostats','-f','null','-'],{stdio:['ignore','pipe','pipe']});
   child.stdout.on('data',d=>progress+=d);child.stderr.on('data',d=>metadata+=d);

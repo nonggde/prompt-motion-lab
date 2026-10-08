@@ -1,27 +1,24 @@
 # Prompt Motion Lab
 
-**From a user’s needs to a creative brief, prompts, animation and a finished film.**
+**Turn an idea into a checkable, reproducible, editable code-rendered film.**
 
-[中文](README.md) · [Live studio](https://nonggde.github.io/prompt-motion-lab/) · [AI skill](#give-your-ai-the-workflow) · [Production guide](docs/workflow.en.md)
+[中文](README.md) · [Live lab](https://nonggde.github.io/prompt-motion-lab/) · [Install the AI skill](#teach-an-ai-to-make-videos) · [English workflow](docs/workflow.en.md)
 
-A bilingual, open-source playground for code-rendered video. It combines attributed motion prompts, original playable examples and a production workflow an AI agent can execute. No particular model or video-generation API key is required.
+Prompt Motion Lab is our bilingual code-video laboratory. It joins brief discovery, visual direction, original prompts, timed storyboards, code scenes, synchronized sound, and verification in one reproducible workflow. It does not require a particular model, and it does not present a web template as a cloud video-generation service.
 
 ![FORM & FLOW storyboard](media/form-flow-storyboard.png)
 
-## What works today
+## What is here
 
-- **513 source records**: search topics, creators, techniques and categories; expand and copy original text with attribution intact.
-- **Honest labels**: 279 records marked complete upstream, 234 partial prompts or post descriptions; 459 distinct texts after trimming outer whitespace and exact deduplication. Several works share the same prompt.
-- **Two original examples**: a 15-second FORM & FLOW reel and a 20-second token bucket explainer with adjustable capacity and refill rate.
-- **Reproducible output**: 1920×1080, 60fps, original synthesized scores; preview and export use the same time-driven drawing code.
-- **An AI production skill**: understand needs → write a brief → develop prompts → storyboard → sample → inspect → deliver MP4 and source.
-- **Chinese and English**: switch the interface language; docs and creative templates cover both. Quoted prompts retain their creators’ original language.
+- **Original bilingual recipes** organized by purpose, visual language, difficulty, and experiment status. The catalog grows through experiments rather than a fixed count.
+- **Runnable scenes** for FORM & FLOW, Token Bucket, and PULSE / GRID. The same time-driven scene can be previewed, storyboarded, and exported.
+- **An AI production skill** that turns a natural-language brief into direction options, bilingual prompts, a timed storyboard, a code plan, a sample, and verification evidence.
+- **Experiment feedback** that records inputs, versions, render settings, observations, and next steps instead of labeling untested ideas as finished work.
+- **Bilingual documentation** across the interface, recipes, skill, contribution rules, and workflow guides.
 
-## Try it
+## Quick start
 
-Open the [live studio](https://nonggde.github.io/prompt-motion-lab/) to play, seek, enable sound, explore the limiter and download the example films.
-
-For local use, install Node.js 20+:
+Open the [live lab](https://nonggde.github.io/prompt-motion-lab/) without installing anything. For local work, use Node.js 20+:
 
 ```sh
 git clone https://github.com/nonggde/prompt-motion-lab.git
@@ -30,73 +27,53 @@ npm ci
 npm start
 ```
 
-Open `http://127.0.0.1:4173`. `npm run build` creates `dist/`; its `index.html` embeds the scripts, fonts and dataset and can be opened offline. Keep `media/` alongside it for video downloads.
+Open `http://127.0.0.1:4173`. `npm run build` creates an offline `dist/index.html`; keep exported films beside the `media/` directory.
 
-## Give your AI the workflow
+## Teach an AI to make videos
 
-Tell your skills-enabled AI tool:
+Install [skills/prompt-to-video/SKILL.md](skills/prompt-to-video/SKILL.md) in an AI tool that supports Skills:
 
 ```text
-Install skills/prompt-to-video from https://github.com/nonggde/prompt-motion-lab.
-Use it to turn my needs into prompts and a storyboard, produce the video,
-and deliver an MP4, interactive preview and source.
+Use prompt-to-video to turn my goal, audience, assets, and duration into a bilingual prompt and timed storyboard.
+Offer executable visual directions first, then make a code-rendered sample, inspect the actual frames and video metadata, and deliver source, MP4, preview, and an experiment record.
 ```
 
-Or use a SKILL.md-compatible installer:
+Compatible installers can also use:
 
 ```sh
 npx skills add nonggde/prompt-motion-lab --skill prompt-to-video
 ```
 
-You can also place the complete [skills/prompt-to-video](skills/prompt-to-video) folder in the skill directory supported by your AI tool. Its reference files are self-contained; when producing video, the skill obtains the renderer in the task’s workspace. **The skill supplies the workflow. The agent still needs code execution and file access to produce output.**
+The skill selects tools and assets within the user's authorization. It does not publish, contact people, purchase services, or claim that a model has been tested when it has not. A work enters `validated` only after an actual render and inspection.
 
-Example requests:
-
-```text
-Use prompt-to-video to make a 20-second launch film for my task manager.
-Audience: indie developers. Story: capture → organize → execute today.
-16:9, Chinese and English captions, cream background, one orange accent.
-Show a storyboard and short sample, then inspect and deliver a 1080p MP4 and source.
-```
-
-```text
-Use prompt-to-video to turn this voiceover into a 45-second whiteboard explainer.
-Reveal the diagrams alongside the narration, preserve accurate data,
-and keep the music quiet beneath speech.
-```
-
-## Customize and render
+## Render and verify
 
 ```sh
 npm test
 npm run render -- --mode reel --stills-only
 npm run render -- --mode reel
 npm run render -- --mode bucket
-npm run render -- --scene examples/custom-scene.cjs --output media/custom.mp4
+npm run render -- --scene examples/pulse-grid.cjs --output media/pulse-grid.mp4
 npm run check:media
+npm run build
 ```
 
-`npm ci` installs the local canvas renderer and FFmpeg; no cloud service is needed. Set `FFMPEG_PATH` to use an existing binary. Rendering first creates a 16-frame storyboard, then renders frames at exact timestamps. `--stills-only` stops after the storyboard. The example films do not claim seamless looping.
+A custom scene exports `duration`, even `width`/`height`, and `render(ctx, t, config)`. Each frame is computed from time and fixed configuration; add `audio(sampleRate)` when the scene needs its own sound. Inspect the storyboard before rendering the full film. The current renderer supports `--duration`, `--fps`, `--output`, and `--stills-only`; see the [render contract](skills/prompt-to-video/references/render-contract.md).
 
-Modify [src/engine.js](src/engine.js) for built-in examples. Custom scenes expose `render(ctx, t, config)`; start with [examples/custom-scene.cjs](examples/custom-scene.cjs). Model correctness, pixel determinism, browser interactions and media output have separate checks.
-
-## Workflow and layout
-
-[English guide](docs/workflow.en.md) · [中文指南](docs/workflow.zh-CN.md) · [Style directions](skills/prompt-to-video/references/style-directions.md) · [Skill](skills/prompt-to-video/SKILL.md)
+## Project layout
 
 ```text
-src/                    Preview, time-driven animation and synthesized audio
-data/videos.json        Attributed upstream prompt snapshot
-media/                  Original example MP4s and storyboards
-scripts/                Local server, build, render and checks
-skills/prompt-to-video/  Installable AI production skill
-docs/                   Chinese and English production guides
+src/                    preview, time-driven animation, synthesized sound, PULSE scene
+data/prompts.json       Prompt Motion Lab's original bilingual recipes
+examples/               independently renderable scene entry points
+media/                  MP4 films and storyboards made by this project
+scripts/                serving, building, rendering, and checks
+skills/prompt-to-video/ installable AI production skill
+docs/                   bilingual workflow and experiment records
 ```
 
-## Sources, licensing and contributions
+## License and contributions
 
-Prompt source: [yihui-dev/awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos). Workflow references: [xilo](https://x.com/xilo2991/status/2104912748794589515) and [huashu-art-motion](https://x.com/alchainhust/status/2107347834668224687), informing structured briefs, content-led style choices and in-shot motion review.
+Code, original recipes, original scenes, and project-made media use [MIT](LICENSE). The font's separate license is recorded in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-New tools, demos and skill instructions use [MIT](LICENSE). Dataset and font licenses are preserved; see [third-party notices](THIRD_PARTY_NOTICES.md). Original creators’ videos and preview images are not bundled.
-
-Contribute sourced prompts, runnable scenes and production lessons with evidence. Cases should include author, source post and completeness flags; styles should include keyframes, implementation and limitations. The built-in renderer currently targets Canvas 2D. Three.js, TTS and reference-driven remakes are workflow choices for capable agents, with their respective dependencies, rather than pre-integrated services.
+Contribute original recipes, runnable scenes, storyboards, and experiment records. Provide Chinese and English, plus the actual command, output settings, observations, and remaining limitations. See [CONTRIBUTING.md](CONTRIBUTING.md).

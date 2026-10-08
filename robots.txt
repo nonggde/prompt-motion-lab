@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nonggde.github.io/prompt-motion-lab/sitemap.xml

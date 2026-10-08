@@ -2,76 +2,59 @@
 
 [中文](workflow.zh-CN.md) · [Project](../README.en.md)
 
-A useful video prompt connects content, visual direction and timing. This guide turns the reference research into a workflow you can implement, inspect and revise.
+Prompt Motion Lab treats a production as an experiment record rather than a magic sentence: brief, direction, bilingual prompt, timed storyboard, scene code, sample, evidence, and next step.
 
-## 1. Turn the request into a brief
+## 1. Write the brief
 
-Record objective, audience, real content, duration, aspect, language, assets and sound. Check sources for factual content; use real features and interfaces for product videos. Choose and record defaults for noncritical omissions. Ask specific questions when a missing fact, material choice or paid resource needs the user’s decision.
+Record the purpose, audience, one-sentence takeaway, required facts, duration, aspect ratio, resolution, fps, language, assets, and sound. Choose and record noncritical defaults such as 15 seconds, 16:9, and three colors. Ask the user when a missing fact or authorization would change the result.
 
-Replace “make a cool video” with:
+Turn “make a cool video” into:
 
-> Introduce a task manager to indie developers in 20 seconds. Show “capture → organize → execute today,” one action per shot. 1920×1080, Chinese and English captions, cream background, charcoal text, orange accent. Do not invent testimonials. Deliver MP4, preview, source and storyboard.
+> Introduce a task manager to indie developers in 20 seconds. Show “capture → organize → execute today,” one operation per shot. 1920×1080, Chinese and English captions, cream background, charcoal body text, orange accent. Do not invent testimonials. Deliver MP4, preview, source, storyboard, and an experiment record.
 
-Use the structure in the [prompt playbook](../skills/prompt-to-video/references/prompt-playbook.md). Archive text retains its creator’s language; a partial post description is not a complete production brief.
+## 2. Offer directions
 
-## 2. Choose a visual language for the content
+Describe color, type, material, composition, camera grammar, in-shot motion, sound, and implementation from the content. Algorithms fit stable geometry and event tables; real products fit real UI states; kinetic type fits few words and strong type; product space needs 3D hierarchy only when depth carries meaning. When the user delegates the choice, pick one direction and record why it serves the goal.
 
-An algorithm needs clear resources, events and state. A product needs real interfaces. An art film benefits from consistent shapes, materials and motion rules. Analyze references through palette, type scale, density, shot timing and motion relationships, then write implementable requirements.
+## 3. Write an original bilingual prompt
 
-The [eight style directions](../skills/prompt-to-video/references/style-directions.md) are design guidance rather than eight shipped templates. Built-in scenes use Canvas 2D; the torus projects 3D coordinates onto a 2D canvas, rather than using an integrated Three.js scene.
+Make the prompt executable: give every shot one primary message, visible action, camera move, text hold, transition, sound event, negative rule, seed, and acceptance check. Separate facts from visual metaphor; a schematic must not be presented as a physical simulation.
 
-## 3. Time the shots and sound
+## 4. Time the storyboard
 
-| Time | Content | In-shot motion | Transition / sound |
-| --- | --- | --- | --- |
-| 0–3.5s | IDEAS TAKE SHAPE | Masked type enters; a circle grows | Synthesized beat; circular wipe |
-| 3.5–8s | FORM INTO FLOW | A 5,720-point torus rotates and deforms | Same beat; circular wipe |
-| 8–11.5s | MAKE IT MOVE | Large type reveals; an asterisk rotates and pulses | Inverted palette; circular wipe |
-| 11.5–15s | FORM & FLOW | Type resolves; ring elements slowly turn | Ending; music fades |
+| Time | Information | In-shot action | Camera | Text | Sound / transition |
+| --- | --- | --- | --- | --- | --- |
+| 0–3s | Establish the question | Main object enters and settles | Wide | One title | Opening cue |
+| 3–8s | Show the relationship | Event travels along a path | Follow | One term | Align to action peak |
+| 8–13s | Explain the change | State changes and leaves a trace | Push in | Parameter or result | Content-led transition |
+| 13–15s | Resolve the takeaway | Elements organize into final form | Pull back | One takeaway | Ending and hold |
 
-This is the actual FORM & FLOW shot list. Do not force every topic into 120 BPM or quick cuts. For narration, time shots to the spoken sections and allow reading time. Inspect whether motion inside each shot communicates meaning, as well as reviewing transitions.
+Do not force this timing on every topic. For narration, time shots to speech; for data, time them to the factual range. Hold important text long enough to read.
 
-The token bucket uses one stable diagram: capacity at 0–4s, burst traffic at 4–8s, rejection at 8–12s, continuous refill at 12–16s and resolution at 16–20s. Counters and request paths share one event model; seeking recomputes it.
+## 5. Choose the implementation and sample
 
-## 4. Make every frame seekable
+Canvas 2D fits diagrams, particles, and pixels; SVG/HTML fits interfaces and type; Three.js fits spatial hierarchy; GLSL fits material and post-processing. Derive every frame from time and fixed configuration and seed randomness. Precompute stateful simulations or replay them from a fixed initial state.
 
-A frame is a function of time `t` and fixed configuration. Avoid accumulated positions, unseeded randomness and real-time network dependencies during rendering. Precompute physics or replay from a fixed initial state. Playback uses a clock; export uses exact `i / fps` timestamps.
+Generate a storyboard with a custom scene:
 
-Use the [custom scene](../examples/custom-scene.cjs) and [render contract](../skills/prompt-to-video/references/render-contract.md). The built-in player loads two examples; connect new scenes to their own preview using the same drawing function. Check typography and wait for fonts and assets before capture.
+    npm ci
+    npm test
+    npm run render -- --scene examples/custom-scene.cjs --output media/my-film.mp4 --stills-only
 
-## 5. Inspect frames, then a short sample
+Inspect the storyboard and fix text collisions, weak focus, static objects, broken transitions, and semantic errors before rendering a short sample and the full film.
 
-```sh
-npm ci
-npm test
-npm run render -- --scene examples/custom-scene.cjs --output media/my-film.mp4 --stills-only
-```
+## 6. Share the timeline with sound
 
-Inspect the storyboard for glyphs, spacing, overlaps, hierarchy and logic. Still images cannot prove continuous motion: inspect both sides of transitions and a short video. Make targeted revisions such as “move the circle right to clear the title.”
+Put cues, motion peaks, speech sections, and holds on one timeline. Built-in sound is synthesized music or effects; use supplied speech or authorized TTS for narration and never describe music as voiceover.
 
-`--duration 2` can render the first two seconds. For another shot, add a fixed time offset in the scene’s sample wrapper. The default storyboard contains 16 evenly spaced timestamps; it does not automatically cover each cut boundary.
+## 7. Record status and evidence
 
-## 6. Share events between picture and sound
+Use draft, rendered, inspected, validated, and blocked. Validated requires actual frame inspection, video metadata, full decoding, narrative and readability checks, and a repeated render comparison when determinism matters. Record observations instead of replacing evidence with a subjective score.
 
-Music and cues here are synthesized in code. Token bucket cues use the event’s accepted/rejected state and update with preview capacity and refill settings. Downloaded MP4s use the default capacity of 4 and refill of 1 token per second.
+## 8. Export and deliver
 
-Use supplied speech or available TTS when narration is requested. Music does not replace voiceover. No TTS or cloud video service is integrated. The exporter uses a single-pass target of -16 LUFS / -1.5 dBTP; those targets are not measured output claims.
+    npm run render -- --scene examples/my-scene.cjs --output media/my-film.mp4 --fps 60
+    npm run build
+    npm run check:media
 
-## 7. Export and verify the file
-
-```sh
-npm run render -- --mode reel
-npm run render -- --mode bucket
-npm run check:media
-npm run build
-npx playwright install chromium
-npm run test:browser
-```
-
-Check full decoding, 1920×1080, 60fps, 15/20 seconds and AAC audio for the built-in films. Verify languages, filters, playback, parameters and offline builds. Validate each new film against its own dimensions and duration; built-in checks do not verify custom films.
-
-Deliver film, preview, source, brief and credits. Describe actual tools and remaining limitations. The [AI skill](../skills/prompt-to-video/SKILL.md) gives agents with code execution and file access this workflow.
-
-## References
-
-[yihui-dev’s collection](https://github.com/yihui-dev/awesome-opus5-5-videos) supplies attributed prompts. [xilo’s article](https://x.com/xilo2991/status/2104912748794589515) informs structured briefs and preview review. [alchain’s article](https://x.com/alchainhust/status/2107347834668224687) informs style directions, reference analysis and in-shot motion. This guide and the examples are newly authored; see [source notices](../THIRD_PARTY_NOTICES.md).
+Deliver the MP4, storyboard, preview, source, brief, and experiment record. Validate a custom film against its own dimensions, duration, frame rate, and audio; the built-in check:media knows only the two shipped films.

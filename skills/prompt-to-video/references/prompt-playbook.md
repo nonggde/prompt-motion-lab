@@ -1,55 +1,66 @@
 # 提示词规划 / Prompt playbook
 
-## 把愿望变成可制作的要求 / From aspiration to direction
+这份手册把需求写成可以讨论、渲染和验收的原创双语提示词。/ This playbook turns a brief into an original bilingual prompt that can be discussed, rendered, and verified.
 
-“做一条惊艳视频”能探索创意，难以稳定表达一个真实产品。先确定用户想让观众理解、感受或采取的动作，再写画面。标签的作用是组织信息，XML 或 Markdown 都可以；没有证据支持某种语法必然优于另一种。
+## 必填信息 / Required fields
 
-“Make an amazing film” can explore creativity but does little to communicate a real product consistently. Start with what the viewer should understand, feel or do. XML and Markdown both organize a brief; syntax alone is not evidence of better results.
+| 字段 / Field | 要回答的问题 / Question |
+| --- | --- |
+| goal / 目标 | 观众看完后要理解、相信或行动什么？ / What should the viewer understand, believe, or do? |
+| audience / 观众 | 谁会看，已有多少背景知识？ / Who is watching and what do they already know? |
+| takeaway / 记忆点 | 观众最终只记住哪一句话？ / What single sentence should remain? |
+| content / 内容 | 哪些事实、界面、数据或素材必须出现？ / Which facts, UI states, data, or assets must appear? |
+| direction / 方向 | 画面、材质、镜头、声音和实现路线是什么？ / What are the visual, material, camera, sound, and implementation rules? |
+| timeline / 时间线 | 每个镜头何时发生、改变什么？ / When does each shot happen and what changes? |
+| acceptance / 验收 | 如何证明文字、叙事、输出和可复现性合格？ / How will readability, narrative, output, and repeatability be proven? |
 
-| 块 / Block | 写什么 / Specify | 避免 / Avoid |
-|---|---|---|
-| role | 实际职责：动效导演、科普作者 / motion director, explainer author | 只有夸张头衔 / grand titles without decisions |
-| inputs | 真实内容、受众、时长、画幅、语言、素材 / real content, audience, duration, aspect, language, assets | 编造产品功能、数据 / invented features or data |
-| direction | 主视觉概念、配色、字体系、参考保留点 / visual idea, palette, type, reference principles | 堆叠所有效果 / every effect at once |
-| structure | 起止时间、画面动作、转场、字幕、声音 / timed shots, action, transition, captions, audio | 只有文案，没有动作 / copy without visual action |
-| build | 渲染接口、路线、素材与声音实现 / rendering contract, tools, assets, audio | 必须使用无用依赖 / mandatory irrelevant dependencies |
-| verify | 静帧、过渡、事实、时长、解码 / images, transitions, facts, duration, decode | 仅自评“8 分” / self-assigned quality scores |
-| deliver | MP4、预览、源码、简报、署名 / MP4, preview, source, brief, credits | 把计划当成片 / a plan presented as a film |
+## 可复用模板 / Reusable template
 
-## 有用的变化 / Useful refinements
+将方括号内容替换为真实信息，保留明确的约束和验收条件。/ Replace bracketed content with real information while keeping concrete constraints and acceptance checks.
 
-- 过于泛化：用“一张纸上的城市逐步展开”替换“高级、炫酷”。/ Replace “premium and cool” with a concrete idea, such as “a city unfolds across one sheet of paper.”
-- 镜头像幻灯片：指定画面内部动作，如指针移动、路径生长、角色回应、真实数据变化。静止留白也可服务叙事，不为动而动。/ Specify meaningful in-shot action: a moving pointer, growing route, character response or data change. Intentional holds can serve a story.
-- 文案拥挤：分离标题与字幕时机，缩短屏幕文案，检查实际边界。/ Separate headline and caption timing, shorten on-screen text and inspect bounds.
-- 风格混杂：统一字体、色彩、镜头语言，风格切换由叙事触发。/ Share type, palette and camera language; let story motivate style changes.
-- 无法复现：要求 `render(t)` / `seek(t)`，给随机数固定种子，消除跨帧副作用。/ Require `render(t)` / `seek(t)`, seed randomness and remove frame-history dependence.
+    制作一支 [时长] 秒、[分辨率]、[fps]fps、[画幅] 的 [类型] 视频。
+    目标观众是 [观众]；他们看完要记住：[一句话记忆点]。
 
-## 中文模板 / Chinese brief
+    视觉世界：[空间/平面]、[材质]、[主色与强调色]、[字体和层级]。
+    实现路线：[Canvas/SVG/Three.js/其他]。所有画面状态由 render(t) 与固定配置计算；随机效果使用固定种子。
 
-```xml
-<role>你是动效导演，负责从简报到检查后的成片与源码。</role>
-<inputs>主题：[主题]；观众：[观众]；目标：[目标]；时长：[时长]；画幅：[画幅]；语言：[语言]；真实内容与素材：[链接或文件]。非关键缺项可自主决定并记录。</inputs>
-<direction>核心视觉概念：[一句话]。字体与配色：[选择]。保留：[参考的哪些特征]。避免：[具体不适合本项目的效果]。</direction>
-<structure>先写逐镜头时间表，包含画面动作、字幕、转场和声音。优先做能验证主要风格与动作的小样。</structure>
-<build>按内容选择实现路线。每帧按时间与配置重现；随机种子固定；音画共用时间线。素材加载完再截图。</build>
-<verify>检查关键帧与切镜前后、字的可读性、数据准确性、音效时间、编码时长和播放。修复实际发现的问题。</verify>
-<deliver>MP4、可交互预览、源码、简报、素材署名与检查结果。付费或缺少工具时说明具体缺口。</deliver>
-```
+    时间分镜：
+    0–[a] 秒：出现 [信息]，动作是 [动作]，声音是 [声音]。
+    [a]–[b] 秒：变化为 [信息]，镜头 [运动]，转场 [逻辑]。
+    [b]–[c] 秒：展示 [结果]，保留 [阅读/停顿]。
 
-## English brief
+    每个镜头只承担一个主要信息；文字放在安全区并给足阅读时间。
+    不要使用 [不需要的风格、素材、品牌或误导性表达]。
+    先输出双语简报、分镜和方向选择，再渲染关键帧与短样片。
+    交付 [MP4/预览/源码/分镜/实验记录]，并检查 [尺寸/帧率/时长/音轨/解码/重复渲染]。
 
-```xml
-<role>You are the motion director, responsible for an inspected film and reproducible source.</role>
-<inputs>Topic: [topic]; audience: [audience]; objective: [objective]; duration: [duration]; aspect: [aspect]; language: [language]; real content and assets: [links/files]. Choose and record reasonable noncritical defaults.</inputs>
-<direction>Central visual idea: [one sentence]. Type and palette: [choices]. Preserve: [reference principles]. Avoid: [effects unsuitable for this project].</direction>
-<structure>Write timed shots with visual action, captions, transition and sound. First make a sample that tests the principal style and motion.</structure>
-<build>Choose tools to match the content. Reproduce frames from time and fixed config, seed randomness, share an audio/visual timeline and await asset loading.</build>
-<verify>Inspect keyframes and both sides of cuts, readable type, accurate data, sound timing, output duration and playback. Repair observed issues.</verify>
-<deliver>MP4, interactive preview, source, brief, credits and check results. Identify missing tools or paid-service needs explicitly.</deliver>
-```
+## Prompt quality / 提示词质量
 
-## 案例库的用法 / Using the archive
+- Use concrete verbs: enter, unfold, connect, pause, return, settle. Avoid mood-only adjectives such as “高级” or “酷”.
+- 用具体动词：进入、展开、连接、停顿、返回、收束。不要只写“高级”“酷”等情绪形容词。
+- Give each shot one information change and one visible internal action. A transition cannot replace a shot's meaning.
+- 每个镜头只安排一个信息变化和一个可见的内部动作；转场不能代替镜头含义。
+- Separate facts from visual metaphor. Label a schematic as a schematic and do not invent measurements, quotes, product behavior, or data.
+- 区分事实和视觉隐喻。示意画面要标注为示意，不编造测量值、引文、产品行为或数据。
+- Specify type size, contrast, safe area, order, and hold time whenever text carries meaning.
+- 文字承担信息时，写清字体大小、对比度、安全区、阅读顺序和停留时间。
+- Make audio events share the same timeline as visual events. State when speech is supplied, synthesized, or unavailable.
+- 音频事件与画面事件使用同一条时间线；说明语音是用户提供、工具合成还是不可用。
 
-检索 `data/videos.json` 的 `prompt`、`author`、`category`、`tech_tags`。`prompt_partial` 为 true 的记录是部分提示词或原帖描述，不能称为完整提示词。按精确文本去重只排除完全相同文本，不代表语义去重。`tech_tags` 来自上游的复刻实现，不能据此断言原作者使用了同样路线。
+## Negative rules / 负面规则
 
-Search `prompt`, `author`, `category` and `tech_tags` in `data/videos.json`. A true `prompt_partial` means partial instructions or a post description, not a complete prompt. Exact-text deduplication is not semantic deduplication. Upstream technology tags describe remakes and do not prove what the original creator used.
+Use only the exclusions that protect this film: no invented UI, no third-party logos, no unlicensed assets, no unseeded randomness, no unexplained code rain, no unreadable microtype, no generic fade when a content-led transition is required, and no claim of a rendered video before inspecting the file.
+
+只写能保护本片的限制：不编造界面、不放第三方 Logo、不用未授权素材、不用未固定随机、不使用无意义代码雨、不放看不清的小字、需要内容转场时不使用默认淡入淡出，也不在检查文件前声称已经完成成片。
+
+## Status / 状态
+
+Store each prompt with a status and a short evidence note:
+
+为每条提示词保存状态和简短证据：
+
+- draft / 草稿：方向和时间线仍可变。/ Direction and timing may change.
+- rendered / 已渲染：有分镜或 MP4 文件。/ A storyboard or MP4 exists.
+- inspected / 已检查：实际画面和关键切换已看过，问题已记录。/ Actual frames and key transitions were inspected and issues recorded.
+- validated / 已验证：元数据、解码、叙事和重复渲染检查通过。/ Metadata, decoding, narrative, and repeat-render checks passed.
+- blocked / 受阻：缺少必要事实、素材、工具或授权。/ A required fact, asset, tool, or authorization is missing.
