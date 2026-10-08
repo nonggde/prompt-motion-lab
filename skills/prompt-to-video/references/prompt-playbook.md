@@ -47,6 +47,27 @@
 - Make audio events share the same timeline as visual events. State when speech is supplied, synthesized, or unavailable.
 - 音频事件与画面事件使用同一条时间线；说明语音是用户提供、工具合成还是不可用。
 
+## Production refinements / 制作细化
+
+- Define the same subject at the start, key transformation and end. Compose the final state first and inspect key actions immediately before and after they happen, including the last output frame.
+- 定义同一主体的初态、主要转变和终态。先确定终态布局，检查关键动作前后与最后一帧。
+- Derive text holds from real word count and speech. Inspect Chinese glyph coverage and English line lengths independently. Vertical versions require a new layout, not a center crop.
+- 阅读停留按真实字数和语音安排，分别检查中文字体覆盖与英文行长；竖屏版重新排版，不能直接居中裁切。
+- For interactive demos, record timestamped inputs and replay them from a fixed initial state. Use suitable domain libraries when rules or physics already have maintained implementations.
+- 交互演示记录带时间戳的输入，从固定初态重放；领域规则和物理已有成熟实现时使用合适库。
+- Choose 24, 30 or 60fps for the subject instead of treating one frame rate as universal. An intentional hold is not a failed repeated frame.
+- 根据内容选择 24、30 或 60fps；有意的定格不属于错误重复帧。
+
+## Library access / 配方库读取
+
+Fetch `https://nonggde.github.io/prompt-motion-lab/data/prompts.json` or read `data/prompts.json` in the renderer checkout. Match title, brief, category and technology; adapt one coherent direction rather than combining every effect. Copy the matching language's prompt together with its audio and checks. The site adds shared rendering, decode and delivery requirements when copying a full recipe.
+
+读取 `https://nonggde.github.io/prompt-motion-lab/data/prompts.json` 或工程中的 `data/prompts.json`。按标题、简报、分类与技术选择，保持一个连贯方向。使用对应语言的正文、声音和检查项；网页复制完整配方时会补入共用渲染、解码和交付要求。
+
+Entries marked `recipe` have complete briefs but no claimed rendered result. Make a separate experiment record for actual outputs and inspections.
+
+`recipe` 表示完整简报，不代表已渲染结果。实际输出与检查另建实验记录。
+
 ## Negative rules / 负面规则
 
 Use only the exclusions that protect this film: no invented UI, no third-party logos, no unlicensed assets, no unseeded randomness, no unexplained code rain, no unreadable microtype, no generic fade when a content-led transition is required, and no claim of a rendered video before inspecting the file.

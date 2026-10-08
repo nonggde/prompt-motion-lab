@@ -1,11 +1,2315 @@
 [
   {
+    "id": "motion-product-feature-stack",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "功能叠层里的产品发布",
+    "title_en": "Launch a product through feature layers",
+    "prompt_zh": "制作18秒虚构产品发布片，1920×1080、60fps，使用SVG和Canvas。产品名采用项目提供文字；配色为白、炭灰、松绿。0–4秒从一条水平基线展开名称；4–10秒三个功能依次从名称下方滑出，每层保留清晰标签与一个具体状态；10–15秒叠层合并成完整产品界面；15–18秒停留名称和一句经确认的描述。转场沿同一网格对齐，不以发光粒子填空。所有状态由固定输入与render(t)计算。无真实用户数量、性能承诺或第三方logo。按层进入合成三次木质短音，片尾收束。检查小屏标签、层间遮挡及逐帧位置连续性，交付中英文本版本、关键帧、源码和MP4。",
+    "prompt_en": "Create an 18-second launch film for a fictional product at 1920x1080, 60fps, using SVG and Canvas. Use the supplied product name and a white, charcoal and pine-green palette. At 0–4s a horizontal baseline opens into the name; 4–10s three named features slide out below it, each showing one concrete state; 10–15s the layers combine into a complete interface; 15–18s hold the name and one approved description. Align every transition to one grid and preserve the identity of each layer. Compute states from fixed inputs with render(t). Do not invent customer counts, performance claims or third-party logos. Compose three soft wooden ticks for the entrances and a restrained closing tone. Verify labels on a phone viewport, check layer occlusion and inspect transition continuity frame by frame. Deliver separate Chinese and English text versions, keyframes, source and an MP4.",
+    "tech_tags": [
+      "svg",
+      "canvas",
+      "product-launch",
+      "layer-motion"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three synthesized wooden ticks at the feature entrances, followed by a soft closing tone at 15 seconds.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "375px视口中三个功能标签完整可读",
+        "叠层合并前后相同元素的位置连续且没有遮挡标签"
+      ],
+      "checks_en": [
+        "All three feature labels remain readable at a 375px viewport",
+        "Matching elements move continuously through the layer merge without covering labels"
+      ],
+      "audio_zh": "三个合成木质短音随功能层进入，第15秒以柔和收束音结束。",
+      "audio_en": "Three synthesized wooden ticks at the feature entrances, followed by a soft closing tone at 15 seconds."
+    }
+  },
+  {
+    "id": "explainer-bloom-filter",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "布隆过滤器：可能有，一定没有",
+    "title_en": "Bloom filters: maybe present, definitely absent",
+    "prompt_zh": "制作 18 秒 1920×1080、60fps 双语科普短片，白底配紫红与青绿，以 12 位数组解释布隆过滤器。固定两个演示哈希：A→[1,4]、B→[4,7]、C→[1,7]、D→[2,8]，注明并非真实哈希或实测数据。0–4 秒插入 A；4–7 秒插入 B 并保留共用位；7–12 秒查询 C 得到可能存在但实际未插入；12–15 秒查询 D 得到一定不存在；15–18 秒停留在两种结论。Canvas 按固定输入 render(t) 重算，位只能由插入变成 1，不展示删除。声音用两种清晰短音区分两种结果。检查 C 为假阳性且没有假阴性，手机上位号和结论可读。交付关键帧、源代码、MP4 与用例结果。",
+    "prompt_en": "Create an 18-second bilingual explainer at 1920x1080 and 60fps. Use white, magenta and teal with a twelve-bit array. Fix two illustrative hash positions per key: A maps to [1,4], B to [4,7], C to [1,7], and D to [2,8]. Label them as a demonstration rather than real hashes or measured data. During 0–4s insert A; 4–7s insert B and retain the shared bit; 7–12s query C, which was never inserted but returns possibly present; 12–15s query D and return definitely absent; 15–18s hold both conclusions. Reconstruct every Canvas frame from fixed inputs with render(t). Bits only change through insertion; do not demonstrate deletion. Use distinct short tones for the two outcomes. Verify the false positive and absence of false negatives, including readable bit labels on mobile. Deliver keyframes, source, MP4 and case results.",
+    "tech_tags": [
+      "canvas",
+      "algorithm",
+      "probabilistic-data-structure"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Two dry sine clicks for insertion; a paired uncertain cue for maybe and one firm low click for absent.",
+      "audio_zh": "插入使用两声短正弦点击；可能存在使用双音提示，确定不存在使用单个低音点击。",
+      "audio_en": "Two dry sine clicks for insertion; a paired uncertain cue for maybe and one firm low click for absent.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "C 未插入却返回可能存在；D 的未置位保证返回不存在。",
+        "拖动到任意时刻，12 位状态与固定插入事件一致。"
+      ],
+      "checks_en": [
+        "C was never inserted but returns possibly present; D has an unset bit and returns absent.",
+        "Seeking to any time reproduces the twelve bits from the same insertion events."
+      ]
+    }
+  },
+  {
+    "id": "3d-sectioned-desk-speaker",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "桌面音箱的剖切结构",
+    "title_en": "A sectioned desktop speaker concept",
+    "prompt_zh": "用Three.js制作22秒原创桌面音箱结构片，1920×1080、60fps，主场景全幅。配色为浅灰背景、石墨外壳、青绿隔层。0–5秒绕完整音箱小角度环拍；5–12秒剖切平面缓慢穿过壳体，露出演示用振膜、空腔和底座；12–18秒三层沿同轴轻微展开，标签固定于安全区；18–22秒复合并停留。建模采用自有几何，写明概念结构，不能承诺声学性能或把空腔当真实设计数据。使用MeshStandardMaterial、稳定阴影与固定环境光，render(t)计算剖面和摄影机。声音为低音脉冲和两次机械短音。检查剖面封口、层件不穿插、镜头近裁面和手机标签，交付关键帧、源码、MP4及结构说明。",
+    "prompt_en": "Use Three.js to create a 22-second structural film for an original desktop-speaker concept at 1920x1080, 60fps, in a full-frame scene. Use a pale-gray background, graphite enclosure and teal internal layers. During 0–5s make a restrained orbit around the complete object; 5–12s move a section plane through its shell to reveal an illustrative diaphragm, cavity and base; 12–18s separate the layers slightly along one axis with labels in safe areas; 18–22s reassemble and hold. Build original geometry and identify it as a concept structure, without acoustic performance claims or presenting cavity dimensions as engineering data. Use MeshStandardMaterial, stable shadows and fixed environment lighting. Derive clipping and camera position from render(t). Compose one low pulse and two brief mechanical cues. Check capped sections, nonintersecting parts, near-plane clipping and phone-readable labels. Deliver keyframes, source, MP4 and a structural note.",
+    "tech_tags": [
+      "threejs",
+      "product",
+      "section-cut",
+      "pbr"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A low sine pulse introduces the object; two short mechanical cues mark section opening and reassembly.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "移动剖面具有封口且不出现穿帮空洞",
+        "展开与复合过程中层件不穿插、近裁面不切到主体",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "The moving section remains capped without unintended holes",
+        "Parts never intersect during separation and the near plane never clips the subject",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "一声低正弦脉冲介绍主体；两声机械短音标记剖切打开与重新组合。",
+      "audio_en": "A low sine pulse introduces the object; two short mechanical cues mark section opening and reassembly."
+    }
+  },
+  {
+    "id": "interactive-chess-fork",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "马的叉击：走一步，同时威胁两子",
+    "title_en": "A knight fork threatens two pieces at once",
+    "prompt_zh": "构建可玩的双语国际象棋战术板，并录制 16 秒固定操作 1080p 60fps MP4，冷白棋盘配莓红提示。使用 chess.js 管理合法走法，固定 FEN 为 3q1k2/8/8/2N5/8/8/8/6K1 w - - 0 1，明确为演示局面。0–4 秒展示局面；4–8 秒点击 c5 再点 e6，合法走法 Ne6+；8–12 秒突出马同时攻击 f8 黑王与 d8 黑后，说明形成叉击但不声称必胜；12–16 秒撤销并重做。可玩端支持合法落子、撤销、重置、键盘焦点与触屏。录制由固定动作表 render(t) 重建棋库状态，声音只在落子时敲击。交付关键帧、源代码、可玩页面与 MP4；验收棋库确认将军与两条攻击、非法走法被拒绝、撤销完整恢复 FEN。",
+    "prompt_en": "Build a playable bilingual chess-tactics board and a 16-second fixed-action 1080p recording at 60fps. Use cool-white squares and berry highlights. Use chess.js for legal moves with demonstration FEN 3q1k2/8/8/2N5/8/8/8/6K1 w - - 0 1. During 0–4s show the position; 4–8s select c5 and play c5-e6, legally notated Ne6+; 8–12s highlight the knight attacking the black king on f8 and queen on d8 without claiming forced victory; 12–16s undo and replay. The playable board needs legal move rejection, undo, reset, keyboard focus and touch input. Reconstruct recording state from an immutable action table with render(t) and chess.js rather than DOM positions. Use dry piece taps. Verify the check, both attacks and exact FEN restoration after undo. Deliver keyframes, source, playable HTML and MP4, including the verified move log.",
+    "tech_tags": [
+      "dom",
+      "chessjs",
+      "board-game"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Dry wooden piece taps accompany legal moves and a quieter reverse tap marks undo; no move advice is conveyed through audio alone.",
+      "audio_zh": "合法落子使用干净木质敲击，撤销使用较轻反向敲击，音频不单独承担走法提示。",
+      "audio_en": "Dry wooden piece taps accompany legal moves and a quieter reverse tap marks undo; no move advice is conveyed through audio alone.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "最终使用的 FEN 由 chess.js 验证，录制落子后确实同时攻击黑王与后。",
+        "非法落子不改变状态，撤销恢复棋子、轮次与走法历史。"
+      ],
+      "checks_en": [
+        "The final FEN is verified with chess.js and the recorded move truly attacks both black king and queen.",
+        "Illegal moves preserve state; undo restores pieces, turn and move history."
+      ]
+    }
+  },
+  {
+    "id": "motion-type-tracking-study",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "一行字的间距实验",
+    "title_en": "A spacing study for one line of type",
+    "prompt_zh": "制作14秒动态排版研究，1080p、60fps，Canvas字形测量配合SVG位置控制。使用项目自写短句，色彩为淡灰、深红和黑。0–3秒显示字形边界与基线；3–7秒让字间空隙按固定序列扩大，整句中心保持不变；7–11秒词组靠近形成三个语义单元；11–14秒隐藏辅助线并停在可读排版。中英版本分别测量实际字宽，不能强行共用字距，也不能改变原句含义。用render(t)确定每个字符位置，避免逐帧累积误差。声音是逐步变密的轻敲声，最终留一秒安静。检查字形重叠、句子居中和中英文断行；交付9张关键帧、源码、字幕文本和MP4。",
+    "prompt_en": "Produce a 14-second typography study at 1080p and 60fps with Canvas glyph measurement and SVG positioning. Use a short sentence written for this project, with pale gray, deep red and black. During 0–3s reveal glyph bounds and a baseline; 3–7s expand the spaces in a fixed sequence while keeping the sentence centered; 7–11s regroup the words into three meaningful units; 11–14s remove guides and hold the readable result. Measure Chinese and English versions separately instead of forcing identical spacing, and preserve the original meaning. Derive every character position directly from render(t), avoiding accumulated frame updates. Use gentle taps that gradually become closer together, then leave the final second quiet. Inspect glyph collisions, center alignment and line wrapping in both languages. Deliver nine keyframes, editable source, caption text and the finished MP4.",
+    "tech_tags": [
+      "svg",
+      "canvas",
+      "kinetic-type",
+      "glyph-metrics"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Soft band-limited taps follow the spacing sequence; silence during the final second.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "最紧密间距时任何字形边界都不重叠",
+        "中英版本的句子视觉中心保持在相同坐标"
+      ],
+      "checks_en": [
+        "Glyph bounds never collide at the tightest spacing",
+        "Both language versions retain the same visual center"
+      ],
+      "audio_zh": "柔和带限轻敲声跟随字距序列；最后一秒保持安静。",
+      "audio_en": "Soft band-limited taps follow the spacing sequence; silence during the final second."
+    }
+  },
+  {
+    "id": "explainer-merkle-tree",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "默克尔树：一片叶子改变整条路径",
+    "title_en": "A Merkle tree changes along one path",
+    "prompt_zh": "制作 20 秒 1080p 60fps 双语短片，用白色、墨黑和湖绿展示四片叶子的默克尔树。叶内容固定为 alpha、beta、gamma、delta；使用浏览器 Web Crypto SHA-256，内部结点按左右子哈希字节拼接再哈希，显示缩略值并注明显示已截短。0–5 秒生成叶哈希；5–9 秒合成两层；9–14 秒把 beta 改为 beta2，仅重算祖先；14–18 秒突出 gamma 的兄弟证明路径；18–20 秒总结根验证的是所给树。用 SVG 固定布局与 Canvas 时间线，预计算哈希后 render(t)，不伪造十六进制字符。声音沿更新路径发出三次干净敲击。验收根确实改变、未影响支路哈希不变、证明可复算；交付关键帧、代码、MP4 与完整哈希表。",
+    "prompt_en": "Make a 20-second bilingual 1080p film at 60fps using white, ink and lake green. Build a four-leaf Merkle tree from fixed contents alpha, beta, gamma and delta. Use Web Crypto SHA-256; concatenate left and right child hash bytes before hashing each parent. Display shortened values with an explicit truncation label. During 0–5s calculate leaves; 5–9s build both parent levels; 9–14s replace beta with beta2 and update only its ancestors; 14–18s highlight a sibling proof for gamma; 18–20s hold the conclusion that the root verifies this supplied tree. Precompute real hashes, then drive a fixed SVG layout through render(t). Never invent hexadecimal values. Three dry knocks follow the updated path. Verify the changed root, unchanged unaffected branch and recomputable proof. Deliver keyframes, source, MP4 and the full hash table; all contents are synthetic demonstration inputs.",
+    "tech_tags": [
+      "svg",
+      "web-crypto",
+      "data-integrity"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three wooden transient cues travel from the edited leaf to its parent and root; a quiet resolution marks verification.",
+      "audio_zh": "三次木质短音依次对应修改叶子、父结点与根；验证成功使用轻微结束音。",
+      "audio_en": "Three wooden transient cues travel from the edited leaf to its parent and root; a quiet resolution marks verification.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "所有显示哈希来自真实 SHA-256 结果，截短字符与完整哈希一致。",
+        "修改 beta 后，gamma/delta 支路保持不变，证明重算得到新根。"
+      ],
+      "checks_en": [
+        "Every displayed prefix comes from an actual SHA-256 value and matches the full hash.",
+        "Changing beta preserves the gamma/delta branch; the proof recomputes the new root."
+      ]
+    }
+  },
+  {
+    "id": "3d-brushed-metal-light-sweep",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "拉丝金属与一道移动光",
+    "title_en": "Brushed metal under one moving light",
+    "prompt_zh": "用Three.js制作16秒金属材质研究，1080p、60fps，全幅展示一块自建倒角铝板，不加装饰球。背景炭灰，主体银色，标记采用冰蓝。0–4秒固定镜头观察板面；4–10秒一盏矩形主光从左向右掠过；10–13秒摄影机抬高10度比较反射；13–16秒同时恢复起始光位和摄影机位姿，再保持终帧。拉丝方向由自写程序纹理或法线实现，注明视觉近似，不声称物理测量。粗糙度、色彩空间、曝光固定，禁用自动曝光；render(t)控制灯位和镜头，固定种子。声音采用随光位变化的轻微滤波噪声，末端静音。检查高光不截白、纹理方向连续和循环首尾像素接近，交付材质参数、关键帧、源码与MP4。",
+    "prompt_en": "Use Three.js for a 16-second metal-material study at 1080p, 60fps, showing one original beveled aluminum plate full-frame. Use charcoal surroundings, silver metal and ice-blue markers. At 0–4s observe the surface from a fixed camera; 4–10s sweep one rectangular key light from left to right; 10–13s raise the camera by ten degrees to compare reflections; 13–16s restore both the initial light and camera poses, then hold the final frame. Generate the brushing with original procedural texture or normals and label it a visual approximation rather than a physical measurement. Fix roughness, color space and exposure, with automatic exposure disabled. Drive light and camera positions from render(t) using a fixed seed. Add low-level filtered noise following the sweep and end quietly. Check unclipped highlights, continuous brushing direction and nearly matching first and last frames. Deliver material parameters, keyframes, source and MP4.",
+    "tech_tags": [
+      "threejs",
+      "material-study",
+      "lighting",
+      "procedural-texture"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Low-level band-limited noise follows the moving light position and fades out before the final hold.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "高光RGB值不因自动曝光或过亮而大片截白",
+        "拉丝方向跨倒角连续且首尾灯位与摄影机位姿完全一致",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "Highlights avoid broad clipping with fixed exposure",
+        "Brushing stays continuous across bevels and initial/final light and camera poses match",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "轻微带限噪声跟随移动灯光，并在最终停留前淡出。",
+      "audio_en": "Low-level band-limited noise follows the moving light position and fades out before the final hold."
+    }
+  },
+  {
+    "id": "interactive-pinball-gates",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "双门弹珠台：选择出口",
+    "title_en": "A two-gate marble table",
+    "prompt_zh": "构建可玩双门弹珠台与 18 秒固定操作 MP4，1920×1080 60fps，浅灰背景配青色球和红色闸门。使用 Matter.js 处理二维刚体，固定重力、碰撞体与 1/120 秒步进。玩家通过两个熟悉图标按钮开关门，支持重置、暂停、触屏和键盘。0–4 秒释放三颗球；4–8 秒打开左门；8–12 秒关闭左门打开右门；12–16 秒展示球进入两个编号收集槽；16–18 秒暂停并显示守恒计数。录制采用固定输入和种子，预计算物理轨迹供 render(t) 随机访问，不能把浏览器帧率当物理步长。声音只在有限速度碰撞时触发，限制同帧叠音。交付关键帧、源代码、可玩页面、MP4 与物理参数。验收球不穿门、总数不丢失、重播轨迹一致。",
+    "prompt_en": "Build a playable two-gate marble table and an 18-second fixed-action MP4 at 1920x1080 and 60fps. Use pale gray, cyan balls and red gates. Let Matter.js handle 2D rigid bodies with fixed gravity, collision shapes and a 1/120-second simulation step. Players open or close two gates through icon controls, with reset, pause, touch and keyboard support. During 0–4s release three balls; 4–8s open the left gate; 8–12s close left and open right; 12–16s show numbered collection bins; 16–18s pause with conserved counts. Precompute the recording's physics trajectory from fixed inputs and a seed, then use render(t) for random access. Browser frame rate must never determine physics step size. Trigger bounded collision sounds with limited simultaneous voices. Verify no gate tunnelling, conserved ball count and identical replay. Deliver keyframes, source, playable page, MP4 and physics parameters.",
+    "tech_tags": [
+      "canvas",
+      "matterjs",
+      "physics-game"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Rounded collision knocks scale with capped impact speed; gate changes use short metal clicks and each bin has a distinct soft tone.",
+      "audio_zh": "碰撞使用随限幅速度变化的圆润敲击，闸门切换使用短金属点击，各收集槽使用不同轻音。",
+      "audio_en": "Rounded collision knocks scale with capped impact speed; gate changes use short metal clicks and each bin has a distinct soft tone.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "三个球在全程与收集槽中数量守恒，固定步进下不穿过闭合门。",
+        "固定动作重播轨迹相同，暂停时画面与声音都停止。"
+      ],
+      "checks_en": [
+        "Three balls are conserved throughout the table and bins, with no closed-gate tunnelling.",
+        "Fixed-action replay is identical, and pause stops both visuals and sound."
+      ]
+    }
+  },
+  {
+    "id": "motion-survey-bar-to-ribbon",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "从条形图到一条数据带",
+    "title_en": "Turn bars into one data ribbon",
+    "prompt_zh": "制作20秒数据图形片，1920×1080、60fps，使用SVG路径插值。固定演示数据为25、40、20、15，总计100；配色用白底、蓝绿、玫红与深灰。0–5秒逐项长出四根柱并标注数值；5–11秒柱体绕底部锚点转向，首尾连接为100单位长的带；11–16秒标出每段占比及总量；16–20秒返回柱图并保持数据身份。画面写明演示数据，不宣称来自调查或真实业务。路径点数统一，标签沿独立轨迹移动，render(t)可任意跳转。声音由四个不同音高的短音和一次轻滑音组成。检查面积比例、数值总和、颜色身份及中点标签可读性，交付双语字幕、关键帧、源码和MP4。",
+    "prompt_en": "Make a 20-second data-motion film at 1920x1080 and 60fps using SVG path interpolation. Use the fixed demonstration values 25, 40, 20 and 15, totaling 100, with white, teal, rose and dark gray. At 0–5s grow four labeled bars; 5–11s rotate them around their base anchors and connect them into a 100-unit ribbon; 11–16s label each segment's share and the total; 16–20s return to the bars while preserving every category's identity. Explicitly label the values as demonstration data, with no survey or business claim. Match path-point counts and move labels on independent tracks. Make seeking deterministic through render(t). Compose four short pitched notes and one subtle glide for the transformation. Check proportional geometry, the sum, consistent color assignment and readable midpoint labels. Deliver bilingual captions, keyframes, source and an MP4.",
+    "tech_tags": [
+      "svg",
+      "data-motion",
+      "path-morph",
+      "chart"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Four pitched plucks correspond to the four categories; one quiet glide follows the bar-to-ribbon morph.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "四段长度占比精确等于25%、40%、20%、15%",
+        "返回柱图后标签、数值和颜色身份完全一致"
+      ],
+      "checks_en": [
+        "Ribbon segments measure exactly 25%, 40%, 20% and 15%",
+        "Labels, values and colors preserve their identity after returning to bars"
+      ],
+      "audio_zh": "四个不同音高的拨音对应四类数据；一次轻滑音跟随柱形转数据带。",
+      "audio_en": "Four pitched plucks correspond to the four categories; one quiet glide follows the bar-to-ribbon morph."
+    }
+  },
+  {
+    "id": "explainer-binary-search",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "二分查找：每次排除一半",
+    "title_en": "Binary search eliminates half at a time",
+    "prompt_zh": "用 16 秒 1920×1080、60fps 展示二分查找，浅灰底配珊瑚红和深绿。数组固定为 [2,5,8,12,16,23,38,45,56,72]，目标为 23，注明是演示数据。0–3 秒建立排序数组与目标；3–7 秒比较索引 4 的 16 并排除左半；7–10 秒比较索引 7 的 45 并收缩右边界；10–13 秒索引 5 命中；13–16 秒显示三次比较与已排除范围。Canvas 从纯二分步骤表 render(t)，明确索引从 0 开始，边界使用闭区间，不把已排除元素删掉造成索引漂移。音高随比较位置变化，命中时短和弦。检查指针不越界、步骤与算法相同、低宽度字幕不断行遮挡。交付关键帧、步骤表、源代码与 MP4。",
+    "prompt_en": "Produce a 16-second bilingual binary-search film at 1920x1080 and 60fps. Use a pale gray field, coral highlights and deep green results. The fixed sorted array is [2,5,8,12,16,23,38,45,56,72] and the target is 23; label these as demonstration data. During 0–3s establish the array and target; 3–7s compare index 4, value 16, and exclude the lower half; 7–10s compare index 7, value 45, and lower the right boundary; 10–13s find index 5; 13–16s hold three comparisons with excluded ranges. Render Canvas frames from a pure algorithm step table. Specify zero-based indexes and inclusive bounds. Keep excluded elements in place so indexes never drift. Let comparison pitch reflect position and play one brief chord on success. Check bounds, exact algorithm steps and mobile caption fit. Deliver keyframes, step data, source and MP4.",
+    "tech_tags": [
+      "canvas",
+      "algorithm",
+      "search"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three position-dependent sine plucks accompany comparisons, followed by a short major triad at the found index.",
+      "audio_zh": "三次比较使用按位置变化的正弦拨音；命中索引时播放短大三和弦。",
+      "audio_en": "Three position-dependent sine plucks accompany comparisons, followed by a short major triad at the found index.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "比较顺序为索引 4、7、5，最终返回 5。",
+        "每次收缩仍保留目标，排除块不改变索引与元素位置。"
+      ],
+      "checks_en": [
+        "Comparison indexes are 4, 7 and 5, returning 5.",
+        "Each narrowed interval retains the target and excluded blocks never shift element indexes."
+      ]
+    }
+  },
+  {
+    "id": "3d-translucent-resin-depth",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "树脂厚度里的光程",
+    "title_en": "Light through resin of different thicknesses",
+    "prompt_zh": "用Three.js制作20秒半透明材料观察，1920×1080、60fps。主体为三个不同厚度的自建树脂方柱，白灰背景、青蓝树脂与一条黑色背景标尺。0–5秒并排展示；5–11秒摄影机沿水平轨道移动，让标尺从柱后可见；11–16秒主光从侧后方转到侧前方；16–20秒标出厚度比例1:2:3并静止。使用MeshPhysicalMaterial的transmission与thickness，说明视觉近似，不能承诺真实折射或透光率。保持透明排序稳定，避免多层重叠穿帮，render(t)重算镜头和灯光。合成三次空心短音，无环境录音。检查透明物体排序、标尺连续性、不同厚度可辨识，交付参数表、关键帧、源码、MP4。",
+    "prompt_en": "Create a 20-second translucent-material observation in Three.js at 1920x1080, 60fps. Show three original resin prisms with different thicknesses against white-gray surroundings, using cyan resin and a black reference ruler behind them. During 0–5s present the row; 5–11s move the camera along a horizontal rail so the ruler can be inspected through each prism; 11–16s move the key light from rear-side to front-side; 16–20s label thickness ratios 1:2:3 and hold. Use MeshPhysicalMaterial transmission and thickness parameters, clearly describing a visual approximation rather than measured refraction or transmission. Keep transparency ordering stable and avoid stacked-surface artifacts. Recompute camera and light transforms through render(t). Compose three hollow short tones without external recordings. Check transparent ordering, continuity of the ruler and visible thickness differences. Deliver the parameter table, keyframes, source and MP4.",
+    "tech_tags": [
+      "threejs",
+      "transmission",
+      "material-study",
+      "camera-rail"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three short hollow synthesized tones introduce the prisms; the lighting comparison remains quiet.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "摄影机移动时半透明柱没有排序跳变",
+        "三根柱厚度比例和背景标尺始终可辨识",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "Translucent prisms show no sorting jumps during camera movement",
+        "All thickness ratios and the rear reference ruler remain discernible",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "三声空心合成短音介绍三个树脂柱；光位比较阶段保持安静。",
+      "audio_en": "Three short hollow synthesized tones introduce the prisms; the lighting comparison remains quiet."
+    }
+  },
+  {
+    "id": "interactive-pathfinding-maze",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "迷宫编辑器：画墙再找路",
+    "title_en": "Draw walls, then find a path",
+    "prompt_zh": "构建可玩的迷宫编辑器，配 16 秒固定操作 1080p 60fps 录制，白底配翠绿路线和洋红起终点。使用 PathFinding.js 的 A*，四方向移动、每步成本 1、曼哈顿启发式，不允许斜穿。玩家可画墙、移动起终点、运行、清空和重置，网格稳定为 12×8，触屏绘制不会滚动页面。0–4 秒展示固定可通地图；4–7 秒画三格墙；7–11 秒运行并显示访问集合；11–14 秒绘制最短路径；14–16 秒加入封口墙并显示无解。固定操作脚本预先核验两种结果，由 render(t) 冻结显示，不能伪造访问顺序。声音区分画墙与找到路径，无解使用中性提示。交付关键帧、源码、可玩页、MP4、网格与路径列表；验收最短步数与 BFS 一致。",
+    "prompt_en": "Build a playable maze editor with a 16-second fixed-action 1080p recording at 60fps. Use white, emerald routes and magenta endpoints. Use PathFinding.js A* with four-direction movement, unit costs and Manhattan heuristic; disallow diagonal shortcuts. Players can paint walls, move endpoints, run, clear and reset a stable 12x8 grid. Touch painting must not scroll the page. During 0–4s show a fixed solvable map; 4–7s paint three wall cells; 7–11s run the search and reveal visited cells; 11–14s draw the shortest route; 14–16s add a closing wall and display no path. Verify both scripted outcomes before freezing the search trace for render(t); never invent visitation order. Use distinct wall taps and a neutral result cue. Check shortest step count against BFS. Deliver keyframes, source, playable page, MP4, grid data and path lists for both states.",
+    "tech_tags": [
+      "canvas",
+      "pathfindingjs",
+      "puzzle"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Wall painting uses restrained chalk taps, path completion uses one rising three-note cue, and no-path uses a quiet neutral double tap.",
+      "audio_zh": "画墙使用轻粉笔点击，路径完成使用三音上行，无路径使用中性轻双击。",
+      "audio_en": "Wall painting uses restrained chalk taps, path completion uses one rising three-note cue, and no-path uses a quiet neutral double tap.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "四邻接 A* 的路径长度与 BFS 最短长度一致，路径不穿墙。",
+        "封口场景确实无解，重置恢复起点、终点和原网格。"
+      ],
+      "checks_en": [
+        "Four-neighbor A* length matches BFS and no path cell crosses a wall.",
+        "The closed scene is truly unsolvable; reset restores endpoints and the original grid."
+      ]
+    }
+  },
+  {
+    "id": "motion-product-before-after-wipe",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "同一个任务的前后对照",
+    "title_en": "A before-and-after view of one task",
+    "prompt_zh": "制作16秒虚构工具演示，1080p、60fps，用SVG表现同一份三项任务清单。色彩为浅灰、靛青、墨黑，避免营销大标题。0–4秒展示任务被分散在三处；4–9秒一条垂直擦除边界从左至右移动，把相同内容整理进统一表格；9–13秒逐项确认映射；13–16秒保留完整对照和小字“概念演示”。擦除边界两侧的同一任务必须保持名称与编号，不虚构节省时长或效率提升。采用固定输入、分段缓动与render(t)，鼠标动作仅在实际执行时出现。声音为三次柔和确认音，不含语音。检查内容守恒、边界处闪烁和表格小屏可读性，交付中英版本、关键帧、源码和MP4。",
+    "prompt_en": "Create a 16-second fictional tool demonstration at 1080p, 60fps, with SVG showing the same three-task list in two states. Use light gray, indigo and ink black, with compact operational typography. During 0–4s show the tasks scattered across three locations; 4–9s move a vertical wipe from left to right, organizing the same content into a unified table; 9–13s confirm each mapping; 13–16s hold the comparison and a small Concept demonstration label. Every task must retain its name and identifier across the boundary. Do not invent time savings or productivity claims. Use fixed inputs, piecewise easing and render(t); show cursor actions only when they cause a visible operation. Add three gentle confirmation tones without narration. Check content conservation, flicker at the wipe boundary and table readability on a phone. Deliver Chinese and English versions, keyframes, source and MP4.",
+    "tech_tags": [
+      "svg",
+      "interface",
+      "comparison",
+      "wipe-transition"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three quiet confirmation tones occur only when each task mapping completes.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "擦除前后任务名称、编号和数量保持不变",
+        "擦除边界通过文字时无半帧闪烁或双重字形"
+      ],
+      "checks_en": [
+        "Task names, identifiers and count remain unchanged across the wipe",
+        "The wipe produces no half-frame flicker or duplicate glyphs"
+      ],
+      "audio_zh": "每个任务映射完成时播放一声轻柔确认音，共三声。",
+      "audio_en": "Three quiet confirmation tones occur only when each task mapping completes."
+    }
+  },
+  {
+    "id": "explainer-stable-merge",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "稳定归并：相同分数保留顺序",
+    "title_en": "Stable merge preserves equal-value order",
+    "prompt_zh": "做一条 18 秒双语归并排序短片，1080p 60fps，象牙白配天蓝与酒红。输入六个带身份的演示卡片 4A、2B、4C、1D、3E、2F，数字是排序键，字母是原顺序身份。0–4 秒分成子列；4–8 秒对子列排序；8–14 秒归并，遇到相等键优先左边；14–18 秒显示 1D、2B、2F、3E、4A、4C，强调同值相对顺序。使用可核验的稳定归并步骤生成 SVG 位置，不靠动画顺序决定结果。字母始终可读，移动卡片与目标槽位不重叠。声音以左右交替轻拨音表达来源，相等时同音。检查所有身份只出现一次、排序递增且 B 在 F 前、A 在 C 前。交付关键帧、源代码、MP4 和步骤日志。",
+    "prompt_en": "Create an 18-second bilingual stable-merge animation at 1080p and 60fps. Use ivory, sky blue and burgundy. Six synthetic cards enter as 4A, 2B, 4C, 1D, 3E and 2F; numbers are keys and letters preserve identity. During 0–4s split the sequence; 4–8s sort the sublists; 8–14s merge them, choosing the left item when keys tie; 14–18s hold 1D, 2B, 2F, 3E, 4A, 4C and explain equal-key order. Generate fixed SVG positions from a verifiable stable merge trace rather than letting animation decide the result. Keep identities readable and prevent moving cards from obscuring their target slots. Alternate soft left/right plucks to identify origin; ties share a pitch. Verify every identity appears once, values increase, B precedes F and A precedes C. Deliver keyframes, source, MP4 and an algorithm trace.",
+    "tech_tags": [
+      "svg",
+      "algorithm",
+      "sorting"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Soft plucks alternate in stereo by sublist; equal keys use the same pitch and the final ordered row gets one gentle chord.",
+      "audio_zh": "左右子列使用交替声像的轻拨音，相等键保持同音高，最终有序行使用轻和弦。",
+      "audio_en": "Soft plucks alternate in stereo by sublist; equal keys use the same pitch and the final ordered row gets one gentle chord.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "结果严格为 1D、2B、2F、3E、4A、4C。",
+        "每张卡片数量守恒，所有相等键保留输入时的相对顺序。"
+      ],
+      "checks_en": [
+        "The result is exactly 1D, 2B, 2F, 3E, 4A, 4C.",
+        "Card count is conserved and equal keys retain their original relative order."
+      ]
+    }
+  },
+  {
+    "id": "3d-plywood-cross-section",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "胶合板的交错层向",
+    "title_en": "Alternating directions in plywood layers",
+    "prompt_zh": "用Three.js制作21秒胶合板结构示意，1080p、60fps，全幅展示五层矩形板，背景雾白，层面使用浅木灰与橄榄绿标记。0–5秒完整板沿长边缓慢转动；5–12秒层间等距展开，纹理方向交替0度与90度；12–17秒侧面剖切展示层厚一致；17–21秒复合并显示“结构示意”。纹理为项目程序生成，不使用外部照片，不能宣称强度、材种或工程合规。灯光为柔和主光与弱填光，摄影机不穿入层间。render(t)直接决定各层位移，配五次轻木敲音。检查纹理方向、层厚一致、复合时无z-fighting和标注可读性，交付关键帧、源码、材料参数和MP4。",
+    "prompt_en": "Use Three.js to make a 21-second plywood-structure schematic at 1080p, 60fps, showing five rectangular layers full-frame. Use a mist-white background, pale wood-gray surfaces and olive direction marks. At 0–5s slowly rotate the assembled board around its long edge; 5–12s separate layers by equal distances with grain alternating between zero and ninety degrees; 12–17s show a side section with equal layer thickness; 17–21s reassemble and hold a Structural schematic label. Generate grain procedurally in the project, without external photographs. Do not claim material strength, wood species or engineering compliance. Use a soft key and weak fill light, keeping the camera outside layer gaps. Derive all layer offsets directly from render(t). Add five gentle wooden taps. Check grain direction, equal thickness, no z-fighting on reassembly and readable labels. Deliver keyframes, source, material parameters and MP4.",
+    "tech_tags": [
+      "threejs",
+      "section-cut",
+      "layers",
+      "procedural-texture"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Five soft synthesized wood taps follow the layer separation sequence.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "相邻板层纹理方向准确交替0度与90度",
+        "复合状态没有层面z-fighting且五层厚度相等",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "Adjacent grain directions alternate exactly zero and ninety degrees",
+        "The assembled board has no z-fighting and all five layers have equal thickness",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "五声柔和的合成木敲音跟随各层分离的顺序。",
+      "audio_en": "Five soft synthesized wood taps follow the layer separation sequence."
+    }
+  },
+  {
+    "id": "interactive-sudoku-notes",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "数独候选：先记，再确认",
+    "title_en": "Sudoku candidates before commitment",
+    "prompt_zh": "构建可玩的双语 4×4 数独与 14 秒固定操作 MP4，1080p 60fps，白底配莓红选中格与青绿确认。规则为数字 1–4，每行、列与 2×2 宫唯一；固定题盘 [1,0,0,4,0,4,1,0,0,1,4,0,4,0,0,1]，先用回溯枚举核验至少一个解并保留确定解。玩家支持候选模式、数字输入、撤销、重置、冲突提示，固定数字不可改。0–4 秒选择空格；4–7 秒记候选；7–10 秒输入冲突数字显示同列问题；10–14 秒撤销后填合法数字。录制由固定动作表 render(t)，不把候选当实填，当前题盘有两个解，不声称唯一解；修改题盘后须重新完整枚举。音频候选轻点击、冲突中性双击。交付关键帧、源码、可玩页面、MP4 与求解日志。",
+    "prompt_en": "Build a playable bilingual 4x4 Sudoku with a 14-second fixed-action MP4 at 1080p and 60fps. Use white, berry selection and teal confirmation. Digits 1–4 must be unique in every row, column and 2x2 box. Fix the puzzle to [1,0,0,4,0,4,1,0,0,1,4,0,4,0,0,1]. Enumerate solutions with a small verifiable backtracking solver and retain a known solution. Offer candidate mode, number entry, undo, reset and conflict feedback; givens stay locked. During 0–4s select an empty cell; 4–7s add candidates; 7–10s enter a conflicting value and reveal its column conflict; 10–14s undo and enter a valid value. Reconstruct render(t) from fixed actions, keeping notes distinct from filled digits. This puzzle has two solutions, so do not claim uniqueness; enumerate again after any puzzle edit. Use quiet note clicks and neutral conflict taps. Deliver keyframes, source, playable page, MP4 and solver log.",
+    "tech_tags": [
+      "dom",
+      "constraint-solver",
+      "puzzle"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Candidate notes use tiny clicks, conflict uses a non-alarming double tap, and a valid committed digit uses one rounded note.",
+      "audio_zh": "候选标记使用极轻点击，冲突使用无警报感双击，合法确认数字使用圆润单音。",
+      "audio_en": "Candidate notes use tiny clicks, conflict uses a non-alarming double tap, and a valid committed digit uses one rounded note.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "给定数字锁定，冲突检测覆盖行、列、2×2 宫。",
+        "求解日志证明存在解，候选输入与撤销不改变给定题盘。"
+      ],
+      "checks_en": [
+        "Givens stay locked and conflicts cover rows, columns and 2x2 boxes.",
+        "The solver log proves a solution exists; note entry and undo preserve givens."
+      ]
+    }
+  },
+  {
+    "id": "motion-editorial-column-relay",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "三列排版接力",
+    "title_en": "An editorial relay across three columns",
+    "prompt_zh": "制作18秒编辑排版短片，1920×1080、60fps，用Canvas测量与SVG文本。输入三句原创短文，配色为白、深绿和珊瑚红。0–4秒第一句在左列逐行出现；4–9秒末行下划线延伸为中列第一行的基线；9–14秒中列句尾标点移动成右列编号；14–18秒三列一起对齐，保留静止读屏时间。句子完整呈现至少两秒，不使用高速滚动或伪造引用；中英文各自重新断行。全部元素由render(t)定位，连接动作应维持物体身份。声音按三次接力加入短拨弦，正文读屏阶段降低音量。检查最后一行不被裁切、连线不穿文字和手机版分列布局，交付关键帧、双语源码与MP4。",
+    "prompt_en": "Produce an 18-second editorial film at 1920x1080, 60fps, using Canvas text measurement and SVG text. Supply three original short statements and use white, deep green and coral. At 0–4s reveal the first statement line by line in the left column; 4–9s extend its final underline into the middle column's opening baseline; 9–14s turn the middle sentence's punctuation into the right column's number; 14–18s align all three columns and hold for reading. Keep every complete sentence visible for at least two seconds. Avoid fast scrolling and fabricated quotations; reflow Chinese and English independently. Position all elements through render(t) and preserve the identity of each connecting mark. Add three brief plucks at the handoffs, lowering audio during reading holds. Check final-line clipping, connectors crossing text and the mobile column arrangement. Deliver keyframes, bilingual source and MP4.",
+    "tech_tags": [
+      "svg",
+      "editorial",
+      "typography",
+      "match-transition"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three short string-like plucks mark the column handoffs; gain drops during sentence holds.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "每句完整呈现至少2秒且末行不裁切",
+        "接力下划线与编号轨迹不穿过可读文字"
+      ],
+      "checks_en": [
+        "Each complete statement holds for at least two seconds with no final-line clipping",
+        "Underline and number handoff paths never cross readable text"
+      ],
+      "audio_zh": "三次短拨弦标记列间接力；句子停留阶段降低音量。",
+      "audio_en": "Three short string-like plucks mark the column handoffs; gain drops during sentence holds."
+    }
+  },
+  {
+    "id": "explainer-dijkstra-route",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "最短路不等于最少边",
+    "title_en": "The shortest path need not use the fewest edges",
+    "prompt_zh": "制作 20 秒 1080p 60fps 双语 Dijkstra 动画，白底配青色路径与朱红候选。固定无向图 A-B=2、A-C=6、B-C=1、B-D=5、C-D=2，明确所有权重非负、数据为演示。0–4 秒展示图；4–9 秒从 A 扩张并展示暂定距离；9–14 秒通过 B 改善 C，再通过 C 改善 D；14–17 秒落定 A-B-C-D，总成本 5；17–20 秒对比直接更少边的 A-B-D 成本 7。用纯实现生成可验收距离轨迹，SVG 采用固定坐标，不把仍暂定的结点当已完成。短音只随距离改善发生，定稿路径声音连续。检查最终距离 [0,2,3,5] 与每条高亮边相符，标签不遮边。交付分镜、代码、MP4 与轨迹 JSON。",
+    "prompt_en": "Make a 20-second bilingual Dijkstra film at 1080p and 60fps on white with cyan paths and vermilion candidates. Use the fixed undirected graph A-B=2, A-C=6, B-C=1, B-D=5 and C-D=2. Label weights as nonnegative demonstration data. During 0–4s establish the graph; 4–9s expand from A and show tentative distances; 9–14s improve C through B and D through C; 14–17s settle A-B-C-D with cost 5; 17–20s compare A-B-D, which has fewer edges but cost 7. Generate a verifiable distance trace with a small pure implementation and render fixed SVG coordinates. Distinguish tentative nodes from settled ones. Only distance improvements trigger short notes; the final route gets a connected phrase. Check final distances [0,2,3,5], path costs and unobscured edge labels. Deliver storyboard keyframes, source, MP4 and trace JSON.",
+    "tech_tags": [
+      "svg",
+      "algorithm",
+      "graph"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A short bell marks each successful distance relaxation; four linked notes trace the settled route without continuous background music.",
+      "audio_zh": "每次距离成功改善使用短铃音；四个连续音符描绘最终路径，不持续铺背景音乐。",
+      "audio_en": "A short bell marks each successful distance relaxation; four linked notes trace the settled route without continuous background music.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "A 到 D 最短距离为 5，路径为 A-B-C-D。",
+        "暂定与落定状态区分清楚，每次距离更新有对应候选边。"
+      ],
+      "checks_en": [
+        "The shortest A-to-D distance is 5 along A-B-C-D.",
+        "Tentative and settled states are distinct, and each relaxation has a matching candidate edge."
+      ]
+    }
+  },
+  {
+    "id": "3d-bayonet-lock-assembly",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "四分之一圈的卡口装配",
+    "title_en": "A quarter-turn bayonet assembly",
+    "prompt_zh": "用Three.js制作18秒原创卡口结构片，1920×1080、60fps。主体是自建套筒、两个销钉和L形槽，浅灰背景、石墨金属与红色路径标记。0–4秒分离呈现零件；4–9秒套筒轴向插入，销钉进入槽口；9–13秒精确旋转90度到止挡；13–18秒用局部剖切显示锁定位置并停留。说明是几何演示，不保证载荷或安全性能；不借用现成产品结构。使用固定尺寸、刚体变换与render(t)，轴线和接触间隙可视化，禁止穿插补帧。声音为插入短滑声和锁定单击。检查销钉路径完全位于槽内、转角准确90度、剖切标注无遮挡，交付关键帧、源码、参数表和MP4。",
+    "prompt_en": "Create an 18-second original bayonet-assembly film in Three.js at 1920x1080, 60fps. Model a sleeve, two pins and L-shaped grooves with pale-gray surroundings, graphite metal and red path markers. During 0–4s show the separated parts; 4–9s insert the sleeve axially so pins enter the groove mouths; 9–13s turn it exactly ninety degrees to the stop; 13–18s use a local section to reveal the locked position and hold. Identify this as a geometric demonstration, without load or safety claims, and avoid copying an existing product mechanism. Use fixed dimensions, rigid transforms and render(t), visualizing the axis and clearance. Do not hide intersections with transition blur. Compose a short insertion scrape and one locking click. Verify pin paths stay inside grooves, rotation is exactly ninety degrees and section labels remain unobscured. Deliver keyframes, source, a parameter table and MP4.",
+    "tech_tags": [
+      "threejs",
+      "mechanism",
+      "assembly",
+      "section-cut"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A short filtered sliding sound marks insertion; one dry click occurs at the ninety-degree stop.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "两个销钉在全部插入和转动时刻均处于槽内",
+        "锁定转角精确90度且所有零件无几何穿插",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "Both pins remain within the grooves throughout insertion and rotation",
+        "The locking turn is exactly ninety degrees with no geometric intersections",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "一声滤波滑动音提示插入；90度止挡处播放一次干燥点击。",
+      "audio_en": "A short filtered sliding sound marks insertion; one dry click occurs at the ninety-degree stop."
+    }
+  },
+  {
+    "id": "interactive-hash-table-probe",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "哈希碰撞实验台",
+    "title_en": "A hash-collision workbench",
+    "prompt_zh": "构建可操作哈希表实验台与 18 秒固定操作 MP4，1080p 60fps，白底配蓝色占用格和红色探测。固定容量 7、整数键哈希 k mod 7、线性探测、使用 tombstone 删除标记。玩家可插入、查找、删除与重置，限制键为非负整数，满表返回明确状态。0–4 秒插入 8；4–8 秒插入 15 与 22 展示连续碰撞；8–12 秒删除 15 留墓碑；12–15 秒查找 22 必须跨墓碑；15–18 秒再次插入 29 复用墓碑。DOM 表格与步骤表 render(t)，每次探测保留索引，不使用真实密码哈希叙述。声音按探测次数轻点击，找到时短音。验收查找不会在墓碑停止、重复键不重复存、容量不越界。交付关键帧、代码、可玩页、MP4 和表状态日志。",
+    "prompt_en": "Build an interactive hash-table workbench and an 18-second fixed-action MP4 at 1080p and 60fps. Use white, blue occupied slots and red probe indicators. Fix capacity at seven, hash nonnegative integers with k mod 7, use linear probing and tombstones for deletion. Provide insert, search, delete and reset with input validation and a clear full-table state. During 0–4s insert 8; 4–8s insert 15 and 22 to show collisions; 8–12s delete 15 but retain a tombstone; 12–15s search for 22 across that tombstone; 15–18s insert 29 into the reusable slot. Drive the DOM table and recorded trace through render(t), preserving every probe index. Do not imply this toy hash is cryptographic. Quiet clicks follow probes and a short note marks success. Verify tombstone traversal, duplicate-key handling and bounds. Deliver keyframes, source, playable page, MP4 and state logs.",
+    "tech_tags": [
+      "dom",
+      "data-structure",
+      "linear-probing"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Each probe produces one dry quiet tick, deletion a soft descending pair, and a successful lookup one short bell.",
+      "audio_zh": "每次探测对应轻干点击，删除使用轻下行双音，查找成功使用短铃音。",
+      "audio_en": "Each probe produces one dry quiet tick, deletion a soft descending pair, and a successful lookup one short bell.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "删除 15 后仍能找到 22；插入 29 复用墓碑而不覆盖 22。",
+        "满表探测最多 7 次，重复插入键不改变元素数。"
+      ],
+      "checks_en": [
+        "22 remains searchable after deleting 15; 29 reuses the tombstone without overwriting 22.",
+        "A full-table probe stops within seven slots and duplicate insertion preserves element count."
+      ]
+    }
+  },
+  {
+    "id": "motion-metric-digits-to-chart",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "数字展开成它的图表",
+    "title_en": "A number unfolds into its chart",
+    "prompt_zh": "制作15秒数据叙事，1080p、60fps，Canvas渲染数字与折线。使用固定演示序列12、18、15、24、21，配色为淡蓝灰、黑与电蓝。0–3秒显示最终值21及“示例”；3–7秒数字移至右上角，五个值沿时间轴展开；7–12秒绘制折线并高亮最后一个点；12–15秒显示首尾差值+9和计算式21−12。横轴只用步骤1到5，不伪造日期或商业指标。数字滚动结束后才显示结果，曲线连接不暗示额外采样。通过render(t)重算插值与标签；合成五个轻短音对应数据点。检查轴尺度、差值计算、动画中标签与点一致，交付中英标题版本、关键帧、源码、MP4。",
+    "prompt_en": "Build a 15-second data story at 1080p and 60fps, drawing numerals and a line chart with Canvas. Use the fixed demonstration sequence 12, 18, 15, 24 and 21, with pale blue-gray, black and electric blue. During 0–3s show the final value 21 and an Example label; 3–7s move it to the upper right as five values unfold along a step axis; 7–12s draw the line and highlight its last point; 12–15s show the endpoint difference +9 alongside 21−12. Label the axis Step 1 through Step 5 rather than inventing dates or business metrics. Display the result after numeral motion finishes, and avoid implying extra samples between points. Recompute interpolation and labels from render(t). Add five quiet tones corresponding to the points. Verify axis scale, arithmetic and point-label agreement throughout motion. Deliver bilingual titles, keyframes, source and MP4.",
+    "tech_tags": [
+      "canvas",
+      "data-motion",
+      "line-chart",
+      "numerals"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Five soft sine plucks map monotonically to the five displayed values, with a final low confirmation note.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "折线坐标和所有显示数值使用同一尺度",
+        "首尾差值始终按21减12计算为9"
+      ],
+      "checks_en": [
+        "Line coordinates and displayed values share one consistent scale",
+        "The endpoint difference is computed as 21 minus 12, exactly 9"
+      ],
+      "audio_zh": "五个轻正弦拨音随数值高低变化，最终加入一声低确认音。",
+      "audio_en": "Five soft sine plucks map monotonically to the five displayed values, with a final low confirmation note."
+    }
+  },
+  {
+    "id": "explainer-tcp-window",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "滑动窗口：确认之后再向前",
+    "title_en": "A sliding window advances after acknowledgement",
+    "prompt_zh": "做 18 秒 1080p 60fps 双语滑动窗口示意，浅灰配靛青和橙红。使用编号 1–8 的数据段、固定窗口 3 段、无丢包和不变延迟，注明这是 TCP 流程的简化演示而非完整协议仿真。0–4 秒发送 1、2、3；4–8 秒收到累计确认 ACK4，表示下一期待段为 4；8–12 秒窗口前进并发送 4、5、6；12–15 秒 ACK7 到达；15–18 秒发送 7、8 并停留于已确认/在途图例。Canvas 按固定事件表 render(t)，发送、在途、确认数量守恒，不把 ACK4 写成确认第 4 段。声音用发送拨音与较低确认音，不强调网络快慢。检查在途从不超过 3、确认方向正确。交付关键帧、代码、事件表、MP4。",
+    "prompt_en": "Produce an 18-second bilingual sliding-window schematic at 1080p and 60fps. Use pale gray, indigo and orange-red. Show segments 1–8 with a fixed three-segment window, no loss and constant latency. State that this simplifies TCP workflow rather than simulating the complete protocol. During 0–4s send 1, 2 and 3; 4–8s receive cumulative ACK4, meaning the next expected segment is 4; 8–12s advance the window and send 4, 5 and 6; 12–15s receive ACK7; 15–18s send 7 and 8, then hold the acknowledged/in-flight legend. Reconstruct Canvas frames from a fixed event table and conserve sent, in-flight and acknowledged counts. Never label ACK4 as acknowledging segment 4. Use light send plucks and lower acknowledgement notes. Verify that in-flight segments never exceed three and acknowledgement arrows travel toward the sender. Deliver keyframes, source, event data and MP4.",
+    "tech_tags": [
+      "canvas",
+      "networking",
+      "protocol"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Each segment uses a brief high pluck; cumulative acknowledgements use a quieter low tone aligned with their arrival.",
+      "audio_zh": "每个发送段使用短高音拨响；累计确认到达时使用更轻的低音。",
+      "audio_en": "Each segment uses a brief high pluck; cumulative acknowledgements use a quieter low tone aligned with their arrival.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "ACK4 表示 1–3 已收到；ACK7 表示 1–6 已收到。",
+        "任意时刻在途段不超过窗口 3，重播不新增发送事件。"
+      ],
+      "checks_en": [
+        "ACK4 means segments 1–3 were received; ACK7 means 1–6 were received.",
+        "In-flight count never exceeds three and replay never adds send events."
+      ]
+    }
+  },
+  {
+    "id": "3d-aperture-iris-mechanism",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "六片叶片控制一个开口",
+    "title_en": "Six blades control one opening",
+    "prompt_zh": "用Three.js制作20秒光圈叶片示意，1080p、60fps。自建六片平面叶片与外圈，背景白，叶片深灰，开口轮廓采用湖蓝。0–5秒正视展示大开口；5–12秒六片同步旋转使开口收小；12–16秒摄影机倾斜15度展示层次；16–20秒回到正视并恢复初始开口。固定叶片轴心与高度次序，说明简化几何，不宣称真实镜头光学效果。使用正交摄影机、柔和阴影和render(t)，叶片边界必须精确，不用模糊遮穿插。声音为轻微连续机械纹理，关闭时一声短音。检查中心对称、叶片相交关系稳定、最大最小开口非负，交付双语关键帧、源码、尺寸表和MP4。",
+    "prompt_en": "Use Three.js for a 20-second iris-blade schematic at 1080p, 60fps. Build six original planar blades and an outer ring, with white surroundings, dark-gray blades and a lake-blue opening outline. At 0–5s show the large opening head-on; 5–12s rotate all blades in synchrony to reduce it; 12–16s tilt the camera fifteen degrees to reveal the layer order; 16–20s return head-on and restore the initial aperture. Fix blade pivots and height order, explaining the simplified geometry without claims about actual lens optics. Use an orthographic camera, soft shadows and render(t). Keep blade boundaries precise rather than concealing intersections with blur. Add a subtle continuous mechanical texture and one short cue at minimum opening. Check central symmetry, stable overlap order and valid nonnegative aperture dimensions. Deliver bilingual keyframes, source, a dimension table and MP4.",
+    "tech_tags": [
+      "threejs",
+      "mechanism",
+      "orthographic",
+      "geometry"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A subtle synthesized gear texture follows blade motion; a short muted note marks the minimum opening.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "六片叶片的轴心、旋转量和层叠次序保持对称稳定",
+        "最小开口没有负面积或叶片突然交换前后关系",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "Blade pivots, rotations and layer order remain symmetric and stable",
+        "The minimum opening has valid area with no sudden overlap-order changes",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "轻微合成齿轮纹理跟随叶片运动；最小开口时一声柔和短音。",
+      "audio_en": "A subtle synthesized gear texture follows blade motion; a short muted note marks the minimum opening."
+    }
+  },
+  {
+    "id": "interactive-cluster-lab",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "聚类实验台：移动中心再迭代",
+    "title_en": "Move centroids and iterate clustering",
+    "prompt_zh": "构建可操作二维 k-means 实验台与 18 秒固定操作 MP4，1080p 60fps，白底配青绿、紫红与金色三簇。数据固定为三组明确坐标的 18 个合成点，k=3，初始中心固定；采用简单可核验 Lloyd 步骤，空簇保持原中心并提示。玩家支持拖中心、单步、重置，图区用键盘可选择中心。0–4 秒展示点与中心；4–8 秒拖一中心；8–12 秒一步分配；12–16 秒更新中心；16–18 秒显示平方距离和，注明分组不代表真实语义。Canvas 对固定动作生成步骤，render(t) 可回看任意时刻。音频在分配与更新使用不同轻音。验收均值准确、每点仅属一簇、平方距离和在完整 Lloyd 步骤后不增。交付关键帧、源码、可玩页、MP4、数据与步骤表。",
+    "prompt_en": "Build a playable 2D k-means laboratory and an 18-second fixed-action MP4 at 1080p and 60fps. Use white with teal, magenta and gold clusters. Supply eighteen synthetic points in three explicit coordinate groups, fix k=3 and fix initial centroids. Implement verifiable Lloyd steps; retain the previous centroid for an empty cluster and report it. Players can drag centroids, single-step and reset; centroids are also keyboard selectable. During 0–4s show points and centers; 4–8s drag one center; 8–12s assign points; 12–16s update means; 16–18s display within-cluster squared-distance sum and state that clusters do not establish real semantic categories. Generate recording steps from fixed actions and let Canvas render(t) seek freely. Use different quiet assignment and update cues. Verify centroid means, unique assignments and nonincreasing objective after complete Lloyd steps. Deliver keyframes, source, playable page, MP4, data and trace.",
+    "tech_tags": [
+      "canvas",
+      "algorithm",
+      "clustering"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Assignment uses three low-volume cluster tones; centroid updates use a short gliding tone, with no sound for stationary centers.",
+      "audio_zh": "分配使用三个低音量簇提示音，中心更新使用短滑音，不移动的中心无声音。",
+      "audio_en": "Assignment uses three low-volume cluster tones; centroid updates use a short gliding tone, with no sound for stationary centers.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "中心等于所属点均值，距离相同按固定索引决胜。",
+        "完整 Lloyd 迭代目标值不增，空簇规则明确且每点恰属一簇。"
+      ],
+      "checks_en": [
+        "Centers equal assigned-point means, with fixed-index tie breaking.",
+        "Complete Lloyd iterations do not increase the objective; empty-cluster policy is explicit and each point has one owner."
+      ]
+    }
+  },
+  {
+    "id": "motion-color-channel-registration",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "三色套印找到准确位置",
+    "title_en": "Three color plates find registration",
+    "prompt_zh": "制作12秒印刷几何研究，1920×1080、24fps，Canvas使用明确混色模式。主体是自写的四字标题与一个矩形标记，配色为白纸、青、品红、黄和黑。0–3秒展示三个错位色版与套准十字；3–8秒三版沿不同路径移动至同一坐标；8–10秒切换为正确合成结果；10–12秒去掉辅助标记并静止。不要把屏幕混色说成真实印刷色彩测量，片中标注数字示意。颜色通道位置由render(t)直接计算，禁止抖动和随机故障效果。三次干燥印压声与对齐事件同步。检查套准十字误差为零、黑色层对齐以及RGB导出色差，交付中英版本、关键帧、源码和MP4。",
+    "prompt_en": "Create a 12-second print-geometry study at 1920x1080, 24fps, with Canvas and an explicit compositing mode. Use an original four-word title and one rectangular mark, in paper white, cyan, magenta, yellow and black. At 0–3s show three offset plates and registration crosses; 3–8s move each plate along a different path into the same coordinates; 8–10s reveal the correctly composited result; 10–12s remove the guides and hold. Label it a digital schematic rather than a measurement of physical printing colors. Compute plate positions directly from render(t), avoiding jitter or randomized glitch effects. Synchronize three dry press-like sounds to registration events. Check zero offset at the final crosses, black-layer alignment and the exported RGB colors. Deliver Chinese and English text versions, keyframes, source and MP4, including a small note describing the compositing method.",
+    "tech_tags": [
+      "canvas",
+      "compositing",
+      "print-motion",
+      "registration"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three dry synthesized press clicks coincide with each color plate reaching registration.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "最终三色套准十字中心坐标误差为零",
+        "导出RGB画面与预览采用相同混色方法"
+      ],
+      "checks_en": [
+        "All three registration-cross centers have zero final offset",
+        "RGB export and preview use the same compositing method"
+      ],
+      "audio_zh": "三次干燥的合成印压点击分别对齐三个色版完成套准的时刻。",
+      "audio_en": "Three dry synthesized press clicks coincide with each color plate reaching registration."
+    }
+  },
+  {
+    "id": "explainer-consistent-ring",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "一致性哈希：只移动一段键",
+    "title_en": "Consistent hashing moves one interval of keys",
+    "prompt_zh": "制作 20 秒双语一致性哈希短片，1920×1080 60fps，白底配玫红、青绿与煤黑。圆环范围 0–99，服务结点 A=10、B=40、C=70，键位置固定为 5、18、32、55、82；按顺时针第一个结点分配，标注演示哈希、未用虚拟结点。0–5 秒分配五键；5–10 秒在 30 加入 D；10–15 秒仅将位置 18 的键从 B 移到 D；15–20 秒保持对比并指出均衡程度受结点分布影响。用 SVG 固定角度 render(t)，跨零点按环绕计算，键移动保留编号与旧归属。音色只在真实重分配时改变。检查加入后 32 仍归 B、82 仍归 A，不宣称此例证明完美负载均衡。交付关键帧、源代码、映射表与 MP4。",
+    "prompt_en": "Create a 20-second bilingual consistent-hashing film at 1920x1080 and 60fps. Use white, fuchsia, teal and coal black. The ring spans 0–99 with server nodes A=10, B=40 and C=70; keys are fixed at 5, 18, 32, 55 and 82. Assign each key to the first clockwise server and label these as illustrative hashes without virtual nodes. During 0–5s place the five keys; 5–10s add D at 30; 10–15s move only key 18 from B to D; 15–20s hold the comparison and state that balance depends on node distribution. Render a fixed SVG layout from time, correctly wrapping across zero. Preserve key identities and old ownership during movement. Change timbre only for actual reassignment. Verify that key 32 remains with B and 82 with A. Do not claim perfect balance. Deliver keyframes, source, mapping data and MP4.",
+    "tech_tags": [
+      "svg",
+      "distributed-systems",
+      "hashing"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Five soft placements use a common pluck; the single reassigned key changes to a brighter timbre when D becomes its owner.",
+      "audio_zh": "五个键落位使用统一轻拨音；唯一迁移的键归属 D 时改用更明亮的音色。",
+      "audio_en": "Five soft placements use a common pluck; the single reassigned key changes to a brighter timbre when D becomes its owner.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "新增 D 后只有位置 18 的键改变归属。",
+        "位置 82 跨零点归 A，所有箭头符合顺时针规则。"
+      ],
+      "checks_en": [
+        "Adding D changes ownership only for the key at position 18.",
+        "Position 82 wraps to A and every ownership arrow follows the clockwise rule."
+      ]
+    }
+  },
+  {
+    "id": "3d-knurled-dial-closeup",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "旋钮齿纹的近距离观察",
+    "title_en": "A close look at a knurled dial",
+    "prompt_zh": "用Three.js制作15秒原创旋钮细节片，1920×1080、60fps，全幅场景，黑灰背景配银色旋钮和朱红指示线。0–4秒中景展示整体；4–9秒摄影机沿预设弧线靠近侧面，观察等间距齿纹；9–12秒旋钮旋转一格，指示线对准刻度；12–15秒退回中景停留。齿纹使用程序几何，刻度只表示0到5的概念档位，不宣称仪器精度。固定焦距、不使用不可预测自动对焦，render(t)计算镜头与角度。声音为一声干净档位单击和低音短提示。检查齿纹频率在导出画面无明显摩尔纹、指示线准确对齐、摄影机不穿模型，交付关键帧、源码、参数和MP4。",
+    "prompt_en": "Create a 15-second detail film for an original dial in Three.js at 1920x1080, 60fps, with a full-frame charcoal scene, silver dial and vermilion indicator. During 0–4s show the complete object in a medium view; 4–9s follow a predefined camera arc toward the evenly spaced side knurling; 9–12s rotate one detent so the indicator meets its scale mark; 12–15s return to the medium view and hold. Generate the ridges procedurally. The zero-to-five scale represents conceptual positions rather than instrument accuracy. Keep focal length fixed and avoid unpredictable autofocus; derive camera transforms and dial angle from render(t). Compose one clean detent click and a low short confirmation tone. Check exported ridges for moiré, exact indicator alignment and a camera path outside the geometry. Deliver keyframes, source, parameters and MP4.",
+    "tech_tags": [
+      "threejs",
+      "product-detail",
+      "procedural-geometry",
+      "camera"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "One dry detent click aligns exactly with the indicator reaching its mark, followed by a brief low tone.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "指示线完成旋转时准确对齐对应档位刻度",
+        "1080p导出的齿纹无明显摩尔纹且镜头不穿模型",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "The indicator aligns exactly with its detent mark after rotation",
+        "Exported 1080p ridges avoid visible moiré and the camera never enters the mesh",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "指示线到达刻度时准确播放一次干燥档位单击，随后一声短低音。",
+      "audio_en": "One dry detent click aligns exactly with the indicator reaching its mark, followed by a brief low tone."
+    }
+  },
+  {
+    "id": "interactive-spring-oscillator",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "阻尼弹簧：三个回弹状态",
+    "title_en": "Three damping regimes of one spring",
+    "prompt_zh": "构建可玩的阻尼振子调节器与 16 秒固定操作 MP4，1080p 60fps，白底配珊瑚位移和青蓝速度。质量 m=1、弹性 k=16、起始位移 x=1、速度 0，调阻尼 c 为 2、8、12，对应欠阻尼、临界、过阻尼；注明理想一维演示模型。用解析解或经过误差验收的固定步长积分，玩家可选模式、拖起始位移、播放暂停、重置。0–4 秒欠阻尼；4–8 秒临界；8–12 秒过阻尼；12–16 秒并排三条位移曲线。录制每段从相同初值重置，render(t) 不依赖上一帧。声音只在欠阻尼过零时发出轻拨音，其他状态静默。验收临界 c=2√km=8、能量不凭空增加、暂停稳定。交付关键帧、源代码、可玩页面、MP4 与误差报告。",
+    "prompt_en": "Build a playable damped-oscillator control and a 16-second fixed-action MP4 at 1080p and 60fps. Use white, coral displacement and cyan-blue velocity. Set mass m=1, stiffness k=16, initial displacement x=1 and velocity zero. Compare damping c=2, 8 and 12 for underdamped, critical and overdamped motion, explicitly labelled as an idealized 1D model. Use analytic solutions or fixed-step integration with documented error checks. Provide mode selection, initial-displacement dragging, play/pause and reset. During 0–4s show underdamping; 4–8s critical; 8–12s overdamping; 12–16s compare all curves. Reset each recorded regime to identical initial conditions and derive render(t) independently of previous frames. Quiet plucks occur only at underdamped zero crossings. Verify critical c=2√km=8, nonincreasing energy and stable pause. Deliver keyframes, source, playable page, MP4 and an error report.",
+    "tech_tags": [
+      "canvas",
+      "physics",
+      "analytic-model"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Very soft plucks occur only at underdamped zero crossings, fading with amplitude; critical and overdamped sections remain silent.",
+      "audio_zh": "仅欠阻尼过零时使用随振幅衰减的轻拨音，临界与过阻尼段保持静默。",
+      "audio_en": "Very soft plucks occur only at underdamped zero crossings, fading with amplitude; critical and overdamped sections remain silent.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "临界阻尼为 8，三种模式使用完全相同初始条件。",
+        "总机械能不增；解析解与抽帧值或积分误差报告对应。"
+      ],
+      "checks_en": [
+        "Critical damping is eight and all regimes share identical initial conditions.",
+        "Mechanical energy never increases; sampled values match the analytic solution or error report."
+      ]
+    }
+  },
+  {
+    "id": "motion-release-version-route",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "版本号沿更新路径前进",
+    "title_en": "A version number follows its release route",
+    "prompt_zh": "制作17秒软件版本发布片，1080p、60fps，用SVG线段和Canvas文字。使用虚构版本0.8、0.9、1.0及三条自写变更，色彩为亮白、墨绿和浅紫灰。0–4秒0.8沿路线进入；4–9秒在0.9停靠并展开两个变化；9–13秒路线延伸到1.0，旧编号缩为里程标记；13–17秒展示完整更新路径；仅在输入已确认时显示发布日期。不得暗示真实软件稳定性或使用未经确认日期；所有变更来自输入。render(t)控制编号、路径长度和文字出现，切换语言时重测标签宽度。声音用三次有节制的节拍确认停靠。检查版本顺序、标签停留至少2秒、路线不穿文字，交付双语关键帧、源码和MP4。",
+    "prompt_en": "Make a 17-second software release film at 1080p, 60fps, using SVG segments and Canvas typography. Use fictional versions 0.8, 0.9 and 1.0 with three original change descriptions, in bright white, ink green and pale lilac-gray. During 0–4s version 0.8 enters along a route; 4–9s stop at 0.9 and unfold two changes; 9–13s extend the route to 1.0 while earlier numbers become milestones; 13–17s show the complete path and include a release date only if supplied and confirmed. Do not imply real software stability or add an unconfirmed date; all changes must come from supplied input. Drive labels, path length and text visibility through render(t), remeasuring labels for each language. Use three restrained beat cues at the stops. Verify version order, at least two seconds of reading time per change and routes that avoid text. Deliver bilingual keyframes, editable source and MP4.",
+    "tech_tags": [
+      "svg",
+      "product-launch",
+      "timeline",
+      "release-notes"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three muted beat cues mark arrivals at 0.8, 0.9 and 1.0; no triumphant stock music.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "版本里程标记按0.8、0.9、1.0顺序排列",
+        "每条变更至少可读2秒且路线不穿过文字"
+      ],
+      "checks_en": [
+        "Version milestones remain ordered 0.8, 0.9, 1.0",
+        "Each change holds legibly for at least two seconds and route segments avoid text"
+      ],
+      "audio_zh": "三次柔和节拍提示0.8、0.9与1.0版本停靠。",
+      "audio_en": "Three muted beat cues mark arrivals at 0.8, 0.9 and 1.0; no triumphant stock music."
+    }
+  },
+  {
+    "id": "explainer-quorum-majority",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "多数派相交，但不自动保证一致",
+    "title_en": "Majorities intersect, but do not ensure consistency alone",
+    "prompt_zh": "用 18 秒 1080p 30fps 双语动画解释五副本多数派，浅米白配翠绿与紫红。副本 A–E，写集合 {A,B,C}、读集合 {C,D,E}，阈值各为 3，数据为演示。0–4 秒放置副本；4–8 秒把版本 v2 写入前三个；8–12 秒读后三个，突出相交结点 C；12–15 秒展示 3+3>5；15–18 秒明确版本选择、冲突处理与并发语义仍需协议定义。SVG 使用固定结点布局和带版本标签的消息，不能把相交直接写成线性一致性保证。render(t) 依据固定状态表，两个集合不可随动画改变。声音区分写与读，不给错误的读值庆祝音。验收集合交集为 C，所有说明在手机可读。交付关键帧、源代码、状态表与 MP4。",
+    "prompt_en": "Make an 18-second bilingual quorum film at 1080p and 30fps using pale ivory, emerald and magenta. Five replicas are A–E; the write set is {A,B,C}, the read set is {C,D,E}, and both thresholds are three. Label this as a demonstration. During 0–4s place replicas; 4–8s write version v2 to the first set; 8–12s read the second set and highlight shared replica C; 12–15s show 3+3>5; 15–18s state that version selection, conflict handling and concurrency semantics still require protocol rules. Use fixed SVG nodes and explicitly versioned messages. Never describe set intersection alone as a linearizability guarantee. Reconstruct render(t) from an immutable state table with unchanging read and write membership. Distinguish write and read tones without celebrating an unresolved value. Check that the intersection is C and all caveats fit mobile. Deliver keyframes, source, state table and MP4.",
+    "tech_tags": [
+      "svg",
+      "distributed-systems",
+      "quorum"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Write messages use low rounded pulses; read messages use higher ticks, and one neutral sustained note marks set intersection.",
+      "audio_zh": "写入消息使用圆润低脉冲，读取使用高音点击，相交集合使用中性持续音。",
+      "audio_en": "Write messages use low rounded pulses; read messages use higher ticks, and one neutral sustained note marks set intersection.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "读写集合保持 {C,D,E} 与 {A,B,C}，交集恰为 C。",
+        "终帧说明多数派交集本身不等于线性一致性保证。"
+      ],
+      "checks_en": [
+        "Read and write sets stay {C,D,E} and {A,B,C}, with intersection exactly C.",
+        "The closing frame states that majority intersection alone does not guarantee linearizability."
+      ]
+    }
+  },
+  {
+    "id": "3d-soft-shell-rigid-frame",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "柔软外壳与刚性骨架",
+    "title_en": "A soft shell around a rigid frame",
+    "prompt_zh": "用Three.js制作24秒材料结构对照，1080p、60fps，主体为原创圆角矩形保护套与内框，背景浅灰，外壳蓝绿、骨架白、接触标记红。0–6秒展示完整结构；6–13秒外壳按明确的数学变形沿一侧压缩；13–18秒半剖露出保持不变的内框；18–24秒解除压缩并复原。这不是物理仿真或保护性能试验，必须标注形变示意；不宣称材料弹性常数。用顶点函数与render(t)计算形变，不积累模拟状态；灯光与镜头固定，阴影随几何更新。音频采用轻压短音和回弹柔音。检查外壳不穿内框、体积近似可见且回到初始顶点，交付关键帧、源码、函数说明与MP4。",
+    "prompt_en": "Use Three.js to make a 24-second material-structure comparison at 1080p, 60fps. Build an original rounded rectangular sleeve and inner frame, with pale-gray surroundings, a teal shell, white frame and red contact markers. At 0–6s present the complete structure; 6–13s compress one side with an explicit mathematical deformation; 13–18s reveal the unchanged frame through a partial section; 18–24s release and restore the shell. Clearly label this a deformation schematic, not a physical simulation or protection test, and make no elastic-constant claims. Calculate deformation from a vertex function and render(t), without accumulated simulation state. Fix lighting and camera position while updating shadows with the geometry. Use a soft pressure cue and a restrained release tone. Check that the shell avoids the frame, the deformation remains visually plausible and every vertex returns to its initial position. Deliver keyframes, source, the function description and MP4.",
+    "tech_tags": [
+      "threejs",
+      "vertex-deformation",
+      "section-cut",
+      "materials"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A soft compressed-noise cue follows the pressure phase; one gentle release tone accompanies restoration.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "形变外壳在所有时刻不穿过刚性内框",
+        "结束时所有变形顶点恢复为初始坐标",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "The deformed shell never intersects the rigid inner frame",
+        "Every deformed vertex returns to its exact initial coordinates at the end",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "柔和压缩噪声跟随受压阶段；复原时播放一次轻柔释放音。",
+      "audio_en": "A soft compressed-noise cue follows the pressure phase; one gentle release tone accompanies restoration."
+    }
+  },
+  {
+    "id": "interactive-fourier-drawer",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "傅里叶绘图：圆接力画线",
+    "title_en": "Epicycles draw a sampled line",
+    "prompt_zh": "构建可玩的傅里叶轮廓绘图与 18 秒固定操作 MP4，1080p 60fps，黑白主体配青绿轨迹和洋红系数。固定示例为闭合椭圆加一个小凹口，先按弧长重采样 128 点，使用 fft.js 或可核验 DFT 获取复系数；不宣称有限项与原曲线完全相同。玩家可手绘、调项数、播放暂停和重置，空输入与不闭合输入有可恢复处理。0–4 秒示例轮廓；4–8 秒只保留 3 项；8–12 秒调到 15 项；12–16 秒完整追踪；16–18 秒显示重建误差。render(t) 由固定系数与 t 合成，不累计尾迹历史。声音以三个固定低音合成，项数多时不无限叠音。验收 128 项重建误差接近数值精度。交付关键帧、代码、可玩页、MP4、采样与系数。",
+    "prompt_en": "Build a playable Fourier contour drawer and an 18-second fixed-action MP4 at 1080p and 60fps. Use black and white with teal traces and magenta coefficients. Supply a closed ellipse with one small notch, resample it to 128 equally spaced arc-length points and obtain complex coefficients with fft.js or a verifiable DFT. Do not claim a few terms exactly reproduce the shape. Support drawing, term-count adjustment, play/pause and reset, with recoverable empty or open input handling. During 0–4s show the supplied contour; 4–8s use three terms; 8–12s select fifteen; 12–16s trace a full cycle; 16–18s show reconstruction error. Derive render(t) from fixed coefficients and time rather than accumulated trail history. A bounded three-tone synth prevents unbounded audio voices. Verify near-numerical-precision reconstruction with all 128 terms. Deliver keyframes, source, playable page, MP4, samples and coefficients.",
+    "tech_tags": [
+      "canvas",
+      "fftjs",
+      "signal-processing"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A quiet three-tone synthesized chord follows one drawing cycle; term-count changes alter filtering rather than adding unlimited oscillators.",
+      "audio_zh": "绘制周期使用轻三音合成和弦，项数变化调整滤波而不无限增加振荡器。",
+      "audio_en": "A quiet three-tone synthesized chord follows one drawing cycle; term-count changes alter filtering rather than adding unlimited oscillators.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "DFT 正反变换约定一致，128 项重建误差接近浮点精度。",
+        "尾迹任意时刻可独立重建，空输入、单点和重置不会产生 NaN。"
+      ],
+      "checks_en": [
+        "Forward/inverse conventions agree and 128-term reconstruction approaches floating-point precision.",
+        "The trail reconstructs independently at any time; empty input, one point and reset never produce NaN."
+      ]
+    }
+  },
+  {
+    "id": "motion-calendar-to-progress-ring",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "日历格合成进度轮",
+    "title_en": "Calendar cells become a progress wheel",
+    "prompt_zh": "制作18秒计划进度动效，1920×1080、60fps，SVG几何插值。使用一个虚构12天计划，完成8天、未完成4天；白底配松绿、灰与钴蓝。0–5秒依次点亮8个完成日；5–11秒12个等大日历格沿编号顺序移动为圆周扇区；11–15秒显示8/12与66.7%；15–18秒停留并标注“演示计划”。圆轮只是进度示意，不能用已完成天数推断实际工作量。所有格子身份、扇区面积和数值由固定数据控制，render(t)支持反向拖动。音频仅在8次完成事件轻响，转形用低音短扫。检查百分比四舍五入、扇区等面积、编号不重复，交付双语关键帧、源码与MP4。",
+    "prompt_en": "Create an 18-second planning-progress study at 1920x1080 and 60fps with SVG geometry interpolation. Use a fictional twelve-day plan with eight completed and four incomplete days, in white, pine green, gray and cobalt. At 0–5s light the eight completed cells in sequence; 5–11s move all twelve equal calendar cells into numbered circular sectors; 11–15s show 8/12 and 66.7%; 15–18s hold with a Demonstration plan label. Clarify that the wheel represents day completion and does not measure actual effort. Fixed data must control cell identity, sector area and all numbers, with reversible seeking through render(t). Add a quiet tick at each of the eight completion events and a short low sweep during the transformation. Check percentage rounding, equal sector areas and unique identifiers. Deliver Chinese and English keyframes, source and MP4.",
+    "tech_tags": [
+      "svg",
+      "data-motion",
+      "progress",
+      "geometry-morph"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Eight soft ticks follow completed-day events; one low filtered sweep accompanies the calendar-to-wheel morph.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "显示百分比按8/12四舍五入到66.7%",
+        "12个扇区等面积并保持唯一日序号"
+      ],
+      "checks_en": [
+        "The shown percentage rounds 8/12 to 66.7%",
+        "All twelve sectors have equal area and retain unique day identifiers"
+      ],
+      "audio_zh": "八声轻点击跟随完成日事件；一次低频滤波滑音连接日历到圆轮。",
+      "audio_en": "Eight soft ticks follow completed-day events; one low filtered sweep accompanies the calendar-to-wheel morph."
+    }
+  },
+  {
+    "id": "explainer-circuit-breaker",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "断路器：失败后暂停尝试",
+    "title_en": "A circuit breaker pauses repeated failure",
+    "prompt_zh": "制作 20 秒 1080p 60fps 双语服务断路器示意，白底配暗绿、砖红和黄色。简化策略固定为连续三次失败打开、等待 5 秒、半开仅允许一个探测，注明演示策略并非通用配置。0–5 秒 Closed 状态发生三次失败；5–10 秒 Open 快速拒绝新调用；10–14 秒 Half-open 放行一个成功探测；14–17 秒恢复 Closed；17–20 秒对比失败重试与主动拒绝。Canvas 按固定请求事件 render(t)，失败计数在成功后重置，打开期间不向服务发送消息。音频使用失败短噪声、拒绝低点击和成功清音，峰值保守。验收探测数量为一、状态转移可追溯、等待窗口精确。交付关键帧、源代码、事件表、MP4 与状态图。",
+    "prompt_en": "Create a 20-second bilingual circuit-breaker schematic at 1080p and 60fps. Use white, dark green, brick red and yellow. Fix a simple demonstration policy: open after three consecutive failures, wait five seconds, then allow exactly one half-open probe. State that this is an illustrative policy rather than a universal configuration. During 0–5s three calls fail while Closed; 5–10s Open rejects new calls immediately; 10–14s Half-open admits one successful probe; 14–17s restore Closed; 17–20s compare remote failures with local rejection. Render Canvas from a fixed request table, reset failure count after success and send no remote messages while Open. Use brief failure noise, a low rejection click and a clean success tone at conservative peaks. Verify one probe, traceable state transitions and the exact waiting interval. Deliver keyframes, source, event data, MP4 and a state diagram.",
+    "tech_tags": [
+      "canvas",
+      "state-machine",
+      "resilience"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Failures have 60ms filtered noise taps; local rejections use a low click; the successful half-open probe uses one clear bell.",
+      "audio_zh": "失败使用 60 毫秒滤波噪声短音，本地拒绝使用低点击，半开探测成功使用单个清晰铃音。",
+      "audio_en": "Failures have 60ms filtered noise taps; local rejections use a low click; the successful half-open probe uses one clear bell.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "Open 持续 5 秒且没有发送远端请求，Half-open 只通过一个探测。",
+        "成功后连续失败计数清零，状态图与事件日志完全对应。"
+      ],
+      "checks_en": [
+        "Open lasts five seconds with no remote call, and Half-open admits one probe.",
+        "Success clears consecutive failures and the state diagram matches the event log."
+      ]
+    }
+  },
+  {
+    "id": "3d-vault-rib-space",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "肋拱定义一段空间",
+    "title_en": "Ribs define a vaulted space",
+    "prompt_zh": "用Three.js制作25秒空间结构片，1920×1080、60fps，展示自建八道肋拱与地面，雾白背景、石灰灰结构和深青剖面标记。0–6秒从侧面看到单拱；6–13秒其余七道按等距出现构成走廊；13–20秒摄影机沿中轴低速前进，观察透视节奏；20–25秒镜头升至俯视，显示拱间距。只表达空间构成，不能宣称承重、建筑规范或真实施工可行性。使用参数化曲线生成肋拱，固定灯光和render(t)摄影机路径，不添加装饰球或漂浮标签。声音是八次柔和短击与低声环境合成。检查拱间距、相机净空和俯视标签，交付双语关键帧、源码、参数表与MP4。",
+    "prompt_en": "Create a 25-second spatial-structure film in Three.js at 1920x1080, 60fps, using eight original vaulted ribs and a ground plane. Use mist white, limestone gray and deep-teal section marks. During 0–6s reveal one rib from the side; 6–13s add seven equally spaced ribs to form a passage; 13–20s move the camera slowly along its centerline to inspect perspective rhythm; 20–25s rise to a plan view showing rib spacing. Express spatial composition only, without load-bearing claims, building-code statements or construction feasibility promises. Generate ribs from parametric curves and use fixed lights plus a render(t) camera route. Avoid floating labels or decorative spheres. Compose eight soft taps over a low-level synthesized ambience. Verify equal spacing, camera clearance and readable plan-view dimensions. Deliver bilingual keyframes, source, the parameter table and MP4.",
+    "tech_tags": [
+      "threejs",
+      "architecture",
+      "parametric",
+      "camera-path"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Eight muted taps mark rib appearances over a quiet, original low-frequency ambience.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "八道肋拱的间距与输入参数一致",
+        "沿轴摄影机路径保有净空且不穿入拱体",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "Spacing between all eight ribs matches the input parameter",
+        "The centerline camera route retains clearance and never intersects a rib",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "八次轻短击标记肋拱出现，配一段低声原创低频环境音。",
+      "audio_en": "Eight muted taps mark rib appearances over a quiet, original low-frequency ambience."
+    }
+  },
+  {
+    "id": "interactive-cellular-life",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "生命游戏：同一规则，不同生长",
+    "title_en": "Game of Life from one fixed rule",
+    "prompt_zh": "构建可玩的 Conway 生命游戏和 16 秒固定操作 MP4，1080p 60fps，白底配墨黑存活格和青绿新生格。使用 20×14 有界网格，边界外恒死，规则 B3/S23，由纯邻居计数更新整代，不能边扫边改。玩家可绘制、单步、运行、速度调节、清空与加载滑翔机/闪烁器；触屏支持点格。0–4 秒放闪烁器；4–8 秒单步两代证明周期 2；8–12 秒加载固定滑翔机；12–16 秒前进四代显示位移。录制固定操作生成代快照，render(t) 选择快照与格子过渡。声音只随整代轻响，声音开关默认关闭。检查闪烁器返回原状、滑翔机四代移动一格对角线，边界规则可见。交付关键帧、代码、可玩页面、MP4 与代状态。",
+    "prompt_en": "Build a playable Conway's Game of Life and a 16-second fixed-action MP4 at 1080p and 60fps. Use white, ink-black surviving cells and teal births. The board is a bounded 20x14 grid with permanently dead exterior cells and B3/S23 rules. Compute a whole next generation from pure neighbor counts; never update cells in place while scanning. Provide painting, single-step, run, speed, clear and glider/blinker presets with touch cell selection. During 0–4s place a blinker; 4–8s step twice to prove its period of two; 8–12s load a fixed glider; 12–16s advance four generations to show diagonal displacement. Store deterministic generation snapshots for render(t). A quiet tick marks each complete generation, with audio initially off. Verify the blinker returns, the glider shifts one diagonal cell after four generations and boundary rules are visible. Deliver keyframes, source, playable page, MP4 and generation states.",
+    "tech_tags": [
+      "canvas",
+      "cellular-automata",
+      "simulation"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "One quiet filtered tick marks each generation when sound is enabled; cell births never create individual overlapping voices.",
+      "audio_zh": "启用声音后每代一个轻滤波点击，不为每个新生格叠加独立声音。",
+      "audio_en": "One quiet filtered tick marks each generation when sound is enabled; cell births never create individual overlapping voices.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "闪烁器两代复原，滑翔机四代整体对角移动一格。",
+        "全代同步更新，边界外恒死，暂停与单步不重复推进。"
+      ],
+      "checks_en": [
+        "Blinker repeats after two generations; glider shifts diagonally by one cell after four.",
+        "Updates are synchronous with dead exterior cells; pause and step never advance twice."
+      ]
+    }
+  },
+  {
+    "id": "motion-headline-mask-reveal",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "让标题穿过自己的版面",
+    "title_en": "A headline passes through its own layout",
+    "prompt_zh": "制作13秒动态标题，1080p、60fps，使用SVG遮罩与稳定字形。原创标题为“尺度与秩序”，英文另行排版，配色为深灰底、白与酸绿。0–3秒标题被三条垂直遮罩部分显示；3–8秒遮罩沿网格展开，标题位置不动；8–10秒其中一条遮罩转为细分隔线，出现作者自写副标题；10–13秒停留完整构图。遮罩揭示必须服务阅读，禁止高频闪烁、扫描噪声和随机字母替换。render(t)直接生成遮罩宽度，确保任意时刻字形不变。配三次柔和短刷音，最后静音。检查单词完整显示、遮罩边缘无锯齿和字幕安全边界，交付双语关键帧、源码、MP4及无声版。",
+    "prompt_en": "Make a 13-second title film at 1080p, 60fps, using SVG masks and stable glyphs. Use the original title Scale and Order, with a separately typeset Chinese version, on dark gray with white and acid green. During 0–3s three vertical masks expose fragments of the headline; 3–8s open them along the layout grid without moving the type; 8–10s turn one mask into a thin divider and reveal an original subtitle; 10–13s hold the complete composition. The reveal should support reading. Avoid high-frequency flashes, scan noise and randomized character substitution. Generate mask widths directly from render(t) so glyphs remain unchanged at every time. Use three gentle brush-like cues and finish in silence. Check complete words, clean mask edges and caption-safe margins in both languages. Deliver keyframes, source, MP4 and a silent export.",
+    "tech_tags": [
+      "svg",
+      "kinetic-type",
+      "mask",
+      "editorial"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three short filtered brush cues accompany mask openings; no sound during the final hold.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "标题最终完整显示且没有单字被裁切",
+        "遮罩边缘在1080p与手机缩放时无明显锯齿"
+      ],
+      "checks_en": [
+        "The final headline is complete with no clipped characters",
+        "Mask edges remain clean at 1080p and phone-scale viewing"
+      ],
+      "audio_zh": "三次短滤波刷音伴随遮罩打开；最终停留不播放声音。",
+      "audio_en": "Three short filtered brush cues accompany mask openings; no sound during the final hold."
+    }
+  },
+  {
+    "id": "explainer-exponential-backoff",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "退避和抖动：别同时重试",
+    "title_en": "Backoff with jitter avoids synchronized retries",
+    "prompt_zh": "做一条 18 秒 1080p 60fps 双语对比动画，白底配紫红与青色，三条客户端轨道。左侧重试间隔固定 1、2、4 秒，右侧使用 full jitter，在 [0,1]、[0,2]、[0,4] 内取固定种子演示值；必须注明未衡量真实系统性能。0–4 秒同时失败；4–10 秒左右并排重试；10–14 秒标出固定侧的集中峰和抖动侧的分散；14–18 秒总结减少同步，不保证不碰撞。用 Canvas 从种子生成并冻结事件表，再由 render(t) 重算；不要每帧重抽随机数。声音让同步事件叠成受控和弦，分散事件各自轻响。检查随机值落在对应上界、事件计数一致、音频不削波。交付分镜、代码、种子、事件表与 MP4。",
+    "prompt_en": "Make an 18-second bilingual comparison at 1080p and 60fps using white, magenta and cyan with three client tracks. On the left use fixed retry delays of 1, 2 and 4 seconds. On the right use full jitter sampled from [0,1], [0,2] and [0,4] with a fixed demonstration seed. State that this does not measure production performance. During 0–4s all clients fail together; 4–10s show both schedules; 10–14s highlight concentrated versus distributed attempts; 14–18s explain that jitter reduces synchronization without guaranteeing collision avoidance. Generate and freeze the seeded event table once, then reconstruct each Canvas frame with render(t); never sample per frame. Controlled chords accompany synchronized events and quiet individual taps accompany spread events. Check sampling bounds, equal attempt counts and unclipped audio. Deliver storyboard keyframes, source, seed, event table and MP4.",
+    "tech_tags": [
+      "canvas",
+      "networking",
+      "seeded-random"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Simultaneous attempts form a gain-limited chord; jittered attempts use quieter separated ticks with the same total number of cues.",
+      "audio_zh": "同步重试合成为限幅和弦；抖动重试使用分开的轻点击，两边提示音数量相同。",
+      "audio_en": "Simultaneous attempts form a gain-limited chord; jittered attempts use quieter separated ticks with the same total number of cues.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "第 n 次抖动在对应 [0,2^(n−1)] 上界内，种子与事件表公开。",
+        "两侧尝试次数相同，画面只表达时间分散而不声称性能提升百分比。"
+      ],
+      "checks_en": [
+        "Retry n jitter stays within its [0,2^(n−1)] bound, with seed and event table included.",
+        "Both sides make equal attempts; no percentage performance gain is claimed."
+      ]
+    }
+  },
+  {
+    "id": "3d-louver-shadow-calendar",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "百叶角度重新排列阴影",
+    "title_en": "Louver angles rearrange their shadows",
+    "prompt_zh": "用Three.js制作19秒光影构成，1080p、60fps。六片自建百叶置于白色墙面前，配色为雾白、灰蓝与砖红角度标记。0–4秒百叶垂直排列；4–11秒同轴旋转从0度至45度，阴影逐渐并为条带；11–15秒主光沿固定小弧移动，比较光位变化；15–19秒恢复原位。注明光影设计示意，不把它当真实日照分析，也不显示未经计算的节能数字。采用真实Three.js阴影贴图、固定bias与曝光，render(t)同步百叶和灯光。声音是六次轻机械拨动与微弱宽带扫音。检查阴影不漂浮、条带连续、45度读数准确及手机上的主体可见，交付关键帧、源码、灯位参数与MP4。",
+    "prompt_en": "Use Three.js for a 19-second light-and-shadow composition at 1080p, 60fps. Place six original louvers in front of a white wall, with mist white, blue-gray and brick-red angle markers. At 0–4s show vertical louvers; 4–11s rotate them together from zero to forty-five degrees as their shadows form bands; 11–15s move the key light along a small fixed arc to compare lighting; 15–19s restore the original state. Label the piece a lighting-design schematic, not a real daylight analysis, and show no uncalculated energy-savings figures. Use actual Three.js shadow maps with fixed bias and exposure, synchronizing louver and light transforms through render(t). Add six light mechanical ticks and a faint noise sweep. Check shadows remain grounded, bands stay continuous, the angle reads exactly forty-five degrees and the subject remains clear on a phone. Deliver keyframes, source, light parameters and MP4.",
+    "tech_tags": [
+      "threejs",
+      "lighting",
+      "shadows",
+      "architecture"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Six light mechanical ticks introduce the louvers; a faint filtered noise sweep follows the light arc.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "45度状态的旋转矩阵和显示角度一致",
+        "百叶阴影接触墙面且没有悬浮或明显shadow acne",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "The forty-five-degree transform matches its displayed angle",
+        "Louver shadows contact the wall without floating or obvious shadow acne",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "六声轻机械点击介绍百叶；微弱滤波噪声扫音跟随灯光弧线。",
+      "audio_en": "Six light mechanical ticks introduce the louvers; a faint filtered noise sweep follows the light arc."
+    }
+  },
+  {
+    "id": "interactive-signal-filter",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "低通滤波：让高频慢下来",
+    "title_en": "A low-pass filter attenuates higher frequencies",
+    "prompt_zh": "构建可玩的信号滤波台及 18 秒固定操作 MP4，1080p 60fps，白底配蓝色输入与玫红输出。固定合成信号为 sin(2π·2t)+0.3sin(2π·20t)，采样率 200Hz；用一阶 RC 离散滤波 y[n]=y[n−1]+α(x[n]−y[n−1])，α=dt/(RC+dt)。玩家调截止频率、查看波形和频谱、播放暂停、重置，标签标明演示信号。0–4 秒原信号；4–8 秒截止 5Hz；8–12 秒提高到 30Hz；12–16 秒对比幅值；16–18 秒停留于公式。录制固定事件预计算采样，render(t) 不按屏幕像素改变采样率。音频另外转成安全可听载频调制，说明非原 2Hz 声音。验收稳定性、频率标注及输入不削波。交付关键帧、代码、可玩页、MP4、数据。",
+    "prompt_en": "Build a playable signal-filter bench and an 18-second fixed-action MP4 at 1080p and 60fps. Use white, blue input and rose output. The synthetic signal is sin(2π·2t)+0.3sin(2π·20t), sampled at 200Hz. Use the first-order RC recurrence y[n]=y[n−1]+α(x[n]−y[n−1]), with α=dt/(RC+dt). Players adjust cutoff, inspect waveform and spectrum, pause and reset. Label it as a demonstration signal. During 0–4s show input; 4–8s use 5Hz cutoff; 8–12s increase to 30Hz; 12–16s compare amplitudes; 16–18s hold the formula. Precompute samples from fixed changes and render(t); screen pixels must not change sample rate. Sonify through safe audible carrier modulation, explicitly separate from the original 2Hz signal. Verify recurrence stability, frequency labels and unclipped gain. Deliver keyframes, source, playable page, MP4 and sampled data.",
+    "tech_tags": [
+      "canvas",
+      "signal-processing",
+      "web-audio"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A gain-limited 220Hz carrier is modulated by the shown signal; captions distinguish this sonification from literal subaudible frequencies.",
+      "audio_zh": "限幅 220Hz 载波按展示信号调制，字幕区分声化演示与原本不可听低频。",
+      "audio_en": "A gain-limited 220Hz carrier is modulated by the shown signal; captions distinguish this sonification from literal subaudible frequencies.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "α 始终在 (0,1) 内，采样率固定 200Hz，输出无 NaN 或发散。",
+        "低截止更明显抑制 20Hz 分量，音频说明与幅值限幅可见。"
+      ],
+      "checks_en": [
+        "Alpha stays in (0,1), sampling stays at 200Hz and output neither diverges nor becomes NaN.",
+        "Lower cutoff attenuates 20Hz more strongly; sonification labels and gain limiting are present."
+      ]
+    }
+  },
+  {
+    "id": "motion-table-row-to-small-multiples",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "表格行展开成小图组",
+    "title_en": "Table rows unfold into small multiples",
+    "prompt_zh": "制作22秒数据界面动效，1920×1080、30fps，Canvas与SVG混合。演示数据有三组，每组四个值，固定为2/4/3/5、1/3/3/4、4/2/5/6。使用白、深蓝绿、砖红和石灰。0–6秒呈现带单位“项”的表格；6–13秒每行保持组名，数值向右展开成四点小折线；13–18秒对齐所有小图的共同0到6纵轴；18–22秒停留并显示“虚构数据”。不单独自动缩放各图，不把趋势归因于真实事件。render(t)保持单元格与点的映射，合成音按行转换出现。检查单位、统一尺度和三个图的编号一致，交付双语关键帧、源码、MP4与数值表。",
+    "prompt_en": "Create a 22-second data-interface film at 1920x1080, 30fps, with Canvas and SVG. Use three fixed demonstration series: 2/4/3/5, 1/3/3/4 and 4/2/5/6. Choose white, deep teal, brick red and lime. At 0–6s show a table with the unit items; 6–13s retain each row name while its values unfold rightward into a four-point mini line chart; 13–18s align all small multiples to the same 0-to-6 vertical scale; 18–22s hold with a Fictional data label. Do not autoscale each chart independently or attribute trends to real events. Preserve the mapping between cells and points through render(t), with one restrained tone at each row transformation. Verify units, shared scale and consistent chart identifiers. Deliver bilingual keyframes, source, MP4 and the exact input table so the animation can be reproduced.",
+    "tech_tags": [
+      "canvas",
+      "svg",
+      "data-motion",
+      "small-multiples"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three quiet ascending tones mark the row-to-chart transformations; background remains silent.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "三张小图统一使用0到6的纵轴",
+        "每个图点可追溯到对应表格单元格数值"
+      ],
+      "checks_en": [
+        "All three small charts share a 0-to-6 vertical axis",
+        "Each plotted point maps to the value in its original table cell"
+      ],
+      "audio_zh": "三次轻微上行音标记表格行转为小图；背景保持安静。",
+      "audio_en": "Three quiet ascending tones mark the row-to-chart transformations; background remains silent."
+    }
+  },
+  {
+    "id": "explainer-transaction-transfer",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "转账事务：一起成功或一起撤销",
+    "title_en": "A transfer transaction commits or rolls back together",
+    "prompt_zh": "制作 18 秒 1080p 60fps 双语数据库事务短片，白底配深蓝、绿色与珊瑚。演示账户 A=100、B=40，转账 30，金额为合成单位。0–4 秒显示余额；4–8 秒在事务工作区暂改 A=70；8–11 秒注入失败并回滚到 100/40；11–15 秒重试，同时提交 70/70；15–18 秒强调只讲原子性，隔离性和持久性需另外验证。使用明确工作区/已提交状态的 Canvas 模型，render(t) 由固定事件派生，不能在失败镜头遗留 B 增长或把工作区当外部可见余额。声音用短悬置音与回滚下降音、提交双音。检查已提交余额总额始终为 140、失败后余额复原；工作区暂存中间状态的余额和不作为守恒断言。交付关键帧、源代码、MP4 与事务状态日志。",
+    "prompt_en": "Create an 18-second bilingual transaction film at 1080p and 60fps with white, deep blue, green and coral. Synthetic balances are A=100 and B=40; transfer 30 units. During 0–4s show committed balances; 4–8s stage A=70 in a transaction workspace; 8–11s inject a failure and roll back to 100/40; 11–15s retry and commit 70/70 together; 15–18s state that this demonstrates atomicity, while isolation and durability require separate verification. Use a Canvas model with explicit workspace and committed state. Derive render(t) from fixed events. Never leave a credit after the failed attempt or present workspace values as externally visible committed balances. Use a suspended tone while staging, a descending rollback cue and paired commit notes. Verify committed balances always total 140 and failure restores both balances; do not assert conservation of the workspace balance sum during intermediate staging. Deliver keyframes, source, MP4 and a transaction-state log.",
+    "tech_tags": [
+      "canvas",
+      "database",
+      "transactions"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Staging uses a quiet suspended interval, rollback resolves downward, and commit plays two synchronized notes for the two balances.",
+      "audio_zh": "暂存使用轻微悬置音程，回滚向下收束，提交使用两个同步音符对应两账户。",
+      "audio_en": "Staging uses a quiet suspended interval, rollback resolves downward, and commit plays two synchronized notes for the two balances.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "已提交余额在回滚后为 100/40、成功提交后为 70/70，总和恒为 140；暂存工作区的中间余额和允许变化。",
+        "工作区与已提交值视觉区分，字幕只声称演示原子性。"
+      ],
+      "checks_en": [
+        "Committed balances are 100/40 after rollback and 70/70 after commit, always totaling 140; intermediate workspace sums may differ.",
+        "Workspace and committed values are visually distinct; claims are limited to atomicity."
+      ]
+    }
+  },
+  {
+    "id": "3d-dolly-zoom-room-study",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "主体不变的推拉镜头",
+    "title_en": "A dolly zoom with a stable subject",
+    "prompt_zh": "用Three.js制作16秒摄影机研究，1920×1080、60fps。主体为原创直立方框，放在白灰条纹室内，配色是白、灰、青绿；不使用人物或第三方素材。0–4秒固定视角；4–11秒摄影机后退，同时按投影公式减小视场角，方框在屏幕上高度保持不变；11–13秒显示两个参考边界；13–16秒反向恢复。背景应产生可观察的透视变化，画面标注摄影机实验，不宣称视觉心理效果。所有焦距、距离和运动由render(t)直接计算，关闭自动对焦与随机抖动。声音为一条低声上升音再返回。检查主体像素高度误差、摄影机不穿墙、首尾投影相同，交付关键帧、公式、源码与MP4。",
+    "prompt_en": "Create a 16-second camera study in Three.js at 1920x1080, 60fps. Place an original upright rectangular frame in a white-gray striped room, using white, gray and teal, with no people or external assets. During 0–4s hold the initial view; 4–11s move the camera backward while narrowing its field of view according to the projection equation, keeping the subject's screen height constant; 11–13s show two reference bounds; 13–16s reverse to the starting state. Background perspective should visibly change. Label it a camera experiment without claims about psychological effects. Compute focal parameters, distance and motion directly from render(t), disabling autofocus and random shake. Use one quiet rising tone that returns to its starting pitch. Check subject pixel-height error, wall clearance and matching initial/final projections. Deliver keyframes, the projection formula, source and MP4.",
+    "tech_tags": [
+      "threejs",
+      "camera",
+      "dolly-zoom",
+      "projection"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A quiet continuous sine glide rises during camera retreat and returns during the reverse movement.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "推拉期间主体屏幕高度相对初始值误差小于1%",
+        "首尾摄影机投影相同且路径不穿过房间墙体",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "Subject screen height stays within one percent of its initial height",
+        "Initial and final projection match and the camera route never crosses a wall",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "摄影机后退时一条低声正弦滑音上升，反向移动时回到起始音高。",
+      "audio_en": "A quiet continuous sine glide rises during camera retreat and returns during the reverse movement."
+    }
+  },
+  {
+    "id": "interactive-euclidean-rhythm",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "欧几里得节奏：把拍点均匀放开",
+    "title_en": "Distribute pulses with a Euclidean rhythm",
+    "prompt_zh": "构建可玩的欧几里得节奏转盘和 16 秒固定操作 MP4，1080p 60fps，白底配酒红拍点与青色游标。使用 Bjorklund 算法生成 E(5,8)，固定起始旋转，Tone.js 或 Web Audio 精确调度，不能用视觉帧率计拍。玩家调步数 3–16、拍点数、旋转、速度、播放与静音；合法范围自动夹取且不改节奏规则。0–4 秒 E(3,8)；4–8 秒改为 E(5,8)；8–12 秒旋转两步；12–16 秒完成一圈并显示固定模式字符串。录制固定 120BPM 事件表，render(t) 同步光标与音频；暂停恢复不双响。每拍使用原创短合成木音，避免采样许可。验收拍点计数准确、旋转只改位置、音画偏差小于一帧。交付关键帧、代码、可玩页、MP4、节奏表。",
+    "prompt_en": "Build a playable Euclidean-rhythm dial and a 16-second fixed-action MP4 at 1080p and 60fps. Use white, burgundy pulses and a cyan playhead. Generate E(5,8) with Bjorklund's algorithm and a fixed rotation convention. Schedule sound precisely with Tone.js or Web Audio, independent of visual frame rate. Support 3–16 steps, pulse count, rotation, tempo, play and mute; clamp valid ranges without changing the rule. During 0–4s show E(3,8); 4–8s change to E(5,8); 8–12s rotate two steps; 12–16s complete a cycle and show the exact pattern string. Use a fixed 120BPM event table for the recording, with render(t) aligning cursor and sound. Pause/resume must not double-trigger. Synthesize original short wood-like hits. Verify pulse counts, rotation-only positional change and audiovisual error below one frame. Deliver keyframes, source, playable page, MP4 and rhythm data.",
+    "tech_tags": [
+      "svg",
+      "tonejs",
+      "generative-music"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Original 80ms wood-like synthesized hits run at 120BPM with bounded gain; silent steps remain completely silent.",
+      "audio_zh": "原创 80 毫秒木质感合成音按 120BPM 调度并限幅，空拍保持完全静默。",
+      "audio_en": "Original 80ms wood-like synthesized hits run at 120BPM with bounded gain; silent steps remain completely silent.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "E(k,n) 恰有 k 个拍点，旋转不改变间隔的环形集合。",
+        "音画同步误差小于 1/60 秒，暂停恢复不重复或漏拍。"
+      ],
+      "checks_en": [
+        "E(k,n) has exactly k pulses and rotation preserves circular interval structure.",
+        "Audiovisual error stays below 1/60 second; pause/resume neither duplicates nor drops hits."
+      ]
+    }
+  },
+  {
+    "id": "motion-icon-contour-handoff",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "轮廓线接力完成三个动作",
+    "title_en": "One contour hands off three actions",
+    "prompt_zh": "制作15秒工具动作片，1080p、60fps，使用项目自画几何轮廓而非第三方logo。配色为白、黑与钴蓝。0–4秒单线勾出收纳盒，表达收集；4–9秒盒子的上边连续延长成分组括号，表达整理；9–12秒括号末端转为向下箭头，表达导出；12–15秒三个状态并列定格。每个动作都有短双语标签，不用图标猜谜，轮廓拓扑变化处先显示连接点。render(t)驱动路径截取和形变，笔画宽度全程一致，避免线条突然跳位。合成三次短笔触音与完成时刻同步。检查轮廓无断裂、标签不被线覆盖及三个动作次序，交付关键帧、源码、中英版本和MP4。",
+    "prompt_en": "Produce a 15-second tool-action film at 1080p, 60fps, using original geometric contours instead of third-party logos. Use white, black and cobalt. During 0–4s one line draws a container to represent collecting; 4–9s its top edge extends continuously into grouping brackets; 9–12s a bracket endpoint becomes a downward export arrow; 12–15s hold all three states side by side. Give every action a short bilingual label, and reveal connection points before topology changes so the transformation stays legible. Drive path trimming and morphing with render(t). Maintain one stroke width throughout and avoid instantaneous line jumps. Synthesize three brief drawing cues aligned to completed actions. Check contour continuity, labels unobscured by strokes and the collect-organize-export sequence. Deliver keyframes, editable source, Chinese and English text variants, and an MP4 with an optional silent version.",
+    "tech_tags": [
+      "svg",
+      "path-morph",
+      "icon-motion",
+      "product"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three synthetic pencil-like cues finish with the collect, organize and export contours.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "连续接力轮廓在连接时刻没有断裂或瞬移",
+        "收集、整理、导出标签均不被笔画遮挡"
+      ],
+      "checks_en": [
+        "Contour handoffs contain no breaks or instantaneous jumps",
+        "Collect, organize and export labels remain clear of all strokes"
+      ],
+      "audio_zh": "三次合成铅笔短音分别在收集、整理与导出轮廓完成时结束。",
+      "audio_en": "Three synthetic pencil-like cues finish with the collect, organize and export contours."
+    }
+  },
+  {
+    "id": "explainer-bayes-base-rate",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "贝叶斯：阳性不等于高概率",
+    "title_en": "Bayes: a positive result need not imply high probability",
+    "prompt_zh": "做 20 秒 1080p 30fps 双语频数图，用白底、紫红真阳性与蓝色假阳性解释基率。全部为虚构检测例：1000 人中 10 有目标状态；灵敏度 90%，990 个无状态者假阳性率 10%，得到 9 真阳性与 99 假阳性。0–5 秒建立 1000 点网格；5–10 秒显示两组检测结果；10–15 秒把 108 个阳性移成一条带；15–20 秒算 9/108≈8.33%。用 Canvas 固定点布局，render(t) 不能随机删点或混淆假阳性率与阳性预测值。数字与颜色都有标签，音频只提示分组和结论，不制造诊断权威。验收人数守恒、分母正确，注明不用于真实医疗判断。交付关键帧、源代码、计算表、MP4。",
+    "prompt_en": "Create a 20-second bilingual frequency visualization at 1080p and 30fps on white, with magenta true positives and blue false positives. All inputs are fictional: of 1,000 people, ten have the target condition; sensitivity is 90%, and the 990 without it have a 10% false-positive rate. This gives nine true positives and 99 false positives. During 0–5s build the thousand-dot grid; 5–10s reveal both result groups; 10–15s gather the 108 positives into one band; 15–20s show 9/108, approximately 8.33%. Use a fixed Canvas layout and render(t); never randomly remove dots or confuse false-positive rate with positive predictive value. Pair every color with a label. Audio only marks grouping and calculation. Verify conserved counts and the denominator, and state that the example is not real medical guidance. Deliver keyframes, source, calculation data and MP4.",
+    "tech_tags": [
+      "canvas",
+      "statistics",
+      "bayes"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Two neutral grouping chimes and a short low-volume calculation tone; no alarm or clinical monitor sounds.",
+      "audio_zh": "使用两个中性分组铃音与轻微计算提示，不使用警报或医疗监护声音。",
+      "audio_en": "Two neutral grouping chimes and a short low-volume calculation tone; no alarm or clinical monitor sounds.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "1000 人分组为 9 真阳性、1 假阴性、99 假阳性、891 真阴性。",
+        "最终概率为 9/108，演示假设与非真实医疗说明可读。"
+      ],
+      "checks_en": [
+        "Counts are 9 true positives, 1 false negative, 99 false positives and 891 true negatives.",
+        "The final probability is 9/108, with readable fictional-input and nonclinical labels."
+      ]
+    }
+  },
+  {
+    "id": "3d-orthographic-perspective-bridge",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "同一结构的两种投影",
+    "title_en": "Two projections of the same structure",
+    "prompt_zh": "用Three.js制作20秒投影比较，1080p、60fps。主体为六个阶梯状矩形模块，浅灰地面、深绿主体、玫红参考线。0–5秒正交视图展示平行边；5–11秒用匹配主体中心与高度的连续参数过渡到透视；11–16秒标出远近边大小差；16–20秒恢复正交视图。结构不移动，只有投影变化，文本说明这不是物体形变；不制作可误认真实建筑的场景。使用经过验证的摄影机投影插值或两镜头可控混合，render(t)确保跳时一致，固定阴影。音频用单次轻扫和两个短提示。检查正交平行线、透视灭点、主体中心稳定和过渡不闪白，交付双语关键帧、源码、投影参数与MP4。",
+    "prompt_en": "Make a 20-second projection comparison in Three.js at 1080p, 60fps. Use six stepped rectangular modules on a light-gray floor, with deep-green geometry and rose reference lines. At 0–5s show parallel edges in an orthographic view; 5–11s transition continuously to perspective while matching subject center and height; 11–16s mark the apparent size difference between near and far edges; 16–20s return to orthographic. Keep the structure stationary and explain that projection changes rather than geometry deformation. Avoid a scene that could be mistaken for an actual building. Use validated camera-projection interpolation or a controlled two-camera blend, with render(t) giving identical results after seeking and fixed shadows. Compose one soft sweep and two short cues. Verify orthographic parallel lines, the perspective vanishing point, stable subject center and no flash during the transition. Deliver bilingual keyframes, source, projection parameters and MP4.",
+    "tech_tags": [
+      "threejs",
+      "projection",
+      "orthographic",
+      "camera"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "One subtle sweep follows the projection change; two short notes mark the comparison bounds.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "正交视图中平行边保持平行、透视视图参考线汇聚正确",
+        "过渡时主体中心偏移不超过画面宽度1%",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "Parallel edges stay parallel in orthographic mode and converge correctly in perspective",
+        "Subject-center drift stays below one percent of frame width during the transition",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "一次轻扫音跟随投影变化；两声短音标记比较边界。",
+      "audio_en": "One subtle sweep follows the projection change; two short notes mark the comparison bounds."
+    }
+  },
+  {
+    "id": "interactive-flow-router",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "流程路由器：把条件接到结果",
+    "title_en": "Route a condition into a result",
+    "prompt_zh": "构建可操作流程图路由器与 18 秒固定操作 MP4，1080p 60fps，白底配青绿通过与莓红拒绝。使用 ELK.js 分层布局与 SVG 边，规则采用可核验有限有向无环图：输入金额→金额≥100?→优惠/原价，所有金额是演示单位。玩家可连接节点、改阈值、输入值、运行、撤销与重置；禁止形成循环并说明被拒原因，连线支持键盘操作。0–4 秒加载流程；4–8 秒输入 80 走原价；8–12 秒改为 120 走优惠；12–15 秒阈值改为 150 重新走原价；15–18 秒撤销恢复。录制固定动作预计算布局与执行轨迹，render(t) 不每帧重新排版。音频仅在分支决定时双选一。验收阈值边界、无悬空执行、连线不盖标签。交付关键帧、源码、可玩页、MP4、图 JSON。",
+    "prompt_en": "Build a playable flow router and an 18-second fixed-action MP4 at 1080p and 60fps. Use white, teal acceptance and berry rejection. Use ELK.js layered layout with SVG edges and a verifiable finite DAG: input amount, test amount>=100, then discount or regular price. Amounts are synthetic units. Support connecting nodes, editing threshold, value input, run, undo and reset. Reject cycles with clear feedback and support keyboard connections. During 0–4s load the graph; 4–8s run 80 through regular price; 8–12s run 120 through discount; 12–15s raise the threshold to 150 and run regular price; 15–18s undo. Precompute fixed-action layout and execution for render(t); never relayout every frame. Use one of two quiet branch tones. Verify equality at threshold, no dangling execution and unobscured edge labels. Deliver keyframes, source, playable page, MP4 and graph JSON.",
+    "tech_tags": [
+      "svg",
+      "elkjs",
+      "node-editor"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A low branch note marks regular price and a higher note marks discount; undo uses a soft reverse cue with no continuous hum.",
+      "audio_zh": "原价分支使用低音，优惠分支使用较高音，撤销使用轻反向提示，无持续嗡声。",
+      "audio_en": "A low branch note marks regular price and a higher note marks discount; undo uses a soft reverse cue with no continuous hum.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "金额等于阈值时进入优惠分支；固定录制的三次结果准确。",
+        "循环连线被拒绝，撤销恢复阈值、布局与图结构。"
+      ],
+      "checks_en": [
+        "Equality takes the discount branch; all three scripted results are correct.",
+        "Cycles are rejected and undo restores threshold, layout and graph structure."
+      ]
+    }
+  },
+  {
+    "id": "motion-heatmap-to-ranked-list",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "热力格变成可比较的排序",
+    "title_en": "A heatmap becomes a comparable ranking",
+    "prompt_zh": "制作20秒数据阅读片，1920×1080、60fps，Canvas绘制4×4演示矩阵。采用白底、青绿单色量级与品红选中标记。0–5秒填入固定整数矩阵和0到9图例；5–10秒选中四行并计算各行总和；10–15秒整行格子收拢成等尺度水平条；15–20秒按总和降序排列，原行编号保持可见。矩阵必须标注虚构示例，不解释为真实人口或风险；相同值保持相同颜色。render(t)与固定排序规则计算位置，相同总和按原编号稳定排序。音频随四行汇总作短音，不把排名做成胜负庆典。检查总和、稳定排序与颜色图例，交付中英关键帧、输入矩阵、源码和MP4。",
+    "prompt_en": "Create a 20-second data-reading film at 1920x1080, 60fps, with a fixed 4x4 integer matrix drawn in Canvas. Use white, a teal value scale and magenta selection marks. At 0–5s populate the matrix and a 0-to-9 legend; 5–10s select the four rows and calculate their totals; 10–15s gather each row into a horizontal bar on a shared scale; 15–20s sort bars by descending total while retaining original row identifiers. Label the matrix as fictional and avoid claims about population, risk or real activity. Equal values must have equal colors. Compute locations using render(t) and a fixed sort rule, retaining original order for tied totals. Use short quiet notes for aggregation rather than celebratory ranking sounds. Check arithmetic, stable sorting and legend mapping. Deliver bilingual keyframes, the input matrix, source and MP4.",
+    "tech_tags": [
+      "canvas",
+      "data-motion",
+      "heatmap",
+      "sorting"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Four muted marimba-like notes mark row aggregation; a subdued sweep accompanies the stable sort.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "各行条形长度严格对应矩阵行总和",
+        "相同总和保留原始行编号顺序且图例映射一致"
+      ],
+      "checks_en": [
+        "Every bar length matches its matrix row sum",
+        "Tied totals preserve original row order and value colors match the legend"
+      ],
+      "audio_zh": "四声柔和马林巴音标记行汇总；低声滑音跟随稳定排序。",
+      "audio_en": "Four muted marimba-like notes mark row aggregation; a subdued sweep accompanies the stable sort."
+    }
+  },
+  {
+    "id": "explainer-confusion-matrix",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "准确率之外：精确率与召回率",
+    "title_en": "Beyond accuracy: precision and recall",
+    "prompt_zh": "用 18 秒 1080p 60fps 双语动画建立二分类混淆矩阵，浅灰底、青绿正确与红色错误，同时用文字标签。固定演示计数 TP=30、FP=10、FN=20、TN=40，总数 100，不宣称真实模型成绩。0–5 秒把四组样本放进带轴标签的矩阵；5–9 秒圈预测阳性列，计算 precision=30/40=75%；9–13 秒圈真实阳性行，计算 recall=30/50=60%；13–18 秒并排保留 accuracy=70%、precision=75%、recall=60%。用 SVG 与纯计数模型 render(t)，不能在同一分母中重复计数。声音通过两段不同但等响的短音区分指标。验收轴方向、计数、百分比和手机布局。交付关键帧、源码、计数表、MP4。",
+    "prompt_en": "Build a bilingual binary-classification confusion matrix in 18 seconds at 1080p and 60fps. Use pale gray, teal for correct outcomes and red for errors, always with text labels. Fixed demonstration counts are TP=30, FP=10, FN=20 and TN=40, totaling 100; do not present them as measured model performance. During 0–5s place all four groups into a clearly labelled matrix; 5–9s highlight the predicted-positive column and calculate precision=30/40=75%; 9–13s highlight the actual-positive row and calculate recall=30/50=60%; 13–18s hold accuracy=70%, precision=75% and recall=60% together. Render SVG from a pure count model through render(t), never double-counting a denominator. Use two distinct equally quiet motifs to distinguish metrics. Verify axis orientation, counts, percentages and mobile layout. Deliver keyframes, source, count data and MP4 with reproducible calculations.",
+    "tech_tags": [
+      "svg",
+      "statistics",
+      "ai-evaluation"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Precision uses two ascending soft notes; recall uses two descending notes at equal loudness; the final metrics are held in silence.",
+      "audio_zh": "精确率使用两声上行轻音，召回率使用等响两声下行轻音，最终指标静默停留。",
+      "audio_en": "Precision uses two ascending soft notes; recall uses two descending notes at equal loudness; the final metrics are held in silence.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "计数合计 100，准确率 70%、精确率 75%、召回率 60%。",
+        "真实标签与预测标签的轴始终明确，指标分母高亮准确。"
+      ],
+      "checks_en": [
+        "Counts total 100; accuracy is 70%, precision 75% and recall 60%.",
+        "Actual and predicted axes stay explicit, and each metric highlights the correct denominator."
+      ]
+    }
+  },
+  {
+    "id": "3d-terrazzo-section-material",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "水磨石切片里的颗粒",
+    "title_en": "Aggregate inside a terrazzo section",
+    "prompt_zh": "用Three.js制作18秒复合材料观察，1920×1080、60fps。自建水磨石样块，雾白底，灰绿基体与少量红、白碎片；颗粒是结构内容，不能当漂浮装饰。0–4秒正面展示完整样块；4–10秒一块截面沿深度滑过，揭示固定种子的内部颗粒；10–14秒镜头靠近截面；14–18秒恢复中景显示“程序材质”。基体与颗粒交界连续，说明并非真实石材扫描，不宣称耐磨或承重。使用自有程序纹理与封口几何，render(t)计算切片与摄影机，固定曝光。音频为低声磨擦与一次轻点击。检查切片封口、表面与内部颗粒对应、无贴图伸缩，交付关键帧、源码、种子参数和MP4。",
+    "prompt_en": "Use Three.js for an 18-second composite-material study at 1920x1080, 60fps. Build an original terrazzo block on mist white, with a gray-green matrix and sparse red and white aggregate. The particles belong to the material structure rather than floating decoration. During 0–4s present the intact sample; 4–10s move a section through its depth, exposing fixed-seed internal aggregate; 10–14s approach the section with the camera; 14–18s return to a medium view and show Procedural material. Keep matrix-aggregate boundaries continuous and explain that this is not a scan of actual stone. Make no abrasion or load-bearing claims. Use original procedural textures and capped geometry, computing section and camera transforms through render(t) with fixed exposure. Add quiet friction texture and one gentle click. Check section caps, surface-interior aggregate correspondence and texture stretching. Deliver keyframes, source, seed parameters and MP4.",
+    "tech_tags": [
+      "threejs",
+      "procedural-material",
+      "section-cut",
+      "fixed-seed"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Quiet synthesized friction follows section movement; one gentle click marks the close-up hold.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "切片封口上颗粒与体积中的固定种子位置一致",
+        "摄影机靠近时基体和颗粒纹理没有明显拉伸",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "Aggregate on section caps matches fixed-seed positions inside the volume",
+        "Matrix and aggregate textures show no obvious stretching in the close-up",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "低声合成摩擦纹理跟随剖切移动；近景停留时一次轻点击。",
+      "audio_en": "Quiet synthesized friction follows section movement; one gentle click marks the close-up hold."
+    }
+  },
+  {
+    "id": "interactive-regex-workbench",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "正则实验台：看见每一次匹配",
+    "title_en": "A regex workbench with visible matches",
+    "prompt_zh": "构建可操作正则实验台与 14 秒固定操作 MP4，1080p 60fps，白底配靛青匹配与珊瑚错误。文本固定为 order-12 order-7 draft-03，演示模式为 order-(\\d+)，展示完整匹配、组 1 和字符区间。玩家可改表达式、旗标和文本，支持清空、重置、复制匹配结果；原生 JavaScript 正则放 Worker，设置执行预算并可终止，不允许恶意输入卡死主线程。0–4 秒文本；4–8 秒输入模式得到两次匹配；8–11 秒打开组视图；11–14 秒输入非法括号并可恢复错误。录制固定动作 render(t)，不要以真实浏览器计算时间宣称速度。音频匹配轻点击、语法错误中性提示。验收索引与 Unicode 显示对应、空匹配能前进、用户文本安全转义。交付关键帧、源码、可玩页、MP4、匹配 JSON。",
+    "prompt_en": "Build a playable regex workbench and a 14-second fixed-action MP4 at 1080p and 60fps. Use white, indigo matches and coral errors. Fixed text is order-12 order-7 draft-03; the demonstration pattern is order-(\\d+). Show full matches, capture group one and character ranges. Let users edit pattern, flags and text, clear, reset and copy results. Run native JavaScript regex in a Worker with an execution budget and termination so hostile patterns cannot freeze the main thread. During 0–4s show text; 4–8s enter the pattern and reveal two matches; 8–11s open capture view; 11–14s enter an invalid parenthesis and recover from the error. Reconstruct recording with fixed actions and render(t); do not claim benchmark speed. Use quiet match clicks and neutral error feedback. Verify indices, Unicode display, zero-length progression and safe text escaping. Deliver keyframes, source, playable page, MP4 and match JSON.",
+    "tech_tags": [
+      "dom",
+      "web-worker",
+      "text-tool"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Each revealed match uses one quiet click; invalid syntax uses a neutral two-note cue and recovery uses no celebratory sound.",
+      "audio_zh": "每个揭示匹配使用轻点击，非法语法使用中性双音，恢复时不添加庆祝音。",
+      "audio_en": "Each revealed match uses one quiet click; invalid syntax uses a neutral two-note cue and recovery uses no celebratory sound.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "结果恰为 order-12 与 order-7，捕获组为 12 与 7，字符区间正确。",
+        "非法表达式与超时可恢复，零长度匹配不会无限循环，输出按文本转义。"
+      ],
+      "checks_en": [
+        "Matches are exactly order-12 and order-7, captures are 12 and 7, and ranges are correct.",
+        "Invalid patterns and timeouts recover, zero-length matches cannot loop forever, and output is escaped text."
+      ]
+    }
+  },
+  {
+    "id": "motion-dual-language-title-switch",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "两种语言共享一个节奏",
+    "title_en": "Two languages share one rhythm",
+    "prompt_zh": "制作16秒双语动态标题研究，1080p、60fps，Canvas进行真实字形测量。使用原创中英同义短句，画面为白、墨黑和莓红。0–4秒中文标题居中展开；4–8秒两侧边界向外移动，为英文长度腾出空间；8–12秒中文逐行退到副标题位，英文以相同节拍出现；12–16秒两种语言形成主副标题并静止。语言切换不逐字机械对译，内容由输入确认；两版字号保持固定，只调整行数、版面宽度与位置。render(t)驱动剪裁与透明度，不用模糊遮掩文字。声音用四组轻击保持相同节奏。检查最长单词、中文标点、字幕边界和完整阅读时间，交付双语文本、关键帧、源码与MP4。",
+    "prompt_en": "Make a 16-second bilingual title study at 1080p, 60fps, using real Canvas glyph measurement. Supply an original Chinese sentence and its approved English equivalent, with white, ink black and berry red. During 0–4s the Chinese title opens at center; 4–8s move the layout boundaries outward to accommodate English length; 8–12s move Chinese into the subtitle position while English enters on the same rhythm; 12–16s hold a complete bilingual title composition. Preserve meaning rather than mechanically substituting characters. Keep fixed font sizes and adapt line count, layout width and position. Drive clipping and opacity through render(t), avoiding blur that conceals text. Use four groups of soft taps sharing one rhythmic pattern. Inspect the longest English word, Chinese punctuation, caption boundaries and reading duration. Deliver approved bilingual text, keyframes, source and MP4.",
+    "tech_tags": [
+      "canvas",
+      "kinetic-type",
+      "bilingual",
+      "layout"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Four repeated groups of soft taps maintain the same rhythm during both language reveals.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "最长英文单词完整容纳且中英字号不随视口缩放",
+        "中英文同义内容在最终静止画面都完整可读"
+      ],
+      "checks_en": [
+        "The longest English word fits without viewport-dependent font scaling",
+        "Both equivalent statements remain completely readable in the final hold"
+      ],
+      "audio_zh": "四组重复轻击保持两种语言揭示时的相同节奏。",
+      "audio_en": "Four repeated groups of soft taps maintain the same rhythm during both language reveals."
+    }
+  },
+  {
+    "id": "explainer-causal-attention",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "因果注意力：当前词看不到未来",
+    "title_en": "Causal attention cannot see future tokens",
+    "prompt_zh": "制作 20 秒 1080p 60fps 双语因果注意力动画，白底配蓝绿权重与洋红遮罩。用四个虚构 token 和固定分数 [1,2,0,3]，观察第三个 token 的查询，仅允许前 3 个位置；softmax 权重为 exp([1,2,0]) 的归一化，未来位置设为 0。0–4 秒建立 token；4–8 秒展示查询与分数；8–13 秒加因果遮罩并计算权重；13–17 秒加权合成示意向量；17–20 秒说明是单头简化模型，权重并非事实依据或完整解释。Canvas 按预计算数值 render(t)，不同位置权重总和为 1，遮罩不只降低透明度而保留非零值。声音三声轻音按权重变化。验收未来权重零、计算准确、标签手机可读。交付关键帧、代码、数值表、MP4。",
+    "prompt_en": "Create a 20-second bilingual causal-attention schematic at 1080p and 60fps. Use white, blue-green weights and a magenta mask. Four fictional tokens have scores [1,2,0,3]. For the third token's query, only the first three positions are allowed: normalize exp([1,2,0]) and set the future position's weight to zero. During 0–4s place tokens; 4–8s show query and scores; 8–13s apply the causal mask and calculate weights; 13–17s combine illustrative value vectors; 17–20s state that this is a simplified single-head model and attention weights are not factual evidence or a complete explanation. Drive Canvas with precomputed numbers and render(t). Allowed weights sum to one; masking must actually zero the future weight. Three quiet notes reflect permitted weights. Check exact normalization, zero future contribution and mobile labels. Deliver keyframes, source, numerical data and MP4.",
+    "tech_tags": [
+      "canvas",
+      "ai-concept",
+      "attention"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three quiet sine notes use gains proportional to the allowed attention weights; the masked token is silent.",
+      "audio_zh": "三个轻正弦音的音量按允许位置注意力权重变化，被遮罩未来 token 保持静默。",
+      "audio_en": "Three quiet sine notes use gains proportional to the allowed attention weights; the masked token is silent.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "允许权重约为 [0.244728,0.665241,0.090031]，未来位置为 0。",
+        "单头示意声明可见，加权合成使用与标签相同的数值。"
+      ],
+      "checks_en": [
+        "Allowed weights are approximately [0.244728,0.665241,0.090031], with future weight zero.",
+        "The single-head disclaimer is visible and weighted values use the same numbers as their labels."
+      ]
+    }
+  },
+  {
+    "id": "3d-ribbon-knot-inspection",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "环带交错但不相交",
+    "title_en": "A woven ribbon crosses without intersecting",
+    "prompt_zh": "用Three.js制作23秒空间曲线实验，1080p、60fps，主体为一条自定义连续扁带，白底配青绿与紫红两面。0–6秒从侧面看到扁带展开；6–13秒沿固定曲线路径形成两次上下交错；13–19秒摄影机绕中心半圈，观察间隙；19–23秒保持结构并显示前后面标记。曲线与厚度由参数定义，不能说成真实结绳力学；禁止装饰球和随机扭曲。使用平行运输框架或稳定标架生成带面，render(t)确保法线不会突然翻转，柔和光照。声音为轻滑音和两次交错提示。检查自交、最小间隙、法线连续与两面色一致，交付参数、关键帧、源码和MP4。",
+    "prompt_en": "Create a 23-second spatial-curve experiment in Three.js at 1080p, 60fps, using one original continuous flat ribbon on white with teal and magenta opposite faces. At 0–6s view the extended ribbon from the side; 6–13s form two over-under crossings along a fixed curve; 13–19s orbit the camera halfway around the center to inspect clearance; 19–23s hold the structure with front/back markers. Define curve and thickness parametrically and avoid claims about actual knot mechanics. Do not add decorative spheres or random twisting. Generate the strip with a parallel-transport frame or another stable framing method. Make render(t) prevent sudden normal flips under soft lighting. Compose a gentle glide and two small crossing cues. Check self-intersections, minimum clearance, continuous normals and consistent face colors. Deliver the curve parameters, keyframes, source and MP4.",
+    "tech_tags": [
+      "threejs",
+      "parametric-curve",
+      "ribbon",
+      "geometry"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A quiet sliding tone follows ribbon formation; two brief cues mark the over-under crossings.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "环带两处交错都保留正的最小间隙",
+        "镜头环绕与形变时法线不翻转、正反面颜色不交换",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "Both over-under crossings retain positive minimum clearance",
+        "Normals never flip and front/back colors never exchange during deformation or orbit",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "一条轻滑音跟随带面成形；两声短提示标记上下交错。",
+      "audio_en": "A quiet sliding tone follows ribbon formation; two brief cues mark the over-under crossings."
+    }
+  },
+  {
+    "id": "interactive-version-diff",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "文本差异台：看清修改在哪里",
+    "title_en": "A text-diff bench shows what changed",
+    "prompt_zh": "构建可操作双栏文本 diff 台与 16 秒固定操作 MP4，1080p 60fps，白底配青绿新增、莓红删除，并用 +/- 标签。使用 diff 库按行生成块，输入为原创三行短文本，不放外部代码。玩家可编辑两侧、切换并排/统一、忽略行尾空格、撤销与重置；移动端统一视图避免超宽。0–4 秒两份相同文本；4–8 秒改一行；8–11 秒追加一行；11–14 秒切换统一视图；14–16 秒显示新增/删除数量。固定动作的 diff 结果预计算供 render(t)，颜色不单独表达含义，不能把修改行计算成两个新增。声音删除低点击、新增高点击，不逐字符响。验收计数与库结果一致、行号保持正确、空文本和长行能处理。交付关键帧、源码、可玩页、MP4、diff 数据。",
+    "prompt_en": "Build a playable two-column text-diff bench and a 16-second fixed-action MP4 at 1080p and 60fps. Use white, teal additions and berry deletions, always with plus/minus labels. Use the diff library for line-level hunks and three lines of original sample text rather than external code. Support editing both versions, side-by-side/unified modes, trailing-space ignore, undo and reset. Use unified mode on mobile to avoid excessive width. During 0–4s show identical texts; 4–8s change one line; 8–11s append one; 11–14s switch to unified mode; 14–16s show added/deleted line counts. Precompute fixed-action diffs for render(t), without relying on color alone or miscounting a replaced line as two additions. Use one low removal click and high addition click per hunk. Verify library counts, line numbers, empty input and long-line wrapping. Deliver keyframes, source, playable page, MP4 and diff data.",
+    "tech_tags": [
+      "dom",
+      "diff",
+      "developer-tool"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "One soft low click marks a removed hunk and one higher click an added hunk; editing individual characters remains silent.",
+      "audio_zh": "删除块使用轻低点击，新增块使用较高点击，逐字符编辑保持静默。",
+      "audio_en": "One soft low click marks a removed hunk and one higher click an added hunk; editing individual characters remains silent.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "一行替换加一行追加得到删除 1 行、新增 2 行，行号对应原文本。",
+        "空文本、无末尾换行与长行均可切换视图而不丢字符。"
+      ],
+      "checks_en": [
+        "One replaced line plus one appended line produces one deletion and two additions with correct line numbers.",
+        "Empty text, missing final newline and long lines retain every character across views."
+      ]
+    }
+  },
+  {
+    "id": "motion-route-line-to-product-outline",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "一条路径描出产品轮廓",
+    "title_en": "One route traces a product outline",
+    "prompt_zh": "制作18秒原创桌面计时器发布片，1920×1080、60fps，用SVG绘制二维外形。白底配炭灰与草绿，无第三方设计或logo。0–4秒一条路线依次经过三个功能标签；4–10秒路线回收并连续变为计时器外壳轮廓；10–14秒内部出现显示区与旋钮；14–18秒显示自写名称和“概念产品”。路径形变保持点顺序，标签先移开再进入产品，避免线穿文字。不得宣称续航、防水或精度；尺寸只是演示比例。render(t)决定所有点坐标，声音沿三个标签作短点击，外壳完成时低音收束。检查路径闭合、产品轮廓可识别和最终读屏，交付双语关键帧、可编辑源码和MP4。",
+    "prompt_en": "Create an 18-second launch film for an original desktop timer concept at 1920x1080, 60fps, drawing its 2D form with SVG. Use white, charcoal and grass green, without third-party product designs or logos. At 0–4s one route passes three feature labels; 4–10s gather the route into a continuous timer enclosure outline; 10–14s reveal its display and dial; 14–18s hold an original name and Concept product. Preserve path-point order throughout the morph. Move labels clear before the enclosure forms so strokes never cross text. Do not claim battery life, waterproofing or accuracy; dimensions are illustrative proportions only. Compute all coordinates through render(t). Add three brief clicks along the labels and a low closing tone when the outline completes. Verify path closure, a recognizable product silhouette and final reading time. Deliver bilingual keyframes, editable source and MP4.",
+    "tech_tags": [
+      "svg",
+      "product-launch",
+      "path-morph",
+      "continuous-transition"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three small click cues accompany feature stops; one low synthesized tone marks the closed product outline.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "形变完成后外壳路径闭合且没有自交",
+        "最终产品名、概念标注和轮廓在手机上可辨认"
+      ],
+      "checks_en": [
+        "The final enclosure path is closed without self-intersections",
+        "The name, concept label and product outline remain recognizable on a phone"
+      ],
+      "audio_zh": "三个短点击对应功能标签；外壳轮廓闭合时播放一次低音。",
+      "audio_en": "Three small click cues accompany feature stops; one low synthesized tone marks the closed product outline."
+    }
+  },
+  {
+    "id": "explainer-overfitting-split",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "过拟合：训练变好，验证变差",
+    "title_en": "Overfitting: training improves while validation worsens",
+    "prompt_zh": "做 18 秒 1080p 60fps 双语机器学习示意，白底配青色训练线、紫红验证线，全部曲线注明合成而非实验成绩。用八个 epoch 的固定损失：训练 [0.8,0.6,0.45,0.34,0.26,0.2,0.16,0.13]，验证 [0.85,0.65,0.5,0.43,0.46,0.51,0.58,0.66]。0–4 秒介绍训练/验证拆分；4–10 秒逐点描线；10–14 秒标出验证最优 epoch 4；14–18 秒解释停止点由验证策略决定，最终评估使用独立测试集。SVG 固定坐标 render(t)，不使用测试集选停止点，也不声称曲线一定证明原因。音频用稳定轻节拍，最优点单次铃音。检查坐标比例与所有值一致，关键帧读得出最小值。交付关键帧、源代码、CSV、MP4。",
+    "prompt_en": "Create an 18-second bilingual machine-learning schematic at 1080p and 60fps. Use white, cyan training loss and magenta validation loss. Label all curves as synthetic, not experiment results. Across eight epochs, fix training loss at [0.8,0.6,0.45,0.34,0.26,0.2,0.16,0.13] and validation at [0.85,0.65,0.5,0.43,0.46,0.51,0.58,0.66]. During 0–4s introduce the training/validation split; 4–10s reveal points; 10–14s mark epoch 4 as the lowest validation loss; 14–18s explain that validation policy selects a stopping point while independent test data is reserved for final evaluation. Use fixed SVG axes with render(t). Never use the test set to select the stop or claim the curves establish causation. A quiet steady beat accompanies epochs and one bell marks the minimum. Verify scales and all values. Deliver keyframes, source, CSV and MP4.",
+    "tech_tags": [
+      "svg",
+      "ai-evaluation",
+      "data-visualization"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Eight low-volume metronome taps accompany epochs; one higher bell marks validation minimum at epoch four.",
+      "audio_zh": "八次低音量节拍对应 epoch，第四个 epoch 的验证最低点使用单次较高铃音。",
+      "audio_en": "Eight low-volume metronome taps accompany epochs; one higher bell marks validation minimum at epoch four.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "验证最小值为 epoch 4 的 0.43，所有点与固定数组一致。",
+        "训练、验证、独立测试用途区分清楚，曲线显式标为合成。"
+      ],
+      "checks_en": [
+        "Validation minimum is 0.43 at epoch four and every point matches the arrays.",
+        "Training, validation and independent test roles are distinct; curves are labelled synthetic."
+      ]
+    }
+  },
+  {
+    "id": "3d-light-temperature-comparison",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "同一物体的三种灯色",
+    "title_en": "One object under three light colors",
+    "prompt_zh": "用Three.js制作17秒灯光比较，1920×1080、60fps。主体是原创带倒角的白色方盒与灰卡，场景白灰，辅助标记深绿。0–4秒中性主光照明；4–9秒主光颜色逐步变暖，光源intensity与曝光参数固定；9–13秒变为偏冷，显示预设颜色标签；13–17秒回中性并停留。使用明确RGB灯色预设，不把标签说成经仪器测量的色温；固定曝光、白平衡和材质，保持明确且一致的比较条件，允许不同灯色产生不同视觉亮度。render(t)从同一时间线计算灯色，摄影机完全固定。声音用三个低音短音标记状态。检查灰卡像素值变化有记录、颜色标签正确、反射不过曝和手机辨色，交付参数、关键帧、源码、中英标签和MP4。",
+    "prompt_en": "Use Three.js to create a 17-second lighting comparison at 1920x1080, 60fps. Show an original beveled white box and gray card in a white-gray scene, with deep-green annotation marks. During 0–4s use a neutral key light; 4–9s gradually warm its color while keeping intensity fixed; 9–13s move to a cool preset and show the preset label; 13–17s return to neutral and hold. Use explicit RGB light-color presets rather than implying instrument-measured color temperature. Fix exposure, white balance and materials to retain consistent comparison conditions while allowing different light colors to change perceived brightness. Calculate light color from one render(t) timeline and keep the camera stationary. Compose three low short notes for the states. Record gray-card pixel-value changes and check, correct preset labels, unclipped reflections and distinguishable colors on a phone. Deliver parameters, keyframes, source, bilingual labels and MP4.",
+    "tech_tags": [
+      "threejs",
+      "lighting",
+      "color-management",
+      "comparison"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three low, quiet notes identify neutral, warm and cool light states, with no continuous music.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "三种灯色预设使用同一灯光强度、曝光与材质参数",
+        "灯色标签和实际RGB预设一致且反射无明显截白",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "All three presets share the same light intensity, exposure and material parameters",
+        "Preset labels match actual RGB settings and reflections avoid broad clipping",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "三声低而轻的短音标记中性、暖、冷灯色，不播放持续音乐。",
+      "audio_en": "Three low, quiet notes identify neutral, warm and cool light states, with no continuous music."
+    }
+  },
+  {
+    "id": "interactive-binary-pixel-editor",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "像素位图：每格就是一个比特",
+    "title_en": "A pixel bitmap with one bit per cell",
+    "prompt_zh": "构建可玩的 8×8 二值像素编辑器与 14 秒固定操作 MP4，1080p 60fps，白底配墨黑像素与玫红行选择。支持画笔、擦除、清空、撤销、水平镜像、PNG 导出与 8 字节十六进制导出，固定行优先且最高位表示最左格。0–4 秒画原创阶梯图；4–7 秒选一行显示 10110000=0xB0；7–10 秒水平镜像；10–12 秒撤销；12–14 秒导出并回读。Canvas 像素使用整数对齐无平滑，DOM 十六进制文本始终跟随真实位图。录制固定操作 render(t)，触屏绘图按格采样而非随机线插值。声音画笔每条笔划一声轻点击，镜像短双音。验收导入导出完全往返、撤销不改历史起点、移动端网格稳定。交付关键帧、源代码、可玩页、MP4 与导出样本。",
+    "prompt_en": "Build a playable 8x8 binary-pixel editor and a 14-second fixed-action MP4 at 1080p and 60fps. Use white, ink pixels and rose row selection. Provide brush, erase, clear, undo, horizontal mirror, PNG export and eight-byte hexadecimal export. Specify row-major order with the most significant bit as the leftmost cell. During 0–4s draw an original stair motif; 4–7s select a row showing 10110000=0xB0; 7–10s mirror horizontally; 10–12s undo; 12–14s export and read back. Draw integer-aligned Canvas cells without smoothing and derive DOM hex text from the real bitmap. Use fixed recording actions with render(t); touch painting samples actual cells rather than random interpolation. One quiet click marks each stroke and a double tone marks mirroring. Verify exact import/export round-trip, undo history and stable mobile grid dimensions. Deliver keyframes, source, playable page, MP4 and export samples.",
+    "tech_tags": [
+      "canvas",
+      "pixel-art",
+      "binary-data"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Each completed brush stroke gets one quiet click; mirroring uses a symmetric two-note cue and exporting uses a short paper-like tap.",
+      "audio_zh": "每个完整笔划一声轻点击，镜像使用对称双音，导出使用短纸感敲击。",
+      "audio_en": "Each completed brush stroke gets one quiet click; mirroring uses a symmetric two-note cue and exporting uses a short paper-like tap.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "10110000 编码为 0xB0，水平镜像后位顺序反转且二次镜像复原。",
+        "8 字节导出回读后 64 格完全一致，PNG 无抗锯齿或错位边缘。"
+      ],
+      "checks_en": [
+        "10110000 encodes as 0xB0; mirroring reverses bits and two mirrors restore the bitmap.",
+        "Eight-byte export round-trips all 64 cells and PNG has no antialiasing or shifted edges."
+      ]
+    }
+  },
+  {
+    "id": "motion-percent-area-balance",
+    "author": "Prompt Motion Lab",
+    "category": "motion",
+    "title_zh": "百分比保持面积守恒",
+    "title_en": "Percentages preserve total area",
+    "prompt_zh": "制作19秒数据图形片，1920×1080、60fps，使用SVG矩形与路径。输入演示比例30%、45%、25%，配色为白、钴蓝、玫红和松绿。0–5秒三个百分比从同一单位方格上方出现；5–11秒方格按比例分割，三块沿直线分开但面积不变；11–15秒块体连续排成100%横条；15–19秒返回完整方格并保持数值。画面标注虚构比例，不把面积当真实市场份额或调查结果。所有矩形尺寸与文字从固定数据及render(t)计算，禁止靠任意缩放制造视觉夸大。用三个短音标记比例，一次轻滑音连接排条。检查面积之和恒为100%、块体身份不变、百分比标签安全区和手机可读性，交付中英版本、关键帧、源码与MP4。",
+    "prompt_en": "Create a 19-second data-geometry film at 1920x1080, 60fps, using SVG rectangles and paths. Use demonstration shares of 30%, 45% and 25%, with white, cobalt, rose and pine green. At 0–5s reveal the percentages above one unit square; 5–11s divide the square proportionally and separate its three pieces along straight routes without changing their areas; 11–15s arrange them continuously into a 100% bar; 15–19s restore the complete square while retaining labels. Explicitly call these fictional shares, not market data or survey results. Derive all geometry and text from fixed data and render(t). Avoid arbitrary scaling that exaggerates a category. Use three short tones for the shares and one quiet glide for the bar formation. Check conserved total area, stable piece identity, caption-safe percentage labels and phone readability. Deliver Chinese and English versions, keyframes, editable source and MP4.",
+    "tech_tags": [
+      "svg",
+      "data-motion",
+      "area",
+      "geometry-morph"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Three short plucks identify the shares; one quiet glide follows the area-preserving transition into a bar.",
+      "audio_zh": "三个短拨音分别提示三种比例；一条轻滑音跟随保持面积的横条转场。",
+      "audio_en": "Three short plucks identify the shares; one quiet glide follows the area-preserving transition into a bar.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "分块和横条的总面积始终等于单位方格面积",
+        "三个块体面积分别占30%、45%、25%且标签保持身份"
+      ],
+      "checks_en": [
+        "The pieces and bar always total the same area as the unit square",
+        "Piece areas remain 30%, 45% and 25% with stable label identity"
+      ]
+    }
+  },
+  {
+    "id": "explainer-keyset-pagination",
+    "author": "Prompt Motion Lab",
+    "category": "explainer",
+    "title_zh": "游标分页：从上一条继续",
+    "title_en": "Keyset pagination continues after the last key",
+    "prompt_zh": "制作 18 秒 1080p 60fps 双语分页对比，白底配墨绿游标与珊瑚 offset。记录按唯一递增 ID 排序，初始为 10、20、30、40、50、60，页长 3，均为演示数据。0–4 秒取得第一页 [10,20,30]；4–8 秒在前面插入 ID15；8–12 秒 offset=3 得到 [30,40,50] 并突出重复 30；12–15 秒使用 id>30 得到 [40,50,60]；15–18 秒说明稳定排序键和并发语义仍要定义。Canvas 将两条固定查询结果并列，render(t) 不从视觉位置推算 ID。声音对重复行使用中性重复点击，正确继续使用三音上行。验收两种结果准确，不承诺 keyset 对所有排序与更新都免问题。交付关键帧、代码、查询表、MP4。",
+    "prompt_en": "Make an 18-second bilingual pagination comparison at 1080p and 60fps using white, dark green for cursors and coral for offsets. Sort records by unique ascending IDs: initially 10, 20, 30, 40, 50 and 60, with page size three. These are demonstration rows. During 0–4s fetch [10,20,30]; 4–8s insert ID15 before the page boundary; 8–12s fetch with offset=3 and show [30,40,50], highlighting duplicated 30; 12–15s fetch with id>30 and show [40,50,60]; 15–18s state that stable sort keys and concurrency semantics still need definition. Compare two fixed query results in Canvas and derive render(t) from data, never visual positions. A neutral repeated click marks duplication; three ascending notes mark continuation. Verify both results and avoid claiming keyset solves every ordering or update issue. Deliver keyframes, source, query data and MP4.",
+    "tech_tags": [
+      "canvas",
+      "database",
+      "pagination"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A repeated dry click identifies duplicated ID30; three short ascending tones accompany the keyset continuation without an error alarm.",
+      "audio_zh": "重复 ID30 使用两次干点击提示；游标继续使用三个短上行音，不采用警报声。",
+      "audio_en": "A repeated dry click identifies duplicated ID30; three short ascending tones accompany the keyset continuation without an error alarm.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "插入 15 后 offset 页为 [30,40,50]，keyset 页为 [40,50,60]。",
+        "每行保留唯一 ID，终帧注明稳定排序与并发语义条件。"
+      ],
+      "checks_en": [
+        "After inserting 15, offset returns [30,40,50] and keyset returns [40,50,60].",
+        "Every row retains its unique ID; the final frame states ordering and concurrency conditions."
+      ]
+    }
+  },
+  {
+    "id": "3d-channel-flow-section",
+    "author": "Prompt Motion Lab",
+    "category": "3d",
+    "title_zh": "剖面里的一条连续流路",
+    "title_en": "One continuous route inside a section",
+    "prompt_zh": "用Three.js制作24秒内部通道示意，1080p、60fps。主体为原创矩形块内的蛇形通道，雾白背景、灰色壳体、青蓝流路和玫红入口。0–5秒展示封闭块体；5–11秒上半壳沿法线打开，露出通道；11–19秒一段有限长度的亮色线按路径从入口移至出口；19–24秒移除亮线、复合壳体并保持入口出口可见。只是路径动画，不是流体仿真，不宣称流速、压降或散热效率。通道中心线与宽度固定，render(t)计算线段范围，摄影机不穿壳体。声音为低声连续扫音与两次端点提示。检查通道连通、线段不越壁、壳体复合无穿插，交付双语关键帧、源码、路径参数和MP4。",
+    "prompt_en": "Create a 24-second internal-channel schematic in Three.js at 1080p, 60fps. Build an original rectangular block containing a serpentine channel, with mist-white surroundings, a gray shell, cyan route and rose inlet. At 0–5s present the closed block; 5–11s lift the upper shell along its normal to reveal the channel; 11–19s move a finite highlighted segment from inlet to outlet along the path; 19–24s remove the highlight, reassemble the shell and keep both ports visible. This is a route animation, not fluid simulation; make no claims about velocity, pressure drop or cooling efficiency. Fix the channel centerline and width, deriving highlighted ranges from render(t) while keeping the camera outside the shell. Use a quiet continuous sweep and two endpoint cues. Verify channel connectivity, highlights confined within walls and intersection-free reassembly. Deliver bilingual keyframes, source, path parameters and MP4.",
+    "tech_tags": [
+      "threejs",
+      "section-cut",
+      "path-animation",
+      "structure"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "A quiet filtered sweep follows the highlighted route; two brief endpoint tones mark inlet and outlet.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "通道中心线连续且亮色线段全程位于通道壁内",
+        "上下壳体复合时没有几何穿插或端口遮挡",
+        "全部标签位于画面5%安全边界内且环绕镜头时主体不出画"
+      ],
+      "checks_en": [
+        "The channel centerline is continuous and highlights remain inside its walls",
+        "Shell reassembly creates no intersections or occluded ports",
+        "All labels remain within a five-percent frame-safe margin and the subject stays in frame during camera movement"
+      ],
+      "audio_zh": "低声滤波扫音跟随高亮流路；入口与出口分别一声短音。",
+      "audio_en": "A quiet filtered sweep follows the highlighted route; two brief endpoint tones mark inlet and outlet."
+    }
+  },
+  {
+    "id": "interactive-memory-cards",
+    "author": "Prompt Motion Lab",
+    "category": "interactive",
+    "title_zh": "记忆配对：翻开后记住位置",
+    "title_en": "A memory-matching board with fixed positions",
+    "prompt_zh": "构建可玩的 12 张记忆配对游戏与 16 秒固定操作 MP4，1080p 60fps，白底配靛青背面和橘红选中边。六种原创几何图案各两张，使用固定种子 Fisher–Yates 洗牌，玩家支持点击、键盘方向移动、确认、重置和新局。0–4 秒翻两张不同图案后盖回；4–8 秒翻一对相同；8–12 秒再完成一对；12–16 秒展示配对数、尝试数并重置。卡面保持稳定比例，翻转中不能露出未选牌，配对牌保持正面；不匹配等待期间禁止第三张。录制固定动作表与种子由 render(t) 重建，不受实时点击时机影响。声音翻牌轻纸音、配对短双音。验收每图案恰两张、计数与动作准确、重置无旧计时器。交付关键帧、源码、可玩页、MP4、洗牌顺序。",
+    "prompt_en": "Build a playable twelve-card memory game and a 16-second fixed-action MP4 at 1080p and 60fps. Use white, indigo backs and orange-red selection borders. Six original geometric symbols appear twice, shuffled with seeded Fisher–Yates. Support clicking, keyboard navigation, confirm, reset and new game. During 0–4s reveal two different symbols and hide them; 4–8s match one pair; 8–12s match another; 12–16s show pairs and attempts, then reset. Keep card aspect ratios fixed. Only selected cards may reveal faces, matched cards stay face-up, and a third card cannot open during mismatch delay. Reconstruct render(t) from an immutable action table and seed rather than live click timing. Use soft paper flips and a short paired match cue. Verify two copies per symbol, action-derived counts and no stale timers after reset. Deliver keyframes, source, playable page, MP4 and shuffle order.",
+    "tech_tags": [
+      "dom",
+      "seeded-random",
+      "memory-game"
+    ],
+    "prompt_partial": false,
+    "status": "recipe",
+    "recipe": {
+      "render": "render(t) with fixed inputs and a fixed seed",
+      "audio": "Card reveals use synthesized paper-like swishes; a matched pair uses two soft complementary notes and mismatches are silent.",
+      "audio_zh": "翻牌使用合成纸感轻滑音，配对使用两个互补轻音，不匹配保持静默。",
+      "audio_en": "Card reveals use synthesized paper-like swishes; a matched pair uses two soft complementary notes and mismatches are silent.",
+      "deliverables": [
+        "keyframes",
+        "source",
+        "mp4"
+      ],
+      "checks_zh": [
+        "六种图案各两张，录制结束前配对数为 2、尝试数为 3。",
+        "不匹配等待期间第三张不可翻，重置取消所有旧延时事件。"
+      ],
+      "checks_en": [
+        "There are two cards per symbol; before reset the recording has two pairs and three attempts.",
+        "A third reveal is blocked during mismatch delay and reset cancels stale delayed events."
+      ]
+    }
+  },
+  {
     "id": "motion-orbiting-word",
     "author": "Prompt Motion Lab",
     "category": "motion",
     "title_zh": "让一个词找到自己的轨道",
     "title_en": "Give one word an orbit",
-    "prompt_zh": "做一条 12 秒动态字体短片，核心词是「方向」。黑色背景上只使用一种无衬线字体和橙色圆点。0–3 秒让词从一条细线中长出来；3–7 秒让每个字母沿同一条椭圆轨道错开运动；7–10 秒轨道收缩成一个点；10–12 秒恢复成完整单词。每个镜头内部都要有可读的运动，不能靠随机粒子填充。画面按 render(t) 重现，固定 60fps，16:9，配一段轻微的合成脉冲音。先导出关键帧，再导出 MP4。",
+    "prompt_zh": "做一条 12 秒动态字体短片，核心词是「方向」。黑色背景上只使用一种无衬线字体和橙色圆点。0–3 秒让词从一条细线中长出来；3–7 秒让每个字形沿同一条椭圆轨道错开运动；7–10 秒轨道收缩成一个点；10–12 秒恢复成完整词语。每个镜头内部都要有可读的运动，不能靠随机粒子填充。画面按 render(t) 重现，固定 60fps，16:9，配一段轻微的合成脉冲音。先导出关键帧，再导出 MP4。",
     "prompt_en": "Create a 12-second kinetic type film around the word “direction”. Use one sans-serif typeface, a black field and orange dots. From 0–3s the word grows from a thin line; from 3–7s each letter travels along the same ellipse with staggered timing; from 7–10s the orbit contracts into one point; from 10–12s the word returns intact. Every shot needs readable internal motion, with no random particle filler. Make each frame reproducible from render(t), at 60fps and 16:9, with a restrained synthesized pulse. Render keyframes before the MP4.",
     "tech_tags": ["canvas", "kinetic-type", "synth-audio"],
     "prompt_partial": false,

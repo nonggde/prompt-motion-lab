@@ -10,7 +10,7 @@ Prompt Motion Lab is our bilingual code-video laboratory. It joins brief discove
 
 ## What is here
 
-- **Original bilingual recipes** organized by purpose, visual language, difficulty, and experiment status. The catalog grows through experiments rather than a fixed count.
+- **96 original bilingual recipes**: 24 per direction, with product flows, data and algorithms, 3D structures, and playable automated demos. Includes multiword search, technology filters, full-contract copying and JSON download. New recipes await experiments; see the [recipe contract](docs/recipes.md).
 - **Runnable scenes** for FORM & FLOW, Token Bucket, and PULSE / GRID. The same time-driven scene can be previewed, storyboarded, and exported.
 - **An AI production skill** that turns a natural-language brief into direction options, bilingual prompts, a timed storyboard, a code plan, a sample, and verification evidence.
 - **Experiment feedback** that records inputs, versions, render settings, observations, and next steps instead of labeling untested ideas as finished work.

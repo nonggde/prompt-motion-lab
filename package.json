@@ -1,6 +1,6 @@
 {
   "name": "prompt-motion-lab",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Explore motion prompts, play deterministic animations, and render original videos from code.",
   "license": "MIT",

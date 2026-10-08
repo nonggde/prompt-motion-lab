@@ -1,7 +1,7 @@
 (function(){
   'use strict';
   const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-  const canvas=$('#stage'),ctx=canvas.getContext('2d'),E=window.MotionEngine;
+  const canvas=$('#stage'),ctx=canvas.getContext('2d'),E=window.MotionEngine,Catalog=window.MotionCatalog;
   let lang='zh',mode='reel',duration=15,t=0,playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,last=0,data=[],shown=12;
   let audioCtx=null,audioSource=null,sound=false,toastTimer,audioTimer;
   const AudioContextClass=window.AudioContext||window.webkitAudioContext;
@@ -27,8 +27,9 @@
     const note=document.createElement('p');note.className='brief-note';note.textContent=tr('实验记录：画面、声音和检查都由同一条时间线驱动。','Experiment note: picture, sound and checks share one timeline.');box.append(note);
   }
   function catalog(){
-    const q=$('#search').value.trim().toLowerCase(),cat=$('#category').value;
-    const records=data.filter(d=>(cat==='all'||d.category===cat)&&(!q||`${d.author} ${d.title_zh} ${d.title_en} ${d.prompt_zh} ${d.prompt_en} ${d.tech_tags.join(' ')}`.toLowerCase().includes(q)));
+    const q=$('#search').value.trim(),cat=$('#category').value,tech=$('#tech').value;
+    const records=Catalog.filter(data,{query:q,category:cat,tech});
+    $('#clear-filters').disabled=!q&&cat==='all'&&tech==='all';
     $('#results-count').textContent=tr(`${records.length} 条结果 · 显示 ${Math.min(shown,records.length)} 条`,`${records.length} results · showing ${Math.min(shown,records.length)}`);
     const grid=$('#prompt-grid');grid.replaceChildren();
     for(const d of records.slice(0,shown)){
@@ -40,14 +41,14 @@
       const preview=document.createElement('p');preview.className='prompt-preview';preview.textContent=lang==='zh'?d.prompt_zh:d.prompt_en;
       const tags=document.createElement('div');tags.className='prompt-tags';tags.textContent=d.tech_tags.join(' / ');
       const bottom=document.createElement('div');bottom.className='card-bottom';
-      const note=document.createElement('span');note.className='card-source';note.textContent=tr('Prompt Motion Lab · 实验库','Prompt Motion Lab · Experiment library');
-      const btn=document.createElement('button');btn.type='button';btn.className='copy-button';btn.textContent=tr('复制提示词 ↗','Copy prompt ↗');btn.addEventListener('click',()=>copy(lang==='zh'?d.prompt_zh:d.prompt_en));bottom.append(note,btn);
-      const detail=document.createElement('details');detail.className='prompt-detail';const summary=document.createElement('summary');summary.textContent=tr('展开完整配方','Read full recipe');const pre=document.createElement('pre');pre.textContent=lang==='zh'?d.prompt_zh:d.prompt_en;detail.append(summary,pre);
+      const note=document.createElement('span');note.className='card-source';note.textContent=tr('实验配方','Experimental recipe');
+      const btn=document.createElement('button');btn.type='button';btn.className='copy-button';btn.textContent=tr('复制完整配方 ↗','Copy full recipe ↗');btn.addEventListener('click',()=>copy(Catalog.fullPrompt(d,lang)));bottom.append(note,btn);
+      const detail=document.createElement('details');detail.className='prompt-detail';const summary=document.createElement('summary');summary.textContent=tr('展开制作合同','Read production contract');const pre=document.createElement('pre');pre.textContent=Catalog.fullPrompt(d,lang);detail.append(summary,pre);
       card.append(meta,author,preview,tags,bottom,detail);grid.append(card);
     }
     if(!records.length){const p=document.createElement('p');p.className='empty';p.textContent=tr('没有找到结果，试试其他关键词。','No matches. Try another keyword.');grid.append(p)}
     $('#load-more').hidden=shown>=records.length;
-    if(data.length){const directions=new Set(data.map(d=>d.category)).size;$('#catalog-stats').textContent=tr(`${data.length} 条原创配方 · ${directions} 个方向 · 每条都可复制、实验和改写`,`${data.length} original recipes · ${directions} directions · each one ready to copy, test and remix`)}
+    if(data.length){const directions=new Set(data.map(d=>d.category)).size;$('#catalog-stats').textContent=tr(`${data.length} 条原创双语配方 · ${directions} 个方向 · 配方待实验验收`,`${data.length} original bilingual recipes · ${directions} directions · recipes awaiting experiment validation`);$('[data-catalog-count]').textContent=tr(`${data.length} 条原创配方`,`${data.length} original recipes`)}
   }
   function applyLanguage(){
     document.documentElement.lang=lang==='zh'?'zh-CN':'en';document.title=tr('Prompt Motion Lab — 从提示词到动态影像','Prompt Motion Lab — From prompts to motion');
@@ -55,13 +56,13 @@
     set('nav a:nth-child(1)','作品实验室','Studio');set('nav a:nth-child(2)','提示词库','Prompts');set('nav a:nth-child(3)','制作方法','Workflow');
     set('.intro .eyebrow','AN OPEN MOTION PLAYGROUND · 开源动效实验室','AN OPEN MOTION PLAYGROUND');set('.intro h1','让想法<br><span>动起来。</span>','Ideas.<br><span>In motion.</span>',true);
     set('.intro-side>p','从一句提示词，到一段有节奏的影像。<br>看作品，拆方法，做自己的下一条。','From a prompt to a moving idea.<br>Watch, explore, and make your next film.',true);
-    $$('.intro-meta span').forEach((e,i)=>e.textContent=tr(['32 条原创配方','3 个原创示例','无须 API Key'][i],['32 original recipes','3 original demos','No API key'][i]));
+    $$('.intro-meta span').forEach((e,i)=>e.textContent=tr(['原创双语配方','3 个原创示例','无须 API Key'][i],['Original bilingual recipes','3 original demos','No API key'][i]));
     set('[data-mode="bucket"]','02 / 令牌桶','02 / TOKEN BUCKET');set('[data-mode="pulse"]','03 / PULSE / GRID','03 / PULSE / GRID');set('#download-video','下载成片 ↓','Download video ↓');set('.work-actions a:last-child','查看源码 ↗','Source code ↗');
     set('.brief summary','这一条是怎么做的？<span>BRIEF + EXPERIMENT ↘</span>','How was this made?<span>BRIEF + EXPERIMENT ↘</span>',true);
     set('.library h2','好的作品，从好的问题开始。','Good motion starts with good questions.');set('.library .section-heading>p','我们自己的双语配方。<br>拿去实验，再把结果带回来。','Our own bilingual recipes.<br>Test them, then bring the result back.',true);
-    $('#search').placeholder=tr('搜索主题、作者、技术…','Search topics, creators, techniques…');$('#search').setAttribute('aria-label',tr('搜索提示词','Search prompts'));$('#category').setAttribute('aria-label',tr('作品分类','Category'));
+    $('#search').placeholder=tr('搜索主题、技术…','Search topics, techniques…');$('#search').setAttribute('aria-label',tr('搜索提示词','Search prompts'));$('#category').setAttribute('aria-label',tr('作品分类','Category'));$('#tech').setAttribute('aria-label',tr('实现技术','Rendering technology'));
     $$('#category option').forEach(o=>o.textContent=o.value==='all'?tr('全部分类','All categories'):cats[lang][o.value]);
-    const fullLabel=$('.full-only');if(fullLabel)fullLabel.hidden=true;set('.results-line>span:last-child','Prompt Motion Lab · 实验配方','Prompt Motion Lab · Experiment recipes');set('#load-more','再看 12 条 ↓','Show 12 more ↓');
+    $('#tech option').textContent=tr('全部技术','All technologies');set('#clear-filters','清除筛选','Clear filters');set('#download-catalog','下载配方 JSON ↓','Download recipes JSON ↓');set('#load-more','再看 12 条 ↓','Show 12 more ↓');
     set('.workflow h2','少一点玄学，多一点导演思维。','Less guessing. More directing.');set('.workflow .section-heading>a','完整制作指南 ↗','Production guide ↗');$('.workflow .section-heading>a').href=`https://github.com/nonggde/prompt-motion-lab/blob/main/docs/workflow.${lang==='zh'?'zh-CN':'en'}.md`;
     const z=[['说清想法','主题、观众、时长、画幅。把真实内容和参考交给模型。'],['写出镜头','一个镜头讲一件事。固定字体、配色、节拍和转场。'],['先看样片','在关键时间点看静帧，检查字是否可读、动作是否清楚。'],['导出成片','按同一条时间线渲染画面与声音，得到可复现的影片。']];
     const en=[['Define the idea','Topic, audience, duration and aspect. Give your AI real content and references.'],['Direct each shot','One idea per shot. Define type, palette, beats and transitions.'],['Inspect a sample','Review keyframes. Check readable type and purposeful movement.'],['Render the film','Use one timeline for picture and sound. Make the output reproducible.']];
@@ -84,13 +85,14 @@
   $('#timeline').addEventListener('input',()=>{t=+$('#timeline').value;draw();updateBucket();syncAudio()});
   $('#sound').addEventListener('click',()=>{sound=!sound;$('#sound').setAttribute('aria-pressed',String(sound));$('#sound').textContent=sound?tr('声音：开','Sound: on'):tr('声音：关','Sound: off');syncAudio()});
   ['capacity','rate'].forEach(id=>$('#'+id).addEventListener('input',()=>{$('#capacity-value').textContent=$('#capacity').value;$('#rate-value').textContent=`${(+$('#rate').value).toFixed(1)}${tr(' / 秒',' / sec')}`;draw();updateBucket();if(sound){stopAudio();clearTimeout(audioTimer);audioTimer=setTimeout(syncAudio,100)}}));
-  ['search','category','full-only'].forEach(id=>$('#'+id).addEventListener(id==='search'?'input':'change',()=>{shown=12;catalog()}));
+  ['search','category','tech'].forEach(id=>$('#'+id).addEventListener(id==='search'?'input':'change',()=>{shown=12;catalog()}));
+  $('#clear-filters').addEventListener('click',()=>{$('#search').value='';$('#category').value='all';$('#tech').value='all';shown=12;catalog()});
   $('#load-more').addEventListener('click',()=>{shown+=12;catalog()});$('#copy-template').addEventListener('click',()=>copy(template[lang]));
   document.addEventListener('visibilitychange',()=>{if(document.hidden){playing=false;stopAudio();playLabel()}last=0});
   let summaryTime=-1;
   function tick(now){if(last&&playing){t=Math.min(duration,t+(now-last)/1000);if(t>=duration){playing=false;playLabel();stopAudio()}}last=now;draw();if(Math.floor(t*2)!==summaryTime){summaryTime=Math.floor(t*2);updateBucket()}requestAnimationFrame(tick)}
   window.seek=seconds=>{t=Math.max(0,Math.min(duration,+seconds||0));playing=false;stopAudio();playLabel();draw();updateBucket()};
   window.motionLab={setMode,getState:()=>({mode,t,playing,lang}),setLanguage:value=>{lang=value==='en'?'en':'zh';applyLanguage()}};
-  async function init(){await document.fonts.ready;applyLanguage();draw();requestAnimationFrame(tick);try{data=window.PROMPT_DATA||(await (await fetch('data/prompts.json')).json());catalog()}catch{const e=$('#catalog-error');e.hidden=false;e.textContent=tr('提示词载入失败。请用 npm start 启动，或打开构建后的 dist/index.html。','Could not load prompts. Run npm start, or open the built dist/index.html.');$('#catalog-stats').textContent=tr('数据暂不可用','Data unavailable')}}
+  async function init(){await document.fonts.ready;applyLanguage();draw();requestAnimationFrame(tick);try{if(window.PROMPT_DATA)data=window.PROMPT_DATA;else{const response=await fetch('data/prompts.json');if(!response.ok)throw Error('Catalog request failed');data=await response.json()}catalog()}catch{const e=$('#catalog-error');e.hidden=false;e.textContent=tr('提示词载入失败。请用 npm start 启动，或打开构建后的 dist/index.html。','Could not load prompts. Run npm start, or open the built dist/index.html.');$('#catalog-stats').textContent=tr('数据暂不可用','Data unavailable')}}
   init();
 })();

@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Prompt Motion Lab：32 条原创双语动效配方、可播放示例、AI Skill 与可复现的视频渲染。">
-  <meta name="theme-color" content="#efede5">
+  <meta name="description" content="Prompt Motion Lab：原创双语代码视频配方、可播放实验、AI Skill 与可复现的视频渲染。">
+  <meta name="theme-color" content="#f1f3f4">
   <link rel="canonical" href="https://nonggde.github.io/prompt-motion-lab/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nonggde.github.io/prompt-motion-lab/">
   <meta property="og:title" content="Prompt Motion Lab — 从提示词到动态影像">
-  <meta property="og:description" content="32 条原创双语动效配方、双语制作 Skill、可播放示例与可复现视频渲染。">
+  <meta property="og:description" content="原创双语代码视频配方、完整制作合同、可播放实验与 AI 制作 Skill。">
   <meta property="og:image" content="https://nonggde.github.io/prompt-motion-lab/media/form-flow-storyboard.png">
   <meta property="og:image:alt" content="FORM & FLOW motion storyboard">
   <meta name="twitter:card" content="summary_large_image">
@@ -32,7 +32,7 @@
   <main>
     <section class="intro" id="studio">
       <div><p class="eyebrow">AN OPEN MOTION PLAYGROUND · 开源动效实验室</p><h1>让想法<br><span>动起来。</span></h1></div>
-      <div class="intro-side"><p>从一句提示词，到一段有节奏的影像。<br>看作品，拆方法，做自己的下一条。</p><div class="intro-meta"><span>32 条原创配方</span><span>3 个原创示例</span><span>无须 API Key</span></div></div>
+      <div class="intro-side"><p>从一句提示词，到一段有节奏的影像。<br>看作品，拆方法，做自己的下一条。</p><div class="intro-meta"><span data-catalog-count>原创双语配方</span><span>3 个原创示例</span><span>无须 API Key</span></div></div>
     </section>
     <section class="studio" aria-label="原创作品播放器">
       <div class="studio-top"><div class="mode-buttons" aria-label="选择作品"><button type="button" data-mode="reel" aria-pressed="true">01 / FORM & FLOW</button><button type="button" data-mode="bucket" aria-pressed="false">02 / 令牌桶</button><button type="button" data-mode="pulse" aria-pressed="false">03 / PULSE / GRID</button></div><span class="studio-spec" id="spec">15 SEC · 1080P · 60 FPS EXPORT</span></div>
@@ -43,10 +43,10 @@
       <details class="brief"><summary>这一条是怎么做的？<span>BRIEF + SOURCE PROMPT ↘</span></summary><div id="brief-content"></div></details>
     </section>
     <section class="library" id="library">
-      <div class="section-heading"><div><p class="eyebrow">THE PROMPT ARCHIVE</p><h2>好的作品，从好的问题开始。</h2></div><p>我们自己的双语配方。<br>拿去实验，再把结果带回来。</p></div>
+      <div class="section-heading"><div><p class="eyebrow">THE RECIPE LIBRARY</p><h2>好的作品，从好的问题开始。</h2></div><p>我们自己的双语配方。<br>拿去实验，再把结果带回来。</p></div>
       <div class="catalog-stats" id="catalog-stats" aria-live="polite">正在载入提示词…</div>
-      <div class="filters"><label class="search-label"><span class="sr-only">搜索主题、作者或技术</span><input type="search" id="search" placeholder="搜索主题、作者、技术…" autocomplete="off"></label><label><span class="sr-only">作品分类</span><select id="category"><option value="all">全部分类</option><option value="motion">动态图形</option><option value="explainer">科普解释</option><option value="3d">3D 场景</option><option value="interactive">游戏与交互</option></select></label><label class="full-only" hidden><input id="full-only" type="checkbox">只看完整提示词</label></div>
-      <div class="results-line"><span id="results-count" aria-live="polite"></span><span>Prompt Motion Lab · 实验配方</span></div>
+      <div class="filters"><label class="search-label"><span class="sr-only">搜索主题或技术</span><input type="search" id="search" placeholder="搜索主题、技术…" autocomplete="off"></label><label><span class="sr-only">作品分类</span><select id="category"><option value="all">全部分类</option><option value="motion">动态图形</option><option value="explainer">科普解释</option><option value="3d">3D 场景</option><option value="interactive">游戏与交互</option></select></label><label><span class="sr-only">实现技术</span><select id="tech" aria-label="实现技术"><option value="all">全部技术</option><option value="canvas">Canvas</option><option value="svg">SVG</option><option value="dom">HTML / DOM</option><option value="threejs">Three.js</option></select></label><button id="clear-filters" class="button" type="button" disabled>清除筛选</button></div>
+      <div class="results-line"><span id="results-count" aria-live="polite"></span><a id="download-catalog" href="data/prompts.json" download="prompt-motion-lab-recipes.json">下载配方 JSON ↓</a></div>
       <div class="prompt-grid" id="prompt-grid"></div>
       <button type="button" id="load-more" class="button load-more">再看 12 条 ↓</button>
       <p id="catalog-error" class="error" role="alert" hidden></p>
@@ -63,6 +63,7 @@
   <script src="src/engine.js"></script>
   <script src="src/audio.js"></script>
   <script src="src/pulse-scene.js"></script>
+  <script src="src/catalog.js"></script>
   <script src="src/app.js"></script>
 </body>
 </html>
