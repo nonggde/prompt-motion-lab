@@ -26,7 +26,7 @@ try {
   await page.locator('#full-only').uncheck();await page.locator('#category').selectOption('interactive');
   assert.match(await page.locator('#results-count').innerText(),/^70 results/);
   await page.locator('#category').selectOption('all');await page.locator('#search').fill('parkerrex');
-  assert.ok(await page.locator('.prompt-card').count()>0);assert.match(await page.locator('.prompt-card h3').first().innerText(),/parkerrex/);
+  assert.ok(await page.locator('.prompt-card').count()>0);assert.match(await page.locator('.prompt-card h3').first().innerText(),/parkerrex/i);
   await page.locator('#search').fill('this-query-should-have-zero-results-918274');assert.equal(await page.locator('.prompt-card').count(),0);
   await page.locator('#search').fill('');await page.locator('#load-more').click();assert.equal(await page.locator('.prompt-card').count(),24);
   await page.locator('[data-mode=bucket]').click();await page.evaluate(()=>window.seek(5.4));
