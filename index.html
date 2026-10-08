@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prompt Motion Lab：513 条有来源的动效提示词、可播放的原创代码动画、可复现的视频制作流程。">
+  <meta name="theme-color" content="#efede5">
+  <title>Prompt Motion Lab — 从提示词到动态影像</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23191918'/%3E%3Ccircle cx='32' cy='32' r='19' fill='%23f16b46'/%3E%3Ccircle cx='32' cy='32' r='8' fill='%23191918'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#studio" aria-label="Prompt Motion Lab 首页"><span class="brand-mark" aria-hidden="true"></span><span>PROMPT<br>MOTION LAB</span></a>
+    <nav aria-label="主导航">
+      <a href="#studio">作品实验室</a><a href="#library">提示词库</a><a href="#workflow">制作方法</a>
+    </nav>
+    <div class="header-actions"><button id="language" type="button" aria-label="Switch to English">EN</button><a class="repo-link" href="https://github.com/nonggde/prompt-motion-lab" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+  </header>
+  <main>
+    <section class="intro" id="studio">
+      <div><p class="eyebrow">AN OPEN MOTION PLAYGROUND · 开源动效实验室</p><h1>让想法<br><span>动起来。</span></h1></div>
+      <div class="intro-side"><p>从一句提示词，到一段有节奏的影像。<br>看作品，拆方法，做自己的下一条。</p><div class="intro-meta"><span>513 条来源记录</span><span>2 个原创示例</span><span>无须 API Key</span></div></div>
+    </section>
+    <section class="studio" aria-label="原创作品播放器">
+      <div class="studio-top"><div class="mode-buttons" aria-label="选择作品"><button type="button" data-mode="reel" aria-pressed="true">01 / FORM & FLOW</button><button type="button" data-mode="bucket" aria-pressed="false">02 / 令牌桶</button></div><span class="studio-spec" id="spec">15 SEC · 1080P · 60 FPS EXPORT</span></div>
+      <div class="stage"><canvas id="stage" width="1920" height="1080" role="img" aria-label="FORM & FLOW：动态字体与三维点阵雕塑的十五秒动效作品"></canvas></div>
+      <div class="transport"><button type="button" class="play-button" id="play" aria-label="暂停">暂停</button><label class="sr-only" for="timeline">播放位置</label><input id="timeline" type="range" min="0" max="15" step="0.01" value="0"><output id="time" for="timeline">00.00 / 15.00</output><button type="button" id="sound" aria-pressed="false">声音：关</button></div>
+      <div id="bucket-controls" class="bucket-controls" hidden><label>容量 <output id="capacity-value">4</output><input id="capacity" type="range" min="2" max="8" step="1" value="4"></label><label>补充速度 <output id="rate-value">1.0 / 秒</output><input id="rate" type="range" min="0.5" max="3" step="0.5" value="1"></label><p id="bucket-summary" aria-live="polite"></p></div>
+      <div class="work-caption"><div><h2 id="work-title">FORM & FLOW</h2><p id="work-description">15 秒，四个镜头。一颗圆，变成形状、流动与节奏。</p></div><div class="work-actions"><a id="download-video" class="button solid" href="media/form-flow.mp4" download>下载成片 ↓</a><a class="button" href="https://github.com/nonggde/prompt-motion-lab/tree/main/src" target="_blank" rel="noreferrer">查看源码 ↗</a></div></div>
+      <details class="brief"><summary>这一条是怎么做的？<span>BRIEF + SOURCE PROMPT ↘</span></summary><div id="brief-content"></div></details>
+    </section>
+    <section class="library" id="library">
+      <div class="section-heading"><div><p class="eyebrow">THE PROMPT ARCHIVE</p><h2>好的作品，从好的问题开始。</h2></div><p>保留作者、出处与完整性标记。<br>读原文，也试着写出自己的版本。</p></div>
+      <div class="catalog-stats" id="catalog-stats" aria-live="polite">正在载入提示词…</div>
+      <div class="filters"><label class="search-label"><span class="sr-only">搜索主题、作者或技术</span><input type="search" id="search" placeholder="搜索主题、作者、技术…" autocomplete="off"></label><label><span class="sr-only">作品分类</span><select id="category"><option value="all">全部分类</option><option value="motion">动态图形</option><option value="explainer">科普解释</option><option value="3d">3D 场景</option><option value="interactive">游戏与交互</option></select></label><label class="full-only"><input id="full-only" type="checkbox">只看完整提示词</label></div>
+      <div class="results-line"><span id="results-count" aria-live="polite"></span><span>来源快照 · 2026.10.08</span></div>
+      <div class="prompt-grid" id="prompt-grid"></div>
+      <button type="button" id="load-more" class="button load-more">再看 12 条 ↓</button>
+      <p id="catalog-error" class="error" role="alert" hidden></p>
+    </section>
+    <section class="workflow" id="workflow">
+      <div class="section-heading"><div><p class="eyebrow">A REPEATABLE WORKFLOW</p><h2>少一点玄学，多一点导演思维。</h2></div><a class="button" href="https://github.com/nonggde/prompt-motion-lab/blob/main/docs/workflow.zh-CN.md" target="_blank" rel="noreferrer">完整制作指南 ↗</a></div>
+      <div class="steps"><article><span>01</span><h3>说清想法</h3><p>主题、观众、时长、画幅。把真实内容和参考交给模型。</p></article><article><span>02</span><h3>写出镜头</h3><p>一个镜头讲一件事。固定字体、配色、节拍和转场。</p></article><article><span>03</span><h3>先看样片</h3><p>在关键时间点看静帧，检查字是否可读、动作是否清楚。</p></article><article><span>04</span><h3>导出成片</h3><p>按同一条时间线渲染画面与声音，得到可复现的影片。</p></article></div>
+      <div class="template"><div><p class="eyebrow">YOUR NEXT EXPERIMENT</p><h3>把想法填进去，开始下一条。</h3><p>一份结构化的制作简报，比一句“全力以赴”更容易控制结果。</p></div><button type="button" id="copy-template" class="button solid">复制创作模板 ↗</button></div>
+      <div class="skill-install"><div><p class="eyebrow">AI SKILL / PROMPT TO VIDEO</p><h3 id="skill-title">让你的 AI 学会这套制作流程。</h3><p id="skill-description">安装技能后，把需求交给能执行代码的 AI，制作提示词、分镜与成片。</p><code>npx skills add nonggde/prompt-motion-lab --skill prompt-to-video</code></div><a id="skill-link" class="button" href="https://github.com/nonggde/prompt-motion-lab/tree/main/skills/prompt-to-video" target="_blank" rel="noreferrer">获取 AI 技能 ↗</a></div>
+    </section>
+  </main>
+  <footer class="footer"><div class="brand-text">PROMPT MOTION LAB</div><p>原创示例与工具以 MIT 协议开源。提示词保留原作者署名。</p><div><a href="https://github.com/yihui-dev/awesome-opus5-5-videos" target="_blank" rel="noreferrer">案例来源 ↗</a><a href="https://x.com/xilo2991/status/2104912748794589515" target="_blank" rel="noreferrer">方法参考 · xilo ↗</a><a href="https://x.com/alchainhust/status/2107347834668224687" target="_blank" rel="noreferrer">方法参考 · alchain ↗</a></div></footer>
+  <p id="toast" class="toast" role="status" hidden></p>
+  <script src="src/engine.js"></script>
+  <script src="src/audio.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
