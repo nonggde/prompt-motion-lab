@@ -4,7 +4,7 @@
 
 `data/videos.json` 来自 [yihui-dev/awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos)，快照提交 `756290289742535eb0ac3817548f152e9759cc70`，获取日期 2026-10-08。上游仓库采用 MIT 协议，原始许可完整保存在 [LICENSES/upstream-MIT.txt](LICENSES/upstream-MIT.txt)。每条记录保留作者、原帖、原始语言与部分提示词标记。
 
-`data/videos.json` is sourced from [yihui-dev/awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos), snapshot commit `756290289742535eb0ac3817548f152e9759cc70`, retrieved on 2026-10-08. Its repository uses MIT; the full upstream notice is retained in [LICENSES/upstream-MIT.txt](LICENSES/upstream-MIT.txt). Author, original post, original language and partial-prompt flags are preserved per record.
+`data/videos.json` is sourced from [yihui-dev/awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos), snapshot commit `756290289742535eb0ac3817548f152e9759cc70`, retrieved on 2026-10-08. Its repository uses MIT; the full upstream notice is retained in [LICENSES/upstream-MIT.txt](LICENSES/upstream-MIT.txt). Author, original post, original language and partial-prompt flags are preserved per record. One source prompt's local absolute attachment path is normalized to `[local attachment path]` for privacy; its filename and meaning are unchanged.
 
 原作视频、预览图与作者品牌未包含在本项目的素材包中；原作通过外链访问。仓库协议不表示原作媒体或品牌获得了额外授权。`media/` 中的示例视频、画面和合成配乐是本项目新制作的作品，适用本项目 MIT 协议。
 
